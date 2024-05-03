@@ -1,0 +1,76 @@
+{
+    "monika":{
+        "head": {
+            "angry": "monika serious.png",
+            "annoyed": "annoyed.png",
+            "blushing": "monika blushing.png",
+            "concerned": "curious.png",
+            "crying": "cry.png",
+            "curious": "curious.png",
+            "embarrassed": "embarrassed.png",
+            "flabbergasted": "monika flabbergasted.png",
+            "flirty": "high.png",
+            "glad": "glad.png",
+            "happy": "smile.png",
+            "horrified": "monika horrifiedYelling.png",
+            "nervous": "nervous.png",
+            "playful frown": "monika playfulFrown.png", 
+            "playful smile": "monika playfulSmile.png", 
+            "really happy": "smileOpenMouth.png", 
+            "resolve": "annoyed_speaking.png", 
+            "sad": "sad.webp", 
+            "scared": "monika scared.png", 
+            "serious": "monika serious.png", 
+            "shocked": "monika shocked.png", 
+            "worried": "worried.png"
+        },
+        "left": {
+        "explain": "2l.png",
+        "relaxed": "1l.png"
+        },
+        "right": {
+            "explain": "2r.png",
+            "relaxed": "1r.png"
+        },
+        "none": "mtea.png"
+    },
+
+    "natsuki":{
+        "head": {
+            "angry": "angry.png",
+            "annoyed": "annoyed.png",
+            "blushing": "flustered.png",
+            "concerned": "concerned.png",
+            "cry": "cry.png",
+            "curious": "curious.png",
+            "embarrassed": "embarrassed.png",
+            "flirty": "flustered.png",
+            "flustered": "flustered.png",
+            "glad": "smiling.png",
+            "growling": "growling.png",
+            "happy": "smiling.png",
+            "horrified": "horrified.png",
+            "laughing": "laughing.png",
+            "nervous": "nervous.png",
+            "prideful": "prideful.png",
+            "pouting": "pouting.png",
+            "really angry": "horrified.png",
+            "really happy": "really happy.png", 
+            "sad": "sad.png", 
+            "scared": "monika scared.png",  
+            "shocked": "shocked.png",
+            "talking": "talking.png",
+            "vibing": "vibing.png",
+            "worried": "worried.png"
+        },
+        "left": {
+        "explain": "2l.png",
+        "relaxed": "1l.png"
+        },
+        "right": {
+            "explain": "2r.png",
+            "relaxed": "1r.png"
+        },
+        "none": "mtea.png"
+    }
+}

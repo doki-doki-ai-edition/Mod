@@ -1,0 +1,10 @@
+{
+    "getimg": {
+        "prompt": "(masterpiece), (best quality), ray tracing, scenery, extremely detailed CG unity 8k wallpaper, no characters, eye-level camera angle, <guide>",
+        "negative": "(worst quality), (low quality), Disfigured, cartoon, blurry, nude, 1girl, 1boy, character"
+    },
+    "stable": {
+        "prompt": "mdjrny-v4 style background anime scenery in <guide> hyperrealistic, highly detailed, cinematic lighting, stunningly beautiful, intricate, sharp focus, (professionally color graded), ((bright soft diffused light)), volumetric fog, trending on instagram, trending on tumblr, HDR 4K, 8K",
+        "negative": "Disfigured, cartoon, blurry, nude, 1girl, 1boy, character"
+    }
+}
