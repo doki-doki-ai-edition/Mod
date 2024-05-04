@@ -512,7 +512,14 @@ init python:
         renpy.save_persistent()
         renpy.hide_screen("seed_window_popup")
         renpy.show_screen("llm_model_config_screen")
-        
+
+    def FinishResetModelConfig():
+        persistent.seed = default_seed
+        persistent.temp = default_temp
+        persistent.context_window = default_context_window
+        renpy.save_persistent()
+        renpy.hide_screen("reset_config_window_popup")
+        renpy.show_screen("llm_model_config_screen")
 
     def SwitchToModelConfig():
         renpy.hide_screen("preferences")
@@ -1011,8 +1018,9 @@ screen llm_model_config_screen():
             vbox:
                 textbutton _("Back") action [Return(), renpy.hide_screen("preferences"), renpy.hide_screen("llm_model_config_screen")]
 
+            vbox:
                 null height 50
-                textbutton _("Use Default Settings") action NullAction()
+                textbutton _("Use Default Settings") action Show(screen="reset_config_window_popup", message="Relaunch the game.", ok_action=Function(FinishResetModelConfig))
                 
 
 
@@ -1044,7 +1052,7 @@ screen llm_model_config_screen():
                         textbutton _("Change") action Show(screen="seed_window_popup", message="Enter a number", ok_action=Function(FinishEnterSeed))
                         textbutton _("Info") action NullAction()
 
-            
+
 
 
 
@@ -1585,6 +1593,36 @@ screen seed_window_popup(message, ok_action):
             textbutton _("OK") action ok_action
 
 
+
+
+screen reset_config_window_popup(message, ok_action):
+
+
+    modal True
+
+    zorder 200
+
+    style_prefix "confirm"
+
+    add "gui/overlay/confirm.png"
+    key "K_RETURN" action [Play("sound", gui.activate_sound), ok_action]
+
+    frame:
+
+        has vbox:
+            xalign .5
+            yalign .5
+            spacing 30
+
+        label _(message):
+            style "confirm_prompt"
+            xalign 0.5
+
+        hbox:
+            xalign 0.5
+            spacing 100
+
+            textbutton _("OK") action ok_action
 
 
 

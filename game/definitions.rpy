@@ -1415,9 +1415,18 @@ define mc_default = DynamicCharacter('player', what_prefix='"', what_suffix='"',
 ##################################
 # Model Configs
 ##################################
-default persistent.context_window = "1024"
-default persistent.temp = "0.6"
-default persistent.seed = "0"
+define default_context_window = "1024"
+define default_temp = "0.6"
+define default_seed = "0"
+
+default persistent.context_window = default_context_window
+default persistent.temp = default_temp
+default persistent.seed = default_seed
+
+default context_window = persistent.context_window
+default temp = persistent.temp
+default seed = persistent.seed
+
 
 default persistent.chatModel = None
 default persistent.imgModel = None
@@ -1429,9 +1438,7 @@ define persistent.imgToken = None
 default llm_mode = True
 default chatModel = persistent.chatModel
 default chatToken = persistent.chatToken
-default context_window = persistent.context_window
-default temp = persistent.temp
-default seed = persistent.seed
+
 
 
 ##################################
