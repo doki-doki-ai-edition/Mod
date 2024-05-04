@@ -1005,8 +1005,7 @@ screen llm_model_config_screen():
                 box_wrap True
 
             vbox:
-                textbutton _("Back") action [ShowMenu("preferences"), SensitiveIf(renpy.get_screen("preferences") == None)]
-
+                textbutton _("Back") action [Return(), renpy.hide_screen("preferences"), renpy.hide_screen("llm_model_config_screen")]
 
 
             null height (4 * gui.pref_spacing)
@@ -1019,18 +1018,23 @@ screen llm_model_config_screen():
 
                     label _(f"Context Window: {context_window}")
 
-                    textbutton _("Change") action Show(screen="context_window_popup", message="Enter a number", ok_action=Function(FinishEnterContextWindow))
-                    textbutton _("Info") action Show(screen="context_window_popup", message="Context Window", ok_action=Function(FinishEnterContextWindow))
+                    hbox:
+                        textbutton _("Change") action Show(screen="context_window_popup", message="Enter a number", ok_action=Function(FinishEnterContextWindow))
+                        textbutton _("Info") action NullAction()
 
                     label _(f"Temperature: {temp}")
 
-                    textbutton _("Change") action Show(screen="temp_window_popup", message="Enter a number 0-9", ok_action=Function(FinishEnterTemp))
+                    hbox:
+                        textbutton _("Change") action Show(screen="temp_window_popup", message="Enter a number 0-9", ok_action=Function(FinishEnterTemp))
+                        textbutton _("Info") action NullAction()
 
                 vbox:
 
                     label _(f"Seed: {seed}")
 
-                    textbutton _("Change") action Show(screen="seed_window_popup", message="Enter a number", ok_action=Function(FinishEnterSeed))
+                    hbox:
+                        textbutton _("Change") action Show(screen="seed_window_popup", message="Enter a number", ok_action=Function(FinishEnterSeed))
+                        textbutton _("Info") action NullAction()
 
 
 
@@ -1180,9 +1184,9 @@ screen preferences():
                 vbox:
                     textbutton _("API Key") action Show(screen="APIKey_name_input", message="Enter your API Key", ok_action=Function(FinishEnterAPIKey))
                 vbox:
-                    textbutton _("Model Config") action ShowMenu("llm_model_config_screen")  #Show(screen="llm_model_config_screen", message="", ok_action=Function(SwitchToModelConfig))
+                    textbutton _("Model Config") action ShowMenu("llm_model_config_screen")
 
-# action [ShowMenu("preferences"), SensitiveIf(renpy.get_screen("preferences") == None)]
+
 
 
     text "v[config.version]":
