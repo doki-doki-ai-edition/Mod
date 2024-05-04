@@ -1417,7 +1417,7 @@ define mc_default = DynamicCharacter('player', what_prefix='"', what_suffix='"',
 ##################################
 define default_context_window = "1024"
 define default_temp = "0.6"
-define default_seed = "0"
+define default_seed = "random"
 
 default persistent.context_window = default_context_window
 default persistent.temp = default_temp

@@ -521,6 +521,7 @@ init python:
         renpy.hide_screen("reset_config_window_popup")
         renpy.show_screen("llm_model_config_screen")
 
+
     def SwitchToModelConfig():
         renpy.hide_screen("preferences")
 
@@ -1036,13 +1037,13 @@ screen llm_model_config_screen():
 
                     hbox:
                         textbutton _("Change") action Show(screen="context_window_popup", message="Enter a number", ok_action=Function(FinishEnterContextWindow))
-                        textbutton _("Info") action NullAction()
+                        textbutton _("Info") action [Show(screen="info_context_window_popup", message="Context Window", ok_action=Hide("info_context_window_popup")), Return(), renpy.hide_screen("preferences"), renpy.hide_screen("llm_model_config_screen")]
 
                     label _(f"Temperature: {temp}")
 
                     hbox:
                         textbutton _("Change") action Show(screen="temp_window_popup", message="Enter a number 0-9", ok_action=Function(FinishEnterTemp))
-                        textbutton _("Info") action NullAction()
+                        textbutton _("Info") action [Show(screen="info_temp_popup", message="Temperature", ok_action=Hide("info_temp_popup")), Return(), renpy.hide_screen("preferences"), renpy.hide_screen("llm_model_config_screen")]
 
                 vbox:
 
@@ -1050,7 +1051,7 @@ screen llm_model_config_screen():
 
                     hbox:
                         textbutton _("Change") action Show(screen="seed_window_popup", message="Enter a number", ok_action=Function(FinishEnterSeed))
-                        textbutton _("Info") action NullAction()
+                        textbutton _("Info") action [Show(screen="info_seed_popup", message="Seed", ok_action=Hide("info_seed_popup")), Return(), renpy.hide_screen("preferences"), renpy.hide_screen("llm_model_config_screen")]
 
 
 
@@ -1424,6 +1425,37 @@ screen name_input(message, ok_action):
 
 
 
+screen reset_config_window_popup(message, ok_action):
+
+
+    modal True
+
+    zorder 200
+
+    style_prefix "confirm"
+
+    add "gui/overlay/confirm.png"
+    key "K_RETURN" action [Play("sound", gui.activate_sound), ok_action]
+
+    frame:
+
+        has vbox:
+            xalign .5
+            yalign .5
+            spacing 30
+
+        label _(message):
+            style "confirm_prompt"
+            xalign 0.5
+
+        hbox:
+            xalign 0.5
+            spacing 100
+
+            textbutton _("OK") action ok_action
+
+
+
 
 screen model_name_input(message, ok_action):
 
@@ -1594,12 +1626,8 @@ screen seed_window_popup(message, ok_action):
 
 
 
-
-screen reset_config_window_popup(message, ok_action):
-
-
+screen info_context_window_popup(message, ok_action):
     modal True
-
     zorder 200
 
     style_prefix "confirm"
@@ -1618,11 +1646,80 @@ screen reset_config_window_popup(message, ok_action):
             style "confirm_prompt"
             xalign 0.5
 
+        label _("The maximum amount of tokens (messages) that will be remembered. Higher=More tokens remembered but this will consume a lot of RAM if you're using an LLM"):
+            style "confirm_prompt"
+
+
         hbox:
             xalign 0.5
             spacing 100
 
             textbutton _("OK") action ok_action
+
+
+
+screen info_temp_popup(message, ok_action):
+    modal True
+    zorder 200
+
+    style_prefix "confirm"
+
+    add "gui/overlay/confirm.png"
+    key "K_RETURN" action [Play("sound", gui.activate_sound), ok_action]
+
+    frame:
+
+        has vbox:
+            xalign .5
+            yalign .5
+            spacing 30
+
+        label _(message):
+            style "confirm_prompt"
+            xalign 0.5
+
+        label _("How creative the model will be with responses. (Higher=More creative but 0.6 is highly recommended for this)"):
+            style "confirm_prompt"
+
+
+        hbox:
+            xalign 0.5
+            spacing 100
+
+            textbutton _("OK") action ok_action
+
+
+
+screen info_seed_popup(message, ok_action):
+    modal True
+    zorder 200
+
+    style_prefix "confirm"
+
+    add "gui/overlay/confirm.png"
+    key "K_RETURN" action [Play("sound", gui.activate_sound), ok_action]
+
+    frame:
+
+        has vbox:
+            xalign .5
+            yalign .5
+            spacing 30
+
+        label _(message):
+            style "confirm_prompt"
+            xalign 0.5
+
+        label _("Deterministic responses. Selecting any seed will always return the same response if your message is written the same."):
+            style "confirm_prompt"
+
+
+        hbox:
+            xalign 0.5
+            spacing 100
+
+            textbutton _("OK") action ok_action
+
 
 
 
