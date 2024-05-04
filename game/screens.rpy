@@ -499,16 +499,21 @@ init python:
         persistent.context_window = context_window
         renpy.save_persistent()
         renpy.hide_screen("context_window_popup")
+        renpy.show_screen("llm_model_config_screen")
+
         
     def FinishEnterTemp():
         persistent.temp = temp
         renpy.save_persistent()
         renpy.hide_screen("temp_window_popup")
+        renpy.show_screen("llm_model_config_screen")
 
     def FinishEnterSeed():
         persistent.seed = seed
         renpy.save_persistent()
         renpy.hide_screen("seed_window_popup")
+        renpy.show_screen("llm_model_config_screen")
+        
 
     def SwitchToModelConfig():
         renpy.hide_screen("preferences")
