@@ -501,7 +501,6 @@ init python:
         renpy.hide_screen("context_window_popup")
         renpy.show_screen("llm_model_config_screen")
 
-        
     def FinishEnterTemp():
         persistent.temp = temp
         renpy.save_persistent()
@@ -1012,10 +1011,14 @@ screen llm_model_config_screen():
             vbox:
                 textbutton _("Back") action [Return(), renpy.hide_screen("preferences"), renpy.hide_screen("llm_model_config_screen")]
 
+                null height 50
+                textbutton _("Use Default Settings") action NullAction()
+                
+
 
             null height (4 * gui.pref_spacing)
 
-            hbox:
+            vbox:
                 style_prefix "slider"
                 box_wrap True
 
@@ -1040,6 +1043,9 @@ screen llm_model_config_screen():
                     hbox:
                         textbutton _("Change") action Show(screen="seed_window_popup", message="Enter a number", ok_action=Function(FinishEnterSeed))
                         textbutton _("Info") action NullAction()
+
+            
+
 
 
 
