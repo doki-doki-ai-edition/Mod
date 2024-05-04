@@ -1039,7 +1039,7 @@ screen llm_model_config_screen():
                         textbutton _("Change") action Show(screen="context_window_popup", message="Enter a number", ok_action=Function(FinishEnterContextWindow))
                         textbutton _("Info") action [Show(screen="info_context_window_popup", message="Context Window", ok_action=Hide("info_context_window_popup")), Return(), renpy.hide_screen("preferences"), renpy.hide_screen("llm_model_config_screen")]
 
-                    label _(f"Temperature: {temp}")
+                    label _(f"Temperature: 0.{temp}")
 
                     hbox:
                         textbutton _("Change") action Show(screen="temp_window_popup", message="Enter a number 0-9", ok_action=Function(FinishEnterTemp))

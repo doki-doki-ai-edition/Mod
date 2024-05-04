@@ -1416,7 +1416,7 @@ define mc_default = DynamicCharacter('player', what_prefix='"', what_suffix='"',
 # Model Configs
 ##################################
 define default_context_window = "1024"
-define default_temp = "0.6"
+define default_temp = "6"
 define default_seed = "random"
 
 default persistent.context_window = default_context_window
