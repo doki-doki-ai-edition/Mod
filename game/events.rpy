@@ -207,14 +207,13 @@ init python:
             the chars, this is to help combat that"""
             with open(f"{config.basedir}/game/assets/prompts/static_emotes.json") as f:
                 emote_reminder = json.load(f)
-            return msg + emote_reminder['emote']
+            return msg + emote_reminder['emotes']
 
     
         def get_char_name(self, gptReply):
             if "[CHAR]" in gptReply:
-                pass
-            # Just Monika
-            return "monika"
+                pass    
+            return self.char
 
 
         def append_to_chat_history(self, role, msg):
@@ -240,70 +239,42 @@ init python:
                 json.dump(self.saved_data, f, indent=2)
 
 
-        def control_mood(self, mood):
+        def control_mood(self, face, body):
             """Display different facial expressions"""
-            emotions = ["angry", "blushing", "flabbergasted", "horrified",
-                    "playful frown", "playful smile", "scared", "shocked", "serious",
-                    "crying"]
+            if not face or not body: return
 
-            vocal_emotions = {
-                "Happy": ["blushing", "playful smile", "flirty", "glad", "happy", "really happy"],
-                "Sad": ["crying", "sad"],
-                "Angry": ["angry"],
-                "Surprise": ["shocked", "scared", "horrified", "flabbergasted"]
-            }
-
-            emo = "Neutral"
-
-            with open(f"{config.basedir}/game/assets/chars/chars.json", "r") as f:
+            with open(f"{config.basedir}/game/assets/configs/characters.json", "r") as f:
                 raw_chars = json.load(f)
 
-            char_name = self.get_char_name(mood)
-            for h in raw_chars[char_name]['head']:
-                if "[MOOD] "+h in mood:
-                    self.update_in_saved_actions("head_sprite", raw_chars[char_name]['head'][h])
-                    self.head_sprite = raw_chars[char_name]['head'][h]
+            char_name = self.get_char_name(face).title()
+            full_sprite_emotions = raw_chars[char_name]["full_sprites"] # dont render "left" or "right" body sprites if head_sprite returns smthing from this list
+            head_sprite = raw_chars[char_name]["head"]
+            leftside_sprite = raw_chars[char_name]["left"]
+            rightside_sprite = raw_chars[char_name]["right"]
 
-                    # Adding tone to char's voice 
-                    """
-                    for vocal_list in vocal_emotions.items():
-                        if h in vocal_list:
-                            emo = vocal_list[0]
-                            break
-                    """
+            for h in head_sprite:
+                if h == face.lower():
+                    self.update_in_saved_actions("head_sprite", raw_chars[char_name]['head'])
+                    self.head_sprite = raw_chars[char_name]['head']
 
-                    if h in emotions:
-                        self.update_in_saved_actions("leftside_sprite", raw_chars[char_name]["none"])
-                        self.leftside_sprite = raw_chars[char_name]["none"]
+                    if h in full_sprite_emotions:
+                        self.update_in_saved_actions("left", raw_chars[char_name]["none"])
+                        self.update_in_saved_actions("right", raw_chars[char_name]["none"])
+                        return
 
-                        self.update_in_saved_actions("rightside_sprite", raw_chars[char_name]["none"])
-                        self.rightside_sprite = raw_chars[char_name]["none"]
+            if head_sprite in full_sprite_emotions:
+                self.update_in_saved_actions("left", raw_chars[char_name]["none"])
+                self.update_in_saved_actions("right", raw_chars[char_name]["none"])
+                return
 
-                        return emo
-            
-            # If the AI returns a [MOOD] that isnt listed then the l and r parts should be invis.
-            for e in emotions:
-                if self.head_sprite == raw_chars[char_name]['head'][e]:
+
+            for l in leftside_sprite:
+                if body == body.lower():
                     self.update_in_saved_actions("leftside_sprite", raw_chars[char_name]["none"])
-                    self.leftside_sprite = raw_chars[char_name]["none"]
 
+            for rr in rightside_sprite:
+                if rr == body.lower():
                     self.update_in_saved_actions("rightside_sprite", raw_chars[char_name]["none"])
-                    self.rightside_sprite = raw_chars[char_name]["none"]
-
-                    return emo               
-
-
-            for l in raw_chars[char_name]['left']:
-                if "[BODY] "+l in mood:
-                    self.update_in_saved_actions("leftside_sprite", raw_chars[char_name]['left'][l])
-                    self.leftside_sprite = raw_chars[char_name]['left'][l]
-
-            for rr in raw_chars[char_name]['right']:
-                if "[BODY] "+rr in mood:
-                    self.update_in_saved_actions("rightside_sprite", raw_chars[char_name]['right'][rr])
-                    self.rightside_sprite = raw_chars[char_name]['right'][rr]
-
-            return emo
 
 
         def getimgai(self, guide):
