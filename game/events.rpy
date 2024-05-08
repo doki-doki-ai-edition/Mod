@@ -205,7 +205,6 @@ init python:
         def enforce_static_emotes(msg):
             """The AI will sometimes get quirky and use unlisted emotions for
             the chars, this is to help combat that"""
-            # TODO: Must be specific to char instead of just monika atm
             with open(f"{config.basedir}/game/assets/prompts/static_emotes.json") as f:
                 emote_reminder = json.load(f)
             return msg + emote_reminder['emote']
