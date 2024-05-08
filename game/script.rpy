@@ -57,7 +57,7 @@ label nameWorld_label:
     scene theme
     $ chatFolderName = renpy.input("Name This Realm: ", "realm", allow=" ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789_").strip() 
 
-    $ motto = renpy.random.randint(1,15)
+    $ motto = renpy.random.randint(1,300)
     if motto == 15:    
         scene black with dissolve
         play sound "audio/sfx/can you hear me.mp3"

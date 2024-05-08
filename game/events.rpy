@@ -139,7 +139,7 @@ init python:
             If they do then it rewrites the first index of chat_history
             (aka the prompt template) to include it.
 
-            This will make Monika address you by your name if
+            This will make the character address you by your name if
             necessary
             """
             if persistent.playername != None:
