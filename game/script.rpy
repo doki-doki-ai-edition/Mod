@@ -74,13 +74,13 @@ label nameWorld_label:
 
 
 ################################################################################
-## Monika's Realm
+## Character's Realm
 ################################################################################
 
 define monika = Character("Monika", color="#ffffff", window_style="textbox_monika", who_outlines=[ (3, "#77a377") ])
 default choice = None
 
-label justMonika:
+label AICharacter:
     $ tokenSetter.set_token_persist()
     stop music
     $ custom_quick_menu = True
