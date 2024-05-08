@@ -207,8 +207,8 @@ init python:
             the chars, this is to help combat that"""
             # TODO: Must be specific to char instead of just monika atm
             with open(f"{config.basedir}/game/assets/prompts/static_emotes.json") as f:
-                emotes = json.load(f)
-            return msg + emotes['monika']
+                emote_reminder = json.load(f)
+            return msg + emote_reminder['emote']
 
     
         def get_char_name(self, gptReply):
