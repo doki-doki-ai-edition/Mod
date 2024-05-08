@@ -210,8 +210,8 @@ init python:
             return msg + emote_reminder['emotes']
 
     
-        def get_char_name(self, gptReply):
-            if "[CHAR]" in gptReply:
+        def get_char_name(self, aireply):
+            if "[CHAR]" in aireply:
                 pass    
             return self.char
 
@@ -258,13 +258,13 @@ init python:
                     self.head_sprite = raw_chars[char_name]['head']
 
                     if h in full_sprite_emotions:
-                        self.update_in_saved_actions("left", raw_chars[char_name]["none"])
-                        self.update_in_saved_actions("right", raw_chars[char_name]["none"])
+                        self.update_in_saved_actions("leftside_sprite", raw_chars[char_name]["none"])
+                        self.update_in_saved_actions("rightside_sprite", raw_chars[char_name]["none"])
                         return
 
             if head_sprite in full_sprite_emotions:
-                self.update_in_saved_actions("left", raw_chars[char_name]["none"])
-                self.update_in_saved_actions("right", raw_chars[char_name]["none"])
+                self.update_in_saved_actions("leftside_sprite", raw_chars[char_name]["none"])
+                self.update_in_saved_actions("rightside_sprite", raw_chars[char_name]["none"])
                 return
 
 
