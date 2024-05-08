@@ -419,32 +419,35 @@ init python:
             return self.saved_data["proceed"]
 
 
-
-
-        def remove_context_words(self, reply):
+        def removeKeywords(self, reply):
             """Get rid of keywords and return a clean string"""
-            if "[CINEMATIC]" not in reply and "[NARRATION]" not in reply and "[CONTENT]" not in reply:
-                self.update_in_saved_actions("zone", "True")
-                self.zone = "True"
-            elif "[MOOD] crying" in reply:
-                self.update_in_saved_actions("zone", "Zone")
-                self.zone = "Zone"
 
-            if "[NARRATION]" in reply:
-                self.control_proceed("True") # User can now respond to AI
-                self.NARRATION = True
+            def getContent(start, end, reply=reply):
+                try:
+                    content = reply.split(start)[1].split(end)[0].strip()
+                    return content
+                except IndexError:
+                    return None
+                except AttributeError:
+                    return None
+
+            char = getContent('[CHAR]', '[CONTENT]')
+            face = getContent('[FACE]', '[BODY]')
+            body = getContent('[BODY]', '[CONTENT]')
+            scene = getContent('[SCENE]', '[NARRATION]')
+
+            reply = reply.replace('[END]', '')
+
+            if "[CONTENT]" in reply:
+                reply = reply.split("[CONTENT]")[1].strip()
+            elif "[NARRATION]" in reply:
+                reply = reply.split("[NARRATION]")[1].strip()
             else:
-                self.NARRATION = False
+                # Typically this means that the model didnt return a proper content field
+                reply = "ERROR"
 
-            reply = reply.split("[BODY]")[0].split("[MOOD]")[0]
+            return reply, char, face, body, scene
 
-            for ctx in self.context_words:
-                reply = reply.replace(ctx, "")
-
-            img = self.scene.replace(".png", "")
-            reply = reply.replace("[SCENE] "+img, "")
-
-            return reply
 
 
         def char_speaks(self, reply, emote):
@@ -500,20 +503,21 @@ init python:
                 max_tokens=90
                 )
             
-            ai_reply = response.choices[0].message.content
+            reply = response.choices[0].message.content
 
             # Log AI input
-            self.append_to_chat_history('assistant', ai_reply)
+            self.append_to_chat_history('assistant', reply)
 
-            emote = self.control_mood(ai_reply)
-            self.control_scene(ai_reply)
-            final_res = self.remove_context_words(ai_reply)
+            reply, _, face, body, scene = self.remove_keywords(reply)
+            self.control_mood(reply)
+            self.control_scene(reply)
+
 
             #TODO Should only run if player has voice enabled
             if self.NARRATION != True:
                 #self.char_speaks(final_res, emote=emote)
                 pass
-            return final_res
+            return reply
 
 
 
