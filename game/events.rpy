@@ -24,8 +24,8 @@ init python:
                                 "proceed": "First",
                                 "character": "",
                                 "head_sprite": "a.png",
-                                "left_sprite": "1l.png",
-                                "right_sprite": "1r.png",
+                                "leftside_sprite": "1l.png",
+                                "rightside_sprite": "1r.png",
                                 "zone": "None"
                             }
             self.chat_history = []
@@ -172,9 +172,9 @@ init python:
                 ]
             self.NARRATION = False
             self.options = []
-            self.proceed = self.saved_data["Proceed"]
-            self.scene = self.saved_data["Scene"]
-            self.char = self.saved_data["char"]
+            self.proceed = self.saved_data["proceed"]
+            self.scene = self.saved_data["scene"]
+            self.char = self.saved_data["character"]
             self.head_sprite = self.saved_data["head_sprite"]
             self.leftside_sprite = self.saved_data["leftside_sprite"]
             self.rightside_sprite = self.saved_data["rightside_sprite"]
@@ -432,9 +432,9 @@ init python:
             """Display different scenes"""
             for s in self.bg_scenes:
                 if f"[SCENE] {s}" in scene:
-                    self.update_in_saved_actions("Scene", self.bg_scenes[s])
+                    self.update_in_saved_actions("scene", self.bg_scenes[s])
                     self.scene = self.bg_scenes[s]
-                    return self.saved_data["Scene"]
+                    return self.saved_data["scene"]
 
             if "[SCENE]" in scene:
                 scene = scene.split("[SCENE]")[1].split("[NARRATION]")[0].strip()
@@ -444,9 +444,9 @@ init python:
 
         def control_proceed(self, mode):
             """Determines if the user can respond & if the bg has changed"""
-            self.update_in_saved_actions("Proceed", mode)
+            self.update_in_saved_actions("proceed", mode)
             self.proceed = mode
-            return self.saved_data["Proceed"]
+            return self.saved_data["proceed"]
 
 
 
