@@ -13,7 +13,7 @@ label start:
         $ input_popup_gui = True
         if num: # Avoid NoneType error
             if num >=0:
-                jump justMonika
+                jump AICharacter
                 return
 
         stop music fadeout 0.5
@@ -64,7 +64,7 @@ label nameWorld_label:
         $ renpy.pause(11, hard=True)
 
     if chatmode_num == 0:
-        jump justMonika
+        jump AICharacter
     else:
         # Currently disabled
         #jump justMonika_Storymode
