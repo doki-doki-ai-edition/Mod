@@ -165,17 +165,17 @@ label AICharacter:
         else:
             # Char is speaking
             image head:
-                "characters/monika/[convo.head_sprite]"
+                "characters/[convo.char]/[convo.head_sprite]"
                 zoom 0.80
                 yoffset 40
                 uppies
             image leftside:
-                "characters/monika/[convo.leftside_sprite]"
+                "characters/[convo.char]/[convo.leftside_sprite]"
                 zoom 0.80
                 yoffset 40
                 uppies
             image rightside:
-                "characters/monika/[convo.rightside_sprite]"
+                "characters/[convo.char]/[convo.rightside_sprite]"
                 zoom 0.80
                 yoffset 40
                 uppies
