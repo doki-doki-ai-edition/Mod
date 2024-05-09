@@ -20,7 +20,7 @@ init python:
             self.msg_history = "chat_history.json"
             self.saved_actions = "saved_actions.json"
             self.saved_data = {
-                                "scene": "club.png",
+                                "background": "club.png",
                                 "proceed": "First",
                                 "character": "",
                                 "head_sprite": "a.png",
@@ -162,18 +162,10 @@ init python:
             super().__init__(full_path)
             self.full_path = full_path
             self.chat_history = chat_history
-            self.bg_scenes = {"bedroom": "bedroom.png", "club": "club.png", "class": "class.png",
-            "coffee shop": "coffee.jpg", "hallway": "hallway.png", "kitchen": "kitchen.png",
-            "mc house": "house.png", "sayori's bedroom": "sayori_bedroom.png", "sayori bedroom": "sayori_bedroom.png",
-            "Sayori's bedroom": "sayori_bedroom.png", "sidewalk": "sidewalk.png",
-            "user house": "house.png", "user's house": "house.png", "house": "house.png" }
-            self.context_words = [
-                "(done)", "(continue)", "[CONTENT]", "[MUSIC]", "[NARRATION]"
-                ]
             self.NARRATION = False
             self.options = []
             self.proceed = self.saved_data["proceed"]
-            self.scene = self.saved_data["scene"]
+            self.scene = self.saved_data["background"]
             self.char = self.saved_data["character"]
             self.head_sprite = self.saved_data["head_sprite"]
             self.leftside_sprite = self.saved_data["leftside_sprite"]
@@ -398,17 +390,22 @@ init python:
                 return self.stableimg(guide)
 
 
-        def control_scene(self, scene):
-            """Display different scenes"""
-            for s in self.bg_scenes:
-                if f"[SCENE] {s}" in scene:
-                    self.update_in_saved_actions("scene", self.bg_scenes[s])
-                    self.scene = self.bg_scenes[s]
-                    return self.saved_data["scene"]
 
-            if "[SCENE]" in scene:
-                scene = scene.split("[SCENE]")[1].split("[NARRATION]")[0].strip()
-                return self.generate_ai_background(scene)
+        def control_scene(self, scene):
+            """Display different background image"""
+            if not scene: return
+
+            with open(f'{config.basedir}/game/assets/configs/bg_scenes.json', 'r') as f:
+                bg_scenes = json.load(f)
+
+            for key in ('default', 'checks'):
+                if scene in bg_scenes[key]:
+                    return self.update_in_saved_actions("background", bg_scenes[key][scene])
+
+            # If the AI responds w/ a bg not in the list, default to the clubroom.
+            return self.update_in_saved_actions("background", bg_scenes['checks']["clubroom"])
+
+
 
 
 
