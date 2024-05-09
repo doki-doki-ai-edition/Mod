@@ -13,6 +13,8 @@ init python:
     with open(config.basedir + "/game/assets/prompts/prompt_templates.json", "r") as f:
         prompt = json.load(f)
 
+    retrycount = 3
+
     class ManageChat_Folders:
         def __init__(self):
             self.chat_path = "chats/"
@@ -505,6 +507,20 @@ init python:
             else:
                 self.voice_mode = False
             return True
+
+
+
+        def retryPrompt(self, chat_history, aimodel, reply, current_emotion, current_body):
+            """If the generated response doesnt use the emotions specified in the characters.json list
+            eg. '[FACE] super shy' then remind the ai to only use what's in
+            the list and redo the response
+            """
+            if current_emotion and current_body:
+                if (reply.startswith("[FACE]")) and (current_emotion not in Configs().characters[self.char.title()]["head"]) or ("explain" not in current_body and "relaxed" not in current_body):
+                    print("<<retrying>>")
+                    chat_history[aimodel].pop()
+                    return True
+            return False
 
 
 
