@@ -508,7 +508,7 @@ init python:
 
 
 
-        def ai_response(self, msg, role="user"):
+        def ai_response(self, msg):
             """Gets ai generated text based off given prompt"""
             self.rnd = random.randint(1,7)
             if "(init_end_sim)" in msg:
@@ -527,7 +527,7 @@ init python:
             
             # Log user input
             examples = self.removePlaceholders()
-            self.append_to_chat_history(role, msg)
+            self.append_to_chat_history("user", msg)
             response = openai.ChatCompletion.create(
                 model="gpt-3.5-turbo-0125",
                 messages=self.chat_history,
@@ -543,11 +543,11 @@ init python:
 
 
             # If the AI responds w/ an emotion/body not listed, redo the response
-            self.retrying = await self.tools.retryPrompt(chat_history, self.aimodel, response, face, body)
+            self.retrying = self.retryPrompt(chat_history, self.aimodel, response, face, body)
             if self.retrying:
                 print(f"<<retrying2>> | self.retrying: {self.retrying}")
                 print(response)
-                return await self.groqResponse(userInput, chat_history, example_template)
+                return self.groqResponse(userInput, chat_history, example_template)
 
             self.control_mood(reply)
             self.control_scene(reply)
