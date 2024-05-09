@@ -130,7 +130,7 @@ init python:
                             chat_history = json.load(f)
                         self.chat_history = chat_history
                         return chat_history
-                  
+
 
 
         def usernameCheck(self):
@@ -175,7 +175,6 @@ init python:
             self.ai_art_mode = False
             self.rnd = random.randint(1,7)
             self.load = load
-
 
         @staticmethod
         def context_to_progress_story(msg):
@@ -447,6 +446,33 @@ init python:
 
 
 
+        def removePlaceholders(self):
+            """remove placeholders in json files"""
+            with open(config.basedir + "/assets/prompts/prompt_template.json", 'r') as f:
+                raw_examples = json.load(f)[f'gpt4_{self.char.lower()}']
+
+            with open(f'{config.basedir}/game/assets/configs/bg_scenes.json', 'r') as f:
+                bg_scenes = json.load(f)
+
+            with open(f'{config.basedir}/game/assets/configs/characters.json', 'r') as f:
+                characters = json.load(f)
+
+            bg_scenes = [s for s in bg_scenes["default"]] + [s for s in bg_scenes["checks"]]
+            emotions = ', '.join([e for e in characters[self.char]['head']])
+            backgrounds = ', '.join(bg_scenes)
+            
+            string = string.replace("<char>", self.char)
+            string = string.replace("<emotions>", emotions)
+            string = string.replace("<backgrounds>", backgrounds)
+
+            string = raw_examples[0]['content'] = string
+            raw_examples[0]['content'] = string
+
+
+            return raw_examples
+
+
+
         def char_speaks(self, reply, emote):
             """Convert character's text into vocals"""
             url = "https://app.coqui.ai/api/v2/samples/from-prompt/"
@@ -489,6 +515,8 @@ init python:
                 self.update_in_saved_actions("zone", "Zone")
                 self.zone = "Zone"
                 return '...'
+
+            examples = self.removePlaceholders(example_template, value=self.interaction.user.name, model=self.aimodel)
 
             # Log user input
             self.append_to_chat_history(role, msg)
