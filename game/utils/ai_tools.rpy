@@ -1,9 +1,7 @@
 init python:
-    from openai import OpenAI
-    from utils.data import Configs, Misc
     import os
     import random
-    import openai
+
 
 
     THIS_PATH = os.path.dirname(os.path.realpath(__file__))
@@ -13,7 +11,6 @@ init python:
 
         def __init__(self):
             self.config = Configs().config
-            self.safety_settings = Configs().getModelDetails["safety_settings"]
             self.openai_client = OpenAI(api_key=self.config['GPT_TOKEN'])
             self.groq_client = ""
 

@@ -527,7 +527,7 @@ init python:
         def ai_response(self, userInput):
             """Gets ai generated text based off given prompt"""
             self.rnd = random.randint(1,7)
-            if "(init_end_sim)" in userInput:
+            if "(init_end_sim)" in userInput and self.char == "monika":
                 self.update_in_saved_actions("zone", "Zone")
                 self.zone = "Zone"
                 return '...'
