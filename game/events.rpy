@@ -510,7 +510,7 @@ init python:
 
 
 
-        def retryPrompt(self, chat_history, aimodel, reply, current_emotion, current_body):
+        def retryPrompt(self, reply, current_emotion, current_body):
             """If the generated response doesnt use the emotions specified in the characters.json list
             eg. '[FACE] super shy' then remind the ai to only use what's in
             the list and redo the response
@@ -518,16 +518,16 @@ init python:
             if current_emotion and current_body:
                 if (reply.startswith("[FACE]")) and (current_emotion not in Configs().characters[self.char.title()]["head"]) or ("explain" not in current_body and "relaxed" not in current_body):
                     print("<<retrying>>")
-                    chat_history[aimodel].pop()
+                    self.chat_history[f"gpt4_{self.char}"].pop()
                     return True
             return False
 
 
 
-        def ai_response(self, msg):
+        def ai_response(self, userInput):
             """Gets ai generated text based off given prompt"""
             self.rnd = random.randint(1,7)
-            if "(init_end_sim)" in msg:
+            if "(init_end_sim)" in userInput:
                 self.update_in_saved_actions("zone", "Zone")
                 self.zone = "Zone"
                 return '...'
@@ -540,17 +540,17 @@ init python:
 
             emotions = ', '.join([e for e in characters[self.char.title()]['head']])
             reminder = "" if self.retrying == False else getReminder[self.char.lower()]["emotes"].replace("<emotes>", emotions)
-            
+
             # Log user input
             examples = self.removePlaceholders()
-            self.append_to_chat_history("user", msg)
+            self.append_to_chat_history("user", userInput + reminder)
             response = openai.ChatCompletion.create(
                 model="gpt-3.5-turbo-0125",
                 messages=self.chat_history,
                 temperature=0.6,
                 max_tokens=90
                 )
-            
+
 
             # Log AI input
             reply = response.choices[0].message.content
@@ -559,11 +559,17 @@ init python:
 
 
             # If the AI responds w/ an emotion/body not listed, redo the response
-            self.retrying = self.retryPrompt(chat_history, self.aimodel, response, face, body)
-            if self.retrying:
+            global retrycount
+            retrying = self.retryPrompt(chat_history, response, face, body)
+            if retrying:
+                retrycount -= 1
                 print(f"<<retrying2>> | self.retrying: {self.retrying}")
                 print(response)
-                return self.groqResponse(userInput, chat_history, example_template)
+                if retrycount <= 0:
+                    retrying = False
+                    retrycount = 3
+                else:
+                    return self.ai_response(userInput)
 
             self.control_mood(reply)
             self.control_scene(reply)
@@ -576,4 +582,3 @@ init python:
             return reply
 
 
-    
