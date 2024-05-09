@@ -516,11 +516,18 @@ init python:
                 self.zone = "Zone"
                 return '...'
 
-            examples = self.removePlaceholders(example_template, value=self.interaction.user.name, model=self.aimodel)
+            with open(f'{config.basedir}/game/assets/configs/characters.json', 'r') as f:
+                characters = json.load(f)
 
-            # Log user input
-            self.append_to_chat_history(role, msg)
+            with open(f"{config.basedir}/game/assets/info/reminder.json", "r") as f:
+                getReminder = json.load(f)
+
+            emotions = ', '.join([e for e in characters[self.char.title()]['head']])
+            reminder = "" if self.retrying == False else getReminder[self.char.lower()]["emotes"].replace("<emotes>", emotions)
             
+            # Log user input
+            examples = self.removePlaceholders()
+            self.append_to_chat_history(role, msg)
             response = openai.ChatCompletion.create(
                 model="gpt-3.5-turbo-0125",
                 messages=self.chat_history,
@@ -528,12 +535,20 @@ init python:
                 max_tokens=90
                 )
             
-            reply = response.choices[0].message.content
 
             # Log AI input
+            reply = response.choices[0].message.content
             self.append_to_chat_history('assistant', reply)
-
             reply, _, face, body, scene = self.remove_keywords(reply)
+
+
+            # If the AI responds w/ an emotion/body not listed, redo the response
+            self.retrying = await self.tools.retryPrompt(chat_history, self.aimodel, response, face, body)
+            if self.retrying:
+                print(f"<<retrying2>> | self.retrying: {self.retrying}")
+                print(response)
+                return await self.groqResponse(userInput, chat_history, example_template)
+
             self.control_mood(reply)
             self.control_scene(reply)
 
