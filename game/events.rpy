@@ -16,7 +16,8 @@ init python:
     retrycount = 3
 
     class ManageChat_Folders:
-        def __init__(self):
+        def __init__(self, character_name):
+            self.character_name = character_name
             self.chat_path = "chats/"
             self.full_path = ""
             self.msg_history = "chat_history.json"
@@ -24,7 +25,7 @@ init python:
             self.saved_data = {
                                 "background": "club.png",
                                 "proceed": "First",
-                                "character": persistent.character_name,
+                                "character": self.character_name,
                                 "head_sprite": "a.png",
                                 "leftside_sprite": "1l.png",
                                 "rightside_sprite": "1r.png",
@@ -85,8 +86,6 @@ init python:
 
                 self.saved_data = saved_data
                 return saved_data
-
-
 
 
 
@@ -345,9 +344,9 @@ init python:
             response = requests.request("POST", url, headers=headers, data=payload, timeout=25)
             if response.status_code == 201 or response.status_code == 200:
                 response_data = json.loads(response.text)
-                with open(config.basedir + f"/game/images/bg_temp/ai_imgs.json", "w") as f:
+                with open(config.basedir + f"/game/images/bg/ai_imgs.json", "w") as f:
                     json.dump(response_data, f, indent=2)
-                with open(config.basedir + f"/game/images/bg_temp/ai_imgs.json", "r") as f:
+                with open(config.basedir + f"/game/images/bg/ai_imgs.json", "r") as f:
                     ai_art = json.load(f)
 
                 # Wait for "output" key to be returned by the API.
@@ -359,10 +358,10 @@ init python:
                     except (IndexError, KeyError): return guide
                 response = requests.get(url)
 
-                with open(config.basedir + f"/game/images/bg_temp/{guide}", "wb") as f:
+                with open(config.basedir + f"/game/images/bg/{guide}", "wb") as f:
                     f.write(response.content)
 
-                self.update_in_saved_actions("Scene", guide)
+                self.update_in_saved_actions("scene", guide)
                 self.scene = guide
                 self.ai_art_mode = True
             else:
@@ -372,10 +371,10 @@ init python:
 
         def generate_ai_background(self, guide):
             """Generates unique AI background if it doesn't already exist in the bg folder"""
-            ai_art_path = config.basedir + "/game/images/bg_temp/"+ guide + ".png"
+            ai_art_path = config.basedir + "/game/images/bg/"+ guide + ".png"
             if os.path.exists(ai_art_path):
                 guide = guide + ".png"
-                self.update_in_saved_actions("Scene", guide)
+                self.update_in_saved_actions("scene", guide)
                 self.scene = guide
                 self.ai_art_mode = True
                 return self.scene
@@ -535,7 +534,7 @@ init python:
             with open(f'{config.basedir}/game/assets/configs/characters.json', 'r') as f:
                 characters = json.load(f)
 
-            with open(f"{config.basedir}/game/assets/info/reminder.json", "r") as f:
+            with open(f"{config.basedir}/game/assets/prompts/reminder.json", "r") as f:
                 getReminder = json.load(f)
 
             emotions = ', '.join([e for e in characters[self.char.title()]['head']])

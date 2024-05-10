@@ -86,7 +86,7 @@ label AICharacter:
     $ custom_quick_menu = True
     scene black with dissolve
 
-    $ user_chats = ManageChat_Folders()
+    $ user_chats = ManageChat_Folders(character_name=character_name)
     $ load = None # Used to check if a file has been loaded
 
     # "num" is a default value set to None. If a number is
