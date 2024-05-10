@@ -24,7 +24,7 @@ init python:
             self.saved_data = {
                                 "background": "club.png",
                                 "proceed": "First",
-                                "character": "",
+                                "character": persistent.character_name,
                                 "head_sprite": "a.png",
                                 "leftside_sprite": "1l.png",
                                 "rightside_sprite": "1r.png",
@@ -53,7 +53,7 @@ init python:
 
 
         def create_chat_history(self):
-            """.json for logging chat history with monika & user"""
+            """.json for logging chat history with character & user"""
             try:
                 with open(self.full_path+"/"+self.msg_history, "r") as f:
                     chat_history = json.load(f)

@@ -48,31 +48,31 @@ init python:
 
 
 
-    async def getGroq(self, prompt, user_id):
-        """Using Groq's API to quickly use large models"""
-        try:
+        def getGroq(self, prompt, user_id):
+            """Using Groq's API to quickly use large models"""
+            try:
 
-            with open(f'{PATH}/data/keys/{user_id}.key', "rb") as f:
-                password = f.read()
+                with open(f'{PATH}/data/keys/{user_id}.key', "rb") as f:
+                    password = f.read()
 
-            token = await ec().decrypt_password(password)
-            groq_client = Groq(api_key=token)
+                token = await ec().decrypt_password(password)
+                groq_client = Groq(api_key=token)
 
-            response = groq_client.chat.completions.create(
-                model="llama3-70b-8192", # mixtral-8x7b-32768, llama2-70b-4096, gemma-7b-it, llama3-70b-8192
-                max_tokens=200,
-                temperature=0.6,
-                stop=['[INST', '[/INST', '[END]'],
-                messages=prompt
-            )
+                response = groq_client.chat.completions.create(
+                    model="llama3-70b-8192", # mixtral-8x7b-32768, llama2-70b-4096, gemma-7b-it, llama3-70b-8192
+                    max_tokens=200,
+                    temperature=0.6,
+                    stop=['[INST', '[/INST', '[END]'],
+                    messages=prompt
+                )
 
-            # Remove everything after [END] but still append it to the end of the msg
-            # This is so the AI still attempts to generate [END] for every msg.
-            response = response.choices[0].message.content + " [END]"
-            return response
-        except GroqError as e:
-            if e.response.status_code == 429:
-                return False, "Rate limit exceeded."
-            else:
-                return False, f"An error occurred: {e}"
+                # Remove everything after [END] but still append it to the end of the msg
+                # This is so the AI still attempts to generate [END] for every msg.
+                response = response.choices[0].message.content + " [END]"
+                return response
+            except GroqError as e:
+                if e.response.status_code == 429:
+                    return False, "Rate limit exceeded."
+                else:
+                    return False, f"An error occurred: {e}"
 

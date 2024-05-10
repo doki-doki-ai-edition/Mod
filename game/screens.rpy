@@ -1787,10 +1787,9 @@ screen chatmode_screen():
 
 
 
-## Just Monika & Everyone ##############################################################
-##
-## A gamemode where Monika is the only character that exists with the user.
-## 
+################################################################
+## Select a character to talk with
+################################################################ 
 
 screen gamemode_screen():
     image "gui/gamemode/gamemode_txt.png" ypos 40 xpos 370
@@ -1801,7 +1800,7 @@ screen gamemode_screen():
             style_prefix "navigation_button_text"
 
             xpos 20
-            
+
             hover_sound "audio/gui/sfx/hover.ogg"
             activate_sound "audio/gui/sfx/select.ogg"
             action [Hide("gamemode_screen"), Show("chatmode_screen")]
@@ -1816,7 +1815,7 @@ screen gamemode_screen():
 
         hover_sound "audio/gui/sfx/hover.ogg"
         activate_sound "audio/gui/sfx/select.ogg"
-        action [Hide("gamemode_screen"), Jump("nameWorld_label")]
+        action [SetVariable("character_name", "monika"), Hide("gamemode_screen"), Jump("nameWorld_label")]
 
 
 
@@ -1830,7 +1829,7 @@ screen gamemode_screen():
 
         hover_sound "audio/gui/sfx/hover.ogg"
         activate_sound "audio/gui/sfx/select.ogg"
-        action [Hide("gamemode_screen"), Jump("nameWorld_label")]
+        action [SetVariable("character_name", "sayori"), Hide("gamemode_screen"), Jump("nameWorld_label")]
 
 
 
@@ -1845,7 +1844,7 @@ screen gamemode_screen():
 
         hover_sound "audio/gui/sfx/hover.ogg"
         activate_sound "audio/gui/sfx/select.ogg"
-        action [Hide("gamemode_screen"), Jump("nameWorld_label")]
+        action [SetVariable("character_name", "natsuki"), Hide("gamemode_screen"), Jump("nameWorld_label")]
 
 
 
@@ -1860,7 +1859,7 @@ screen gamemode_screen():
 
         hover_sound "audio/gui/sfx/hover.ogg"
         activate_sound "audio/gui/sfx/select.ogg"
-        action [Hide("gamemode_screen"), Jump("nameWorld_label")]
+        action [SetVariable("character_name", "yuri"), Hide("gamemode_screen"), Jump("nameWorld_label")]
 
 
 
@@ -1874,7 +1873,7 @@ screen gamemode_screen():
             
             hover_sound "audio/gui/sfx/hover.ogg"
             activate_sound "audio/gui/sfx/select.ogg"
-            action [Show(screen="dialog", message="Coming very very soon...", ok_action=Hide("dialog"))]
+            action [Show(screen="dialog", message="Not available yet", ok_action=Hide("dialog"))]
 
 
 

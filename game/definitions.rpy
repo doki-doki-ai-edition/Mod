@@ -1442,6 +1442,10 @@ default chatToken = persistent.chatToken
 
 
 ##################################
+default character_name = ""
+default persistent.character_name = character_name
+
+
 define _dismiss_pause = config.developer
 
 define persistent.freedom = None
