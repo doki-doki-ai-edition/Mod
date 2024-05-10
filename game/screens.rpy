@@ -216,6 +216,24 @@ style textbox_sayori is window:
     background Image("gui/textbox_sayori.png", xalign=0.5, yalign=1.0)
 
 
+style textbox_natsuki is window:
+    xalign 0.5
+    xfill True
+    yalign gui.textbox_yalign
+    ysize gui.textbox_height
+
+    background Image("gui/textbox_natsuki.png", xalign=0.5, yalign=1.0)
+
+
+style textbox_yuri is window:
+    xalign 0.5
+    xfill True
+    yalign gui.textbox_yalign
+    ysize gui.textbox_height
+
+    background Image("gui/textbox_yuri.png", xalign=0.5, yalign=1.0)
+
+
 
 init -1 style namebox:
     xpos gui.name_xpos
@@ -229,6 +247,8 @@ init -1 style namebox:
     background ConditionSwitch(
         "_last_say_who == 'm'", Frame("gui/namebox_monika.png", gui.namebox_borders, tile=gui.namebox_tile, xalign=gui.name_xalign),
         "_last_say_who == 's'", Frame("gui/namebox_sayori.png", gui.namebox_borders, tile=gui.namebox_tile, xalign=gui.name_xalign),
+        "_last_say_who == 'n'", Frame("gui/namebox_natsuki.png", gui.namebox_borders, tile=gui.namebox_tile, xalign=gui.name_xalign),
+        "_last_say_who == 'y'", Frame("gui/namebox_yuri.png", gui.namebox_borders, tile=gui.namebox_tile, xalign=gui.name_xalign),
         "_last_say_who == 'n_default'", Frame("gui/namebox.png", gui.namebox_borders, tile=gui.namebox_tile, xalign=gui.name_xalign),
         )
     padding gui.namebox_borders.padding
@@ -239,6 +259,15 @@ style window_monika is window:
 
 style window_sayori is window:
     background Image("gui/textbox_sayori.png", xalign=0.5, yalign=1.0)
+
+style window_natsuki is window:
+    background Image("gui/textbox_natsuki.png", xalign=0.5, yalign=1.0)
+
+style window_yuri is window:
+    background Image("gui/textbox_yuri.png", xalign=0.5, yalign=1.0)
+
+
+
 
 style namebox:
     xpos gui.name_xpos
