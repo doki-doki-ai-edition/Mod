@@ -536,7 +536,7 @@ init python:
             # Log AI input
             reply = response.choices[0].message.content
             self.append_to_chat_history('assistant', reply)
-            reply, _, face, body, scene = self.remove_keywords(reply)
+            reply, _, face, body, scene = self.removeKeywords(reply)
 
 
             # If the AI responds w/ an emotion/body not listed, redo the response
