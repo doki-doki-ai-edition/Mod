@@ -125,8 +125,6 @@ label AICharacter:
         if load == True:
             $ user_msg = "continue {remember to never speak as the MC, continue the story.}"
             $ load = False
-            $ convo.proceed = True
-        elif convo.proceed == "First": # The prompt template was just generated 
             $ user_msg = "{RPT}"
         elif convo.rnd == 6: # Makes the narration/Character add on to what they were saying
             $ user_msg = "continue"

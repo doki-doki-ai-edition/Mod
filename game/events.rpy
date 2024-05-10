@@ -24,7 +24,6 @@ init python:
             self.saved_actions = "saved_actions.json"
             self.saved_data = {
                                 "background": "club.png",
-                                "proceed": "First",
                                 "character": self.character_name,
                                 "head_sprite": "a.png",
                                 "leftside_sprite": "1l.png",
@@ -144,7 +143,6 @@ init python:
             self.chat_history = chat_history
             self.NARRATION = False
             self.options = []
-            self.proceed = self.saved_data["proceed"]
             self.scene = self.saved_data["background"]
             self.char = self.saved_data["character"]
             self.head_sprite = self.saved_data["head_sprite"]
@@ -387,13 +385,6 @@ init python:
 
 
 
-
-
-        def control_proceed(self, mode):
-            """Determines if the user can respond & if the bg has changed"""
-            self.update_in_saved_actions("proceed", mode)
-            self.proceed = mode
-            return self.saved_data["proceed"]
 
 
         def removeKeywords(self, reply):
