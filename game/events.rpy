@@ -93,8 +93,9 @@ init python:
 
 
     class CheckData(ManageChat_Folders):
-        def __init__(self, full_path):
-            super().__init__()
+        def __init__(self, character_name, full_path):
+            super().__init__(character_name)
+            self.character_name
             self.full_path = full_path
             self.ddlc_mode = {'justMonika': [0, 1], 'monikaZone': [2, 3]}
 
@@ -159,8 +160,8 @@ init python:
 
 
     class Convo(CheckData):
-        def __init__(self, chat_history, full_path, load=False):
-            super().__init__(full_path)
+        def __init__(self, character_name, chat_history, full_path, load=False):
+            super().__init__(character_name, full_path)
             self.full_path = full_path
             self.chat_history = chat_history
             self.NARRATION = False

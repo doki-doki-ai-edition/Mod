@@ -95,19 +95,19 @@ label AICharacter:
         if num >= 0:
             $ load = True
             $ path = "chats/"+persistent.chatFolderName[num]
-            $ check = CheckData(full_path=path+"/")
+            $ check = CheckData(character_name=character_name, full_path=path+"/")
             $ memory = check.historyCheck(gamemode="justMonika", chatmode=0, load=True)
-            $ convo = Convo(chat_history=memory, full_path=path+"/", load=True)
+            $ convo = Convo(character_name=character_name, chat_history=memory, full_path=path+"/", load=True)
     else:
         $ path = user_chats.create_folder(name=chatFolderName)
 
         $ user_chats.create_chat_history()
         $ user_chats.create_world_history()
 
-        $ check = CheckData(full_path=path+"/")
+        $ check = CheckData(character_name=character_name, full_path=path+"/")
         $ memory = check.historyCheck(gamemode="justMonika", chatmode=0) # Adds Freechat Prompt
         $ check.usernameCheck() # Adds your username to prompt
-        $ convo = Convo(chat_history=memory, full_path=path+"/")
+        $ convo = Convo(character_name=character_name, chat_history=memory, full_path=path+"/")
 
     if convo.ai_art_mode == False:
         image _bg:
@@ -153,11 +153,11 @@ label AICharacter:
             # I could import Pillow and resize it that way but installing it isnt working atm.
             if convo.ai_art_mode == False:
                 image _bg:
-                    "bg_temp/[convo.scene]"
+                    "bg/[convo.scene]"
                 scene _bg
             else:
                 image ai_bg:
-                    "bg_temp/[convo.scene]"
+                    "bg/[convo.scene]"
                     zoom 1.5
                 scene ai_bg
 
@@ -165,17 +165,17 @@ label AICharacter:
         else:
             # Char is speaking
             image head:
-                "characters/[convo.char]/[convo.head_sprite]"
+                "images/[convo.char]/[convo.head_sprite]"
                 zoom 0.80
                 yoffset 40
                 uppies
             image leftside:
-                "characters/[convo.char]/[convo.leftside_sprite]"
+                "images/[convo.char]/[convo.leftside_sprite]"
                 zoom 0.80
                 yoffset 40
                 uppies
             image rightside:
-                "characters/[convo.char]/[convo.rightside_sprite]"
+                "images/[convo.char]/[convo.rightside_sprite]"
                 zoom 0.80
                 yoffset 40
                 uppies
@@ -223,7 +223,7 @@ label monika_zone:
 
     $ chatFolderName = "monikaZone"
 
-    $ user_chats = ManageChat_Folders()
+    $ user_chats = ManageChat_Folders("monika")
 
     # "num" is a default value set to None. If a number is
     # assigned to it, that means the user is opening an old file
