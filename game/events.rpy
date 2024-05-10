@@ -461,7 +461,7 @@ init python:
                 characters = json.load(f)
 
             bg_scenes = [s for s in bg_scenes["default"]] + [s for s in bg_scenes["checks"]]
-            emotions = ', '.join([e for e in characters[self.char]['head']])
+            emotions = ', '.join([e for e in characters[self.char.title()]['head']])
             backgrounds = ', '.join(bg_scenes)
             
             string = string.replace("<char>", self.char)
