@@ -527,7 +527,7 @@ init python:
             self.append_to_chat_history("user", userInput + reminder)
             response = openai.ChatCompletion.create(
                 model="gpt-3.5-turbo-0125",
-                messages=self.chat_history,
+                messages=examples + self.chat_history,
                 temperature=0.6,
                 max_tokens=90
                 )
