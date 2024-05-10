@@ -177,6 +177,7 @@ init python:
             self.ai_art_mode = False
             self.rnd = random.randint(1,7)
             self.load = load
+            self.retrying = False
 
         @staticmethod
         def context_to_progress_story(msg):
@@ -560,13 +561,13 @@ init python:
 
             # If the AI responds w/ an emotion/body not listed, redo the response
             global retrycount
-            retrying = self.retryPrompt(chat_history, response, face, body)
-            if retrying:
+            self.retrying = self.retryPrompt(chat_history, response, face, body)
+            if self.retrying:
                 retrycount -= 1
                 print(f"<<retrying2>> | self.retrying: {self.retrying}")
                 print(response)
                 if retrycount <= 0:
-                    retrying = False
+                    self.retrying = False
                     retrycount = 3
                 else:
                     return self.ai_response(userInput)
