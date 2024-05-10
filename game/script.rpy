@@ -118,6 +118,7 @@ label AICharacter:
             "bg/[convo.scene]"
         scene ai_bg
 
+    $ first_response = True
     # placeholder text (Will rely on json data later for when users load a file)
     "..."
 
@@ -125,6 +126,8 @@ label AICharacter:
         if load == True:
             $ user_msg = "continue {remember to never speak as the MC, continue the story.}"
             $ load = False
+            $ first_response = False
+        elif first_response == True:
             $ user_msg = "{RPT}"
         elif convo.rnd == 6: # Makes the narration/Character add on to what they were saying
             $ user_msg = "continue"
