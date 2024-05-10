@@ -125,7 +125,7 @@ init python:
                 for m in self.ddlc_mode:
                     if m == gamemode:
                         with open(f"{self.full_path}/{self.msg_history}", "w") as f:
-                            json.dump(prompt[self.ddlc_mode[m][chatmode]], f, indent=2)
+                            json.dump([], f, indent=2)
 
                         with open(f"{self.full_path}/{self.msg_history}", "r") as f:
                             chat_history = json.load(f)
