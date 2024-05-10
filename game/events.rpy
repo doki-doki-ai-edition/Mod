@@ -517,7 +517,7 @@ init python:
             examples = self.removePlaceholders()
             self.append_to_chat_history("user", userInput + reminder)
             response = openai.ChatCompletion.create(
-                model="gpt-3.5-turbo-0125",
+                model="gpt-4-1106-preview",
                 messages=examples + self.chat_history,
                 temperature=0.6,
                 max_tokens=90
@@ -525,7 +525,7 @@ init python:
 
 
             # Log AI input
-            reply = response.choices[0].message.content
+            reply = response = response.choices[0].message.content
             self.append_to_chat_history('assistant', reply)
             reply, _, face, body, scene = self.removeKeywords(reply)
 
