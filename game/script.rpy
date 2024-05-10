@@ -13,7 +13,7 @@ label start:
         $ input_popup_gui = True
         if num: # Avoid NoneType error
             if num >=0:
-                jump justMonika
+                jump AICharacter
                 return
 
         stop music fadeout 0.5
@@ -57,14 +57,14 @@ label nameWorld_label:
     scene theme
     $ chatFolderName = renpy.input("Name This Realm: ", "realm", allow=" ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789_").strip() 
 
-    $ motto = renpy.random.randint(1,15)
+    $ motto = renpy.random.randint(1,300)
     if motto == 15:    
         scene black with dissolve
         play sound "audio/sfx/can you hear me.mp3"
         $ renpy.pause(11, hard=True)
 
     if chatmode_num == 0:
-        jump justMonika
+        jump AICharacter
     else:
         # Currently disabled
         #jump justMonika_Storymode
@@ -74,19 +74,23 @@ label nameWorld_label:
 
 
 ################################################################################
-## Monika's Realm
+## Character's Realm
 ################################################################################
 
 define monika = Character("Monika", color="#ffffff", window_style="textbox_monika", who_outlines=[ (3, "#77a377") ])
+define sayori = Character("Sayori", color="#ffffff", window_style="textbox_sayori", who_outlines=[ (3, "#7795a3") ])
+define natsuki = Character("Natsuki", color="#ffffff", window_style="textbox_natsuki", who_outlines=[ (3, "#a3779f") ])
+define yuri = Character("Yuri", color="#ffffff", window_style="textbox_yuri", who_outlines=[ (3, "#8f77a3") ])
+
 default choice = None
 
-label justMonika:
+label AICharacter:
     $ tokenSetter.set_token_persist()
     stop music
     $ custom_quick_menu = True
     scene black with dissolve
 
-    $ user_chats = ManageChat_Folders()
+    $ user_chats = ManageChat_Folders(character_name=character_name)
     $ load = None # Used to check if a file has been loaded
 
     # "num" is a default value set to None. If a number is
@@ -95,19 +99,18 @@ label justMonika:
         if num >= 0:
             $ load = True
             $ path = "chats/"+persistent.chatFolderName[num]
-            $ check = CheckData(full_path=path+"/")
+            $ check = CheckData(character_name=character_name, full_path=path+"/")
             $ memory = check.historyCheck(gamemode="justMonika", chatmode=0, load=True)
-            $ convo = Convo(chat_history=memory, full_path=path+"/", load=True)
+            $ convo = Convo(character_name=character_name, chat_history=memory, full_path=path+"/", load=True)
     else:
         $ path = user_chats.create_folder(name=chatFolderName)
 
         $ user_chats.create_chat_history()
         $ user_chats.create_world_history()
 
-        $ check = CheckData(full_path=path+"/")
+        $ check = CheckData(character_name=character_name, full_path=path+"/")
         $ memory = check.historyCheck(gamemode="justMonika", chatmode=0) # Adds Freechat Prompt
-        $ check.usernameCheck() # Adds your username to prompt
-        $ convo = Convo(chat_history=memory, full_path=path+"/")
+        $ convo = Convo(character_name=character_name, chat_history=memory, full_path=path+"/")
 
     if convo.ai_art_mode == False:
         image _bg:
@@ -119,6 +122,7 @@ label justMonika:
             "bg/[convo.scene]"
         scene ai_bg
 
+    $ first_response = True
     # placeholder text (Will rely on json data later for when users load a file)
     "..."
 
@@ -126,9 +130,10 @@ label justMonika:
         if load == True:
             $ user_msg = "continue {remember to never speak as the MC, continue the story.}"
             $ load = False
-            $ convo.proceed = True
-        elif convo.proceed == "First": # The prompt template was just generated 
+            $ first_response = False
+        elif first_response == True:
             $ user_msg = "{RPT}"
+            $ first_response = False
         elif convo.rnd == 6: # Makes the narration/Character add on to what they were saying
             $ user_msg = "continue"
         else:
@@ -153,11 +158,11 @@ label justMonika:
             # I could import Pillow and resize it that way but installing it isnt working atm.
             if convo.ai_art_mode == False:
                 image _bg:
-                    "bg_temp/[convo.scene]"
+                    "bg/[convo.scene]"
                 scene _bg
             else:
                 image ai_bg:
-                    "bg_temp/[convo.scene]"
+                    "bg/[convo.scene]"
                     zoom 1.5
                 scene ai_bg
 
@@ -165,17 +170,17 @@ label justMonika:
         else:
             # Char is speaking
             image head:
-                "characters/monika/[convo.head_sprite]"
+                "images/[convo.char]/[convo.head_sprite]"
                 zoom 0.80
                 yoffset 40
                 uppies
             image leftside:
-                "characters/monika/[convo.leftside_sprite]"
+                "images/[convo.char]/[convo.leftside_sprite]"
                 zoom 0.80
                 yoffset 40
                 uppies
             image rightside:
-                "characters/monika/[convo.rightside_sprite]"
+                "images/[convo.char]/[convo.rightside_sprite]"
                 zoom 0.80
                 yoffset 40
                 uppies
@@ -187,7 +192,15 @@ label justMonika:
 
             #if convo.NARRATION == False and convo.voice_mode == True:
             #    play sound "audio/vocals/monika.wav"
-            monika "[final_msg]"
+
+            if character_name == "monika":
+                monika "[final_msg]"
+            if character_name == "sayori":
+                sayori "[final_msg]"
+            if character_name == "natsuki":
+                natsuki "[final_msg]"
+            if character_name == "yuri":
+                yuri "[final_msg]"
     return
 
 
@@ -223,7 +236,7 @@ label monika_zone:
 
     $ chatFolderName = "monikaZone"
 
-    $ user_chats = ManageChat_Folders()
+    $ user_chats = ManageChat_Folders("monika")
 
     # "num" is a default value set to None. If a number is
     # assigned to it, that means the user is opening an old file
@@ -238,7 +251,6 @@ label monika_zone:
 
     $ check = CheckData(full_path=path+"/")
     $ memory = check.historyCheck(gamemode="monikaZone", chatmode=0) # Adds Freechat Prompt
-    $ check.usernameCheck() # Adds your username to prompt
     $ convo = Convo(chat_history=memory, full_path=path+"/")
 
     $ wait_time = 5

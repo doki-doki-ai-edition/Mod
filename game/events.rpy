@@ -13,16 +13,18 @@ init python:
     with open(config.basedir + "/game/assets/prompts/prompt_templates.json", "r") as f:
         prompt = json.load(f)
 
+    retrycount = 3
+
     class ManageChat_Folders:
-        def __init__(self):
+        def __init__(self, character_name):
+            self.character_name = character_name
             self.chat_path = "chats/"
             self.full_path = ""
             self.msg_history = "chat_history.json"
             self.saved_actions = "saved_actions.json"
             self.saved_data = {
-                                "scene": "club.png",
-                                "proceed": "First",
-                                "character": "",
+                                "background": "club.png",
+                                "character": self.character_name,
                                 "head_sprite": "a.png",
                                 "leftside_sprite": "1l.png",
                                 "rightside_sprite": "1r.png",
@@ -51,7 +53,7 @@ init python:
 
 
         def create_chat_history(self):
-            """.json for logging chat history with monika & user"""
+            """.json for logging chat history with character & user"""
             try:
                 with open(self.full_path+"/"+self.msg_history, "r") as f:
                     chat_history = json.load(f)
@@ -89,11 +91,10 @@ init python:
 
 
 
-
-
     class CheckData(ManageChat_Folders):
-        def __init__(self, full_path):
-            super().__init__()
+        def __init__(self, character_name, full_path):
+            super().__init__(character_name)
+            self.character_name
             self.full_path = full_path
             self.ddlc_mode = {'justMonika': [0, 1], 'monikaZone': [2, 3]}
 
@@ -124,56 +125,25 @@ init python:
                 for m in self.ddlc_mode:
                     if m == gamemode:
                         with open(f"{self.full_path}/{self.msg_history}", "w") as f:
-                            json.dump(prompt[self.ddlc_mode[m][chatmode]], f, indent=2)
+                            json.dump([], f, indent=2)
 
                         with open(f"{self.full_path}/{self.msg_history}", "r") as f:
                             chat_history = json.load(f)
                         self.chat_history = chat_history
                         return chat_history
-                  
 
-
-        def usernameCheck(self):
-            """
-            Checks if the player has a registered username.
-            If they do then it rewrites the first index of chat_history
-            (aka the prompt template) to include it.
-
-            This will make Monika address you by your name if
-            necessary
-            """
-            if persistent.playername != None:
-                try:
-                    prompt_name = self.chat_history[0]["content"].replace("<name>", persistent.playername)
-                    self.chat_history[0]["content"] = prompt_name
-
-                    with open(self.full_path+self.msg_history, "w") as f:
-                        json.dump(self.chat_history, f, indent=2)
-                except IndexError:
-                    return "File Currently Doesn't Exist"
-                return prompt_name
-            return "Username is not defined"
 
 
 
 
     class Convo(CheckData):
-        def __init__(self, chat_history, full_path, load=False):
-            super().__init__(full_path)
+        def __init__(self, character_name, chat_history, full_path, load=False):
+            super().__init__(character_name, full_path)
             self.full_path = full_path
             self.chat_history = chat_history
-            self.bg_scenes = {"bedroom": "bedroom.png", "club": "club.png", "class": "class.png",
-            "coffee shop": "coffee.jpg", "hallway": "hallway.png", "kitchen": "kitchen.png",
-            "mc house": "house.png", "sayori's bedroom": "sayori_bedroom.png", "sayori bedroom": "sayori_bedroom.png",
-            "Sayori's bedroom": "sayori_bedroom.png", "sidewalk": "sidewalk.png",
-            "user house": "house.png", "user's house": "house.png", "house": "house.png" }
-            self.context_words = [
-                "(done)", "(continue)", "[CONTENT]", "[MUSIC]", "[NARRATION]"
-                ]
             self.NARRATION = False
             self.options = []
-            self.proceed = self.saved_data["proceed"]
-            self.scene = self.saved_data["scene"]
+            self.scene = self.saved_data["background"]
             self.char = self.saved_data["character"]
             self.head_sprite = self.saved_data["head_sprite"]
             self.leftside_sprite = self.saved_data["leftside_sprite"]
@@ -183,7 +153,7 @@ init python:
             self.ai_art_mode = False
             self.rnd = random.randint(1,7)
             self.load = load
-
+            self.retrying = False
 
         @staticmethod
         def context_to_progress_story(msg):
@@ -205,17 +175,15 @@ init python:
         def enforce_static_emotes(msg):
             """The AI will sometimes get quirky and use unlisted emotions for
             the chars, this is to help combat that"""
-            # TODO: Must be specific to char instead of just monika atm
             with open(f"{config.basedir}/game/assets/prompts/static_emotes.json") as f:
-                emotes = json.load(f)
-            return msg + emotes['monika']
+                emote_reminder = json.load(f)
+            return msg + emote_reminder['emotes']
 
     
-        def get_char_name(self, gptReply):
-            if "[CHAR]" in gptReply:
-                pass
-            # Just Monika
-            return "monika"
+        def get_char_name(self, aireply):
+            if "[CHAR]" in aireply:
+                pass    
+            return self.char
 
 
         def append_to_chat_history(self, role, msg):
@@ -241,70 +209,42 @@ init python:
                 json.dump(self.saved_data, f, indent=2)
 
 
-        def control_mood(self, mood):
+        def control_mood(self, face, body):
             """Display different facial expressions"""
-            emotions = ["angry", "blushing", "flabbergasted", "horrified",
-                    "playful frown", "playful smile", "scared", "shocked", "serious",
-                    "crying"]
+            if not face or not body: return
 
-            vocal_emotions = {
-                "Happy": ["blushing", "playful smile", "flirty", "glad", "happy", "really happy"],
-                "Sad": ["crying", "sad"],
-                "Angry": ["angry"],
-                "Surprise": ["shocked", "scared", "horrified", "flabbergasted"]
-            }
-
-            emo = "Neutral"
-
-            with open(f"{config.basedir}/game/assets/chars/chars.json", "r") as f:
+            with open(f"{config.basedir}/game/assets/configs/characters.json", "r") as f:
                 raw_chars = json.load(f)
 
-            char_name = self.get_char_name(mood)
-            for h in raw_chars[char_name]['head']:
-                if "[MOOD] "+h in mood:
-                    self.update_in_saved_actions("head_sprite", raw_chars[char_name]['head'][h])
-                    self.head_sprite = raw_chars[char_name]['head'][h]
+            char_name = self.get_char_name(face).title()
+            full_sprite_emotions = raw_chars[char_name]["full_sprites"] # dont render "left" or "right" body sprites if head_sprite returns smthing from this list
+            head_sprite = raw_chars[char_name]["head"]
+            leftside_sprite = raw_chars[char_name]["left"]
+            rightside_sprite = raw_chars[char_name]["right"]
 
-                    # Adding tone to char's voice 
-                    """
-                    for vocal_list in vocal_emotions.items():
-                        if h in vocal_list:
-                            emo = vocal_list[0]
-                            break
-                    """
+            for h in head_sprite:
+                if h == face.lower():
+                    self.update_in_saved_actions("head_sprite", raw_chars[char_name]['head'])
+                    self.head_sprite = raw_chars[char_name]['head']
 
-                    if h in emotions:
+                    if h in full_sprite_emotions:
                         self.update_in_saved_actions("leftside_sprite", raw_chars[char_name]["none"])
-                        self.leftside_sprite = raw_chars[char_name]["none"]
-
                         self.update_in_saved_actions("rightside_sprite", raw_chars[char_name]["none"])
-                        self.rightside_sprite = raw_chars[char_name]["none"]
+                        return
 
-                        return emo
-            
-            # If the AI returns a [MOOD] that isnt listed then the l and r parts should be invis.
-            for e in emotions:
-                if self.head_sprite == raw_chars[char_name]['head'][e]:
+            if head_sprite in full_sprite_emotions:
+                self.update_in_saved_actions("leftside_sprite", raw_chars[char_name]["none"])
+                self.update_in_saved_actions("rightside_sprite", raw_chars[char_name]["none"])
+                return
+
+
+            for l in leftside_sprite:
+                if body == body.lower():
                     self.update_in_saved_actions("leftside_sprite", raw_chars[char_name]["none"])
-                    self.leftside_sprite = raw_chars[char_name]["none"]
 
+            for rr in rightside_sprite:
+                if rr == body.lower():
                     self.update_in_saved_actions("rightside_sprite", raw_chars[char_name]["none"])
-                    self.rightside_sprite = raw_chars[char_name]["none"]
-
-                    return emo               
-
-
-            for l in raw_chars[char_name]['left']:
-                if "[BODY] "+l in mood:
-                    self.update_in_saved_actions("leftside_sprite", raw_chars[char_name]['left'][l])
-                    self.leftside_sprite = raw_chars[char_name]['left'][l]
-
-            for rr in raw_chars[char_name]['right']:
-                if "[BODY] "+rr in mood:
-                    self.update_in_saved_actions("rightside_sprite", raw_chars[char_name]['right'][rr])
-                    self.rightside_sprite = raw_chars[char_name]['right'][rr]
-
-            return emo
 
 
         def getimgai(self, guide):
@@ -382,9 +322,9 @@ init python:
             response = requests.request("POST", url, headers=headers, data=payload, timeout=25)
             if response.status_code == 201 or response.status_code == 200:
                 response_data = json.loads(response.text)
-                with open(config.basedir + f"/game/images/bg_temp/ai_imgs.json", "w") as f:
+                with open(config.basedir + f"/game/images/bg/ai_imgs.json", "w") as f:
                     json.dump(response_data, f, indent=2)
-                with open(config.basedir + f"/game/images/bg_temp/ai_imgs.json", "r") as f:
+                with open(config.basedir + f"/game/images/bg/ai_imgs.json", "r") as f:
                     ai_art = json.load(f)
 
                 # Wait for "output" key to be returned by the API.
@@ -396,10 +336,10 @@ init python:
                     except (IndexError, KeyError): return guide
                 response = requests.get(url)
 
-                with open(config.basedir + f"/game/images/bg_temp/{guide}", "wb") as f:
+                with open(config.basedir + f"/game/images/bg/{guide}", "wb") as f:
                     f.write(response.content)
 
-                self.update_in_saved_actions("Scene", guide)
+                self.update_in_saved_actions("scene", guide)
                 self.scene = guide
                 self.ai_art_mode = True
             else:
@@ -409,10 +349,10 @@ init python:
 
         def generate_ai_background(self, guide):
             """Generates unique AI background if it doesn't already exist in the bg folder"""
-            ai_art_path = config.basedir + "/game/images/bg_temp/"+ guide + ".png"
+            ai_art_path = config.basedir + "/game/images/bg/"+ guide + ".png"
             if os.path.exists(ai_art_path):
                 guide = guide + ".png"
-                self.update_in_saved_actions("Scene", guide)
+                self.update_in_saved_actions("scene", guide)
                 self.scene = guide
                 self.ai_art_mode = True
                 return self.scene
@@ -428,53 +368,83 @@ init python:
                 return self.stableimg(guide)
 
 
+
         def control_scene(self, scene):
-            """Display different scenes"""
-            for s in self.bg_scenes:
-                if f"[SCENE] {s}" in scene:
-                    self.update_in_saved_actions("scene", self.bg_scenes[s])
-                    self.scene = self.bg_scenes[s]
-                    return self.saved_data["scene"]
+            """Display different background image"""
+            if not scene: return
 
-            if "[SCENE]" in scene:
-                scene = scene.split("[SCENE]")[1].split("[NARRATION]")[0].strip()
-                return self.generate_ai_background(scene)
+            with open(f'{config.basedir}/game/assets/configs/bg_scenes.json', 'r') as f:
+                bg_scenes = json.load(f)
 
+            for key in ('default', 'checks'):
+                if scene in bg_scenes[key]:
+                    return self.update_in_saved_actions("background", bg_scenes[key][scene])
 
-
-        def control_proceed(self, mode):
-            """Determines if the user can respond & if the bg has changed"""
-            self.update_in_saved_actions("proceed", mode)
-            self.proceed = mode
-            return self.saved_data["proceed"]
+            # If the AI responds w/ a bg not in the list, default to the clubroom.
+            return self.update_in_saved_actions("background", bg_scenes['checks']["clubroom"])
 
 
 
 
-        def remove_context_words(self, reply):
+
+        def removeKeywords(self, reply):
             """Get rid of keywords and return a clean string"""
-            if "[CINEMATIC]" not in reply and "[NARRATION]" not in reply and "[CONTENT]" not in reply:
-                self.update_in_saved_actions("zone", "True")
-                self.zone = "True"
-            elif "[MOOD] crying" in reply:
-                self.update_in_saved_actions("zone", "Zone")
-                self.zone = "Zone"
 
-            if "[NARRATION]" in reply:
-                self.control_proceed("True") # User can now respond to AI
-                self.NARRATION = True
+            def getContent(start, end, reply=reply):
+                try:
+                    content = reply.split(start)[1].split(end)[0].strip()
+                    return content
+                except IndexError:
+                    return None
+                except AttributeError:
+                    return None
+
+            char = getContent('[CHAR]', '[CONTENT]')
+            face = getContent('[FACE]', '[BODY]')
+            body = getContent('[BODY]', '[CONTENT]')
+            scene = getContent('[SCENE]', '[NARRATION]')
+
+            reply = reply.replace('[END]', '')
+
+            if "[CONTENT]" in reply:
+                reply = reply.split("[CONTENT]")[1].strip()
+            elif "[NARRATION]" in reply:
+                reply = reply.split("[NARRATION]")[1].strip()
             else:
-                self.NARRATION = False
+                # Typically this means that the model didnt return a proper content field
+                reply = "ERROR"
 
-            reply = reply.split("[BODY]")[0].split("[MOOD]")[0]
+            return reply, char, face, body, scene
 
-            for ctx in self.context_words:
-                reply = reply.replace(ctx, "")
 
-            img = self.scene.replace(".png", "")
-            reply = reply.replace("[SCENE] "+img, "")
 
-            return reply
+        def removePlaceholders(self):
+            """remove placeholders in json files"""
+            with open(config.basedir + "/game/assets/prompts/prompt_templates.json", 'r') as f:
+                raw_examples = json.load(f)[f'gpt4_{self.char.lower()}']
+
+            with open(f'{config.basedir}/game/assets/configs/bg_scenes.json', 'r') as f:
+                bg_scenes = json.load(f)
+
+            with open(f'{config.basedir}/game/assets/configs/characters.json', 'r') as f:
+                characters = json.load(f)
+
+            bg_scenes = [s for s in bg_scenes["default"]] + [s for s in bg_scenes["checks"]]
+            emotions = ', '.join([e for e in characters[self.char.title()]['head']])
+            backgrounds = ', '.join(bg_scenes)
+            
+
+            string = raw_examples[0]['content'].replace("<name>", persistent.playername)
+            string = string.replace("<char>", self.char)
+            string = string.replace("<emotions>", emotions)
+            string = string.replace("<backgrounds>", backgrounds)
+
+            string = raw_examples[0]['content'] = string
+            raw_examples[0]['content'] = string
+
+
+            return raw_examples
+
 
 
         def char_speaks(self, reply, emote):
@@ -512,151 +482,75 @@ init python:
 
 
 
-        def ai_response(self, msg, role="user"):
+        def retryPrompt(self, chat_history, reply, current_emotion, current_body):
+            """If the generated response doesnt use the emotions specified in the characters.json list
+            eg. '[FACE] super shy' then remind the ai to only use what's in
+            the list and redo the response
+            """
+            if current_emotion and current_body:
+                if (reply.startswith("[FACE]")) and (current_emotion not in Configs().characters[self.char.title()]["head"]) or ("explain" not in current_body and "relaxed" not in current_body):
+                    print("<<retrying>>")
+                    self.chat_history[f"gpt4_{self.char}"].pop()
+                    return True
+            return False
+
+
+
+        def ai_response(self, userInput):
             """Gets ai generated text based off given prompt"""
             self.rnd = random.randint(1,7)
-            if "(init_end_sim)" in msg:
+            if "(init_end_sim)" in userInput and self.char == "monika":
                 self.update_in_saved_actions("zone", "Zone")
                 self.zone = "Zone"
                 return '...'
 
+            with open(f'{config.basedir}/game/assets/configs/characters.json', 'r') as f:
+                characters = json.load(f)
+
+            with open(f"{config.basedir}/game/assets/prompts/reminder.json", "r") as f:
+                getReminder = json.load(f)
+
+            emotions = ', '.join([e for e in characters[self.char.title()]['head']])
+            reminder = "" if self.retrying == False else getReminder[self.char.lower()]["emotes"].replace("<emotes>", emotions)
+
             # Log user input
-            self.append_to_chat_history(role, msg)
-            
+            examples = self.removePlaceholders()
+            self.append_to_chat_history("user", userInput + reminder)
             response = openai.ChatCompletion.create(
-                model="gpt-3.5-turbo-0125",
-                messages=self.chat_history,
+                model="gpt-4-1106-preview",
+                messages=examples + self.chat_history,
                 temperature=0.6,
                 max_tokens=90
                 )
-            
-            ai_reply = response.choices[0].message.content
+
 
             # Log AI input
-            self.append_to_chat_history('assistant', ai_reply)
+            reply = response = response.choices[0].message.content
+            self.append_to_chat_history('assistant', reply)
+            reply, _, face, body, scene = self.removeKeywords(reply)
 
-            emote = self.control_mood(ai_reply)
-            self.control_scene(ai_reply)
-            final_res = self.remove_context_words(ai_reply)
+
+            # If the AI responds w/ an emotion/body not listed, redo the response
+            global retrycount
+            self.retrying = self.retryPrompt(self.chat_history, response, face, body)
+            if self.retrying:
+                retrycount -= 1
+                print(f"<<retrying2>> | self.retrying: {self.retrying}")
+                print(response)
+                if retrycount <= 0:
+                    self.retrying = False
+                    retrycount = 3
+                else:
+                    return self.ai_response(userInput)
+
+            self.control_mood(face, body)
+            self.control_scene(scene)
+
 
             #TODO Should only run if player has voice enabled
             if self.NARRATION != True:
                 #self.char_speaks(final_res, emote=emote)
                 pass
-            return final_res
+            return reply
 
 
-
-
-
-
-
-
-    #  Copied & Pasted Class from Official Doki Doki game (I am not a psychopath)
-    class ParticleBurst:
-        """Animates the particles in the main menu when the user first
-        launches the game
-        """
-        def __init__(self, theDisplayable, explodeTime=0, numParticles=20, particleTime = 0.500, particleXSpeed = 3, particleYSpeed = 5):
-            self.sm = SpriteManager(update=self.update)
-            
-            self.stars = [ ]
-            self.displayable = theDisplayable
-            self.explodeTime = explodeTime
-            self.numParticles = numParticles
-            self.particleTime = particleTime
-            self.particleXSpeed = particleXSpeed
-            self.particleYSpeed = particleYSpeed
-            self.gravity = 240
-            self.timePassed = 0
-            
-            for i in range(self.numParticles):
-                self.add(self.displayable, 1)
-        
-        def add(self, d, speed):
-            s = self.sm.create(d)
-            speed = random.random()
-            angle = random.random() * 3.14159 * 2
-            xSpeed = speed * math.cos(angle) * self.particleXSpeed
-            ySpeed = speed * math.sin(angle) * self.particleYSpeed - 1
-            s.x = xSpeed * 24
-            s.y = ySpeed * 24
-            pTime = self.particleTime
-            self.stars.append((s, ySpeed, xSpeed, pTime))
-        
-        def update(self, st):
-            sindex=0
-            for s, ySpeed, xSpeed, particleTime in self.stars:
-                if (st < particleTime):
-                    s.x = xSpeed * 120 * (st + .20)
-                    s.y = (ySpeed * 120 * (st + .20) + (self.gravity * st * st))
-                else:
-                    s.destroy()
-                    self.stars.pop(sindex)
-                sindex += 1
-            return 0
-
-    #  Copied & Pasted Class from Official Doki Doki game
-    class AnimatedMask(renpy.Displayable):
-        
-        def __init__(self, child, mask, maskb, oc, op, moving=True, speed=1.0, frequency=1.0, amount=0.5, **properties):
-            super(AnimatedMask, self).__init__(**properties)
-            
-            self.child = renpy.displayable(child)
-            self.mask = renpy.displayable(mask)
-            self.maskb = renpy.displayable(maskb)
-            self.oc = oc
-            self.op = op
-            self.null = None
-            self.size = None
-            self.moving = moving
-            self.speed = speed
-            self.amount = amount
-            self.frequency = frequency
-        
-        def render(self, width, height, st, at):
-            
-            cr = renpy.render(self.child, width, height, st, at)
-            mr = renpy.render(self.mask, width, height, st, at)
-            mb = renpy.Render(width, height)
-            
-            
-            if self.moving:
-                mb.place(self.mask, ((-st * 50) % (width * 2)) - (width * 2), 0)
-                mb.place(self.maskb, -width / 2, 0)
-            else:
-                mb.place(self.mask, 0, 0)
-                mb.place(self.maskb, 0, 0)
-            
-            
-            
-            cw, ch = cr.get_size()
-            mw, mh = mr.get_size()
-            
-            w = min(cw, mw)
-            h = min(ch, mh)
-            size = (w, h)
-            
-            if self.size != size:
-                self.null = Null(w, h)
-            
-            nr = renpy.render(self.null, width, height, st, at)
-            
-            rv = renpy.Render(w, h)
-            
-            rv.operation = renpy.display.render.IMAGEDISSOLVE
-            rv.operation_alpha = 1.0
-            rv.operation_complete = self.oc + math.pow(math.sin(st * self.speed / 8), 64 * self.frequency) * self.amount
-            rv.operation_parameter = self.op
-            
-            rv.blit(mb, (0, 0), focus=False, main=False)
-            rv.blit(nr, (0, 0), focus=False, main=False)
-            rv.blit(cr, (0, 0))
-            
-            renpy.redraw(self, 0)
-            return rv
-
-    def monika_alpha(trans, st, at):
-        trans.alpha = math.pow(math.sin(st / 8), 64) * 1.4
-        return 0
-    

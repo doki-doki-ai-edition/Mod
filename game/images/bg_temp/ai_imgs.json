@@ -1,5 +1,0 @@
-{
-  "status": "error",
-  "message": "Invalid Api Key",
-  "tip": "1. Get API key from below link : \"https://stablediffusionapi.com/settings/api\" 2. Delete api key and create new."
-}

@@ -1,0 +1,150 @@
+{
+    "Monika":{
+        "full_sprites": [
+            "playful frown",
+            "playful smile"
+        ],
+        "head": {
+            "angry": "i.png",
+            "annoyed": "c.png",
+            "blushing": "m.png",
+            "concerned": "c.png",
+            "crying": "o.png",
+            "curious": "c.png",
+            "embarrassed": "l.png",
+            "flirty": "3a.png",
+            "glad": "j.png",
+            "happy": "a.png",
+            "horrified": "g1.png",
+            "nervous": "n.png",
+            "oh": "d.png",
+            "playful frown": "3b.png",
+            "playful smile": "3a.png",
+            "really happy": "b.png",
+            "resolve": "q.png", 
+            "sad": "p.png",
+            "scared": "l.png", 
+            "serious": "h.png", 
+            "shocked": "l.png", 
+            "worried": "g.png"
+        },
+        "left": {
+            "explain": "2l.png",
+            "relaxed": "1l.png"
+        },
+        "right": {
+            "explain": "2r.png",
+            "relaxed": "1r.png"
+        },
+        "none": "mtea.png"
+    },
+
+    "Sayori":{
+        "full_sprites": [
+            "annoyed",
+            "nervous",
+            "pouting"
+        ],
+        "head": {
+            "angry": "j.png",
+            "annoyed": "3c.png",
+            "blushing": "e.png",
+            "concerned": "m.png",
+            "crying": "cry.png",
+            "curious": "b.png",
+            "embarrassed": "p.png",
+            "explaining": "c.png",
+            "excited": "r.png",
+            "flustered": "e.png",
+            "glad": "s.png",
+            "happy": "a.png",
+            "nervous": "3b.png",
+            "pouting": "3d.png",
+            "relieved": "d.png",
+            "sad": "u.png",
+            "smiling": "a.png",
+            "scared": "h.png",
+            "shocked": "m.png",
+            "worried": "g.png"
+        },
+        "left": {
+            "relaxed": "1l.png",
+            "excited": "2l.png"
+        },
+        "right": {
+            "relaxed": "1r.png",
+            "excited": "2r.png"
+        },
+        "none": "mtea.png"
+    },
+
+    "Natsuki":{
+        "full_sprites": [
+            "vomit"
+        ],
+        "head": {
+            "angry": "f.png",
+            "annoyed": "w.png",
+            "blushing": "t.png",
+            "concerned": "m.png",
+            "curious": "k.png",
+            "embarrassed": "v.png",
+            "explaining": "b.png",
+            "flustered": "p.png",
+            "glad": "z.png",
+            "happy": "a.png",
+            "horrified": "scream.png",
+            "nervous": "h.png",
+            "prideful": "y.png",
+            "pouting": "g.png",
+            "sad": "u.png",
+            "smiling": "a.png",
+            "scared": "h.png",
+            "shocked": "p.png",
+            "vomit": "vomit.png",
+            "worried": "m.png"
+        },
+        "left": {
+            "explain": "1l.png",
+            "relaxed": "2l.png"
+        },
+        "right": {
+            "explain": "1r.png",
+            "relaxed": "2r.png"
+        },
+        "none": "mtea.png"
+    },
+
+    "Yuri":{
+        "full_sprites": [],
+        "head": {
+            "angry": "r.png",
+            "annoyed": "g.png",
+            "blushing": "o.png",
+            "concerned": "t.png",
+            "curious": "e.png",
+            "embarrassed": "o.png",
+            "flustered": "n.png",
+            "glad": "d.png",
+            "happy": "b.png",
+            "nervous": "q.png",
+            "really happy": "y5.png",
+            "resolve": "k.png", 
+            "sad": "v.png",
+            "scared": "p.png", 
+            "serious": "l.png",
+            "smiling": "a.png",
+            "shocked": "p.png", 
+            "worried": "t.png"
+        },
+        "left": {
+            "explain": "2l.png",
+            "relaxed": "1l.png"
+        },
+        "right": {
+            "explain": "2r.png",
+            "relaxed": "1r.png"
+        },
+        "none": "mtea.png"
+    }
+}
