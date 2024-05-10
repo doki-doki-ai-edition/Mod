@@ -78,6 +78,10 @@ label nameWorld_label:
 ################################################################################
 
 define monika = Character("Monika", color="#ffffff", window_style="textbox_monika", who_outlines=[ (3, "#77a377") ])
+define sayori = Character("Sayori", color="#ffffff", window_style="textbox_sayori", who_outlines=[ (3, "#7795a3") ])
+define natsuki = Character("Natsuki", color="#ffffff", window_style="textbox_natsuki", who_outlines=[ (3, "#a3779f") ])
+define yuri = Character("Yuri", color="#ffffff", window_style="textbox_yuri", who_outlines=[ (3, "#8f77a3") ])
+
 default choice = None
 
 label AICharacter:
@@ -187,7 +191,15 @@ label AICharacter:
 
             #if convo.NARRATION == False and convo.voice_mode == True:
             #    play sound "audio/vocals/monika.wav"
-            monika "[final_msg]"
+
+            if character_name == "monika":
+                monika "[final_msg]"
+            if character_name == "sayori":
+                sayori "[final_msg]"
+            if character_name == "natsuki":
+                natsuki "[final_msg]"
+            if character_name == "yuri":
+                yuri "[final_msg]"
     return
 
 
