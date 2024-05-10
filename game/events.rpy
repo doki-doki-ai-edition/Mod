@@ -451,7 +451,7 @@ init python:
 
         def removePlaceholders(self):
             """remove placeholders in json files"""
-            with open(config.basedir + "/assets/prompts/prompt_templates.json", 'r') as f:
+            with open(config.basedir + "/game/assets/prompts/prompt_templates.json", 'r') as f:
                 raw_examples = json.load(f)[f'gpt4_{self.char.lower()}']
 
             with open(f'{config.basedir}/game/assets/configs/bg_scenes.json', 'r') as f:
