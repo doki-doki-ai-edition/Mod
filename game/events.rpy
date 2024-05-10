@@ -491,7 +491,7 @@ init python:
 
 
 
-        def retryPrompt(self, reply, current_emotion, current_body):
+        def retryPrompt(self, chat_history, reply, current_emotion, current_body):
             """If the generated response doesnt use the emotions specified in the characters.json list
             eg. '[FACE] super shy' then remind the ai to only use what's in
             the list and redo the response
@@ -541,7 +541,7 @@ init python:
 
             # If the AI responds w/ an emotion/body not listed, redo the response
             global retrycount
-            self.retrying = self.retryPrompt(chat_history, response, face, body)
+            self.retrying = self.retryPrompt(self.chat_history, response, face, body)
             if self.retrying:
                 retrycount -= 1
                 print(f"<<retrying2>> | self.retrying: {self.retrying}")
@@ -552,8 +552,8 @@ init python:
                 else:
                     return self.ai_response(userInput)
 
-            self.control_mood(reply)
-            self.control_scene(reply)
+            self.control_mood(face, body)
+            self.control_scene(scene)
 
 
             #TODO Should only run if player has voice enabled
