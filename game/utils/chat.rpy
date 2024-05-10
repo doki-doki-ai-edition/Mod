@@ -83,7 +83,7 @@ init python:
         def chatImg(self, chat_history, userInput):
 
             state, msg = AIManager(
-                dokiname=self.dokiname,
+                character_name=character_name,
                 path_to_user_dir=self.path_to_user_dir,
                 ).imgConvo(chat_history, userInput)
 
