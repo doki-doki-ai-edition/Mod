@@ -106,7 +106,6 @@ label AICharacter:
 
         $ check = CheckData(character_name=character_name, full_path=path+"/")
         $ memory = check.historyCheck(gamemode="justMonika", chatmode=0) # Adds Freechat Prompt
-        $ check.usernameCheck() # Adds your username to prompt
         $ convo = Convo(character_name=character_name, chat_history=memory, full_path=path+"/")
 
     if convo.ai_art_mode == False:
@@ -238,7 +237,6 @@ label monika_zone:
 
     $ check = CheckData(full_path=path+"/")
     $ memory = check.historyCheck(gamemode="monikaZone", chatmode=0) # Adds Freechat Prompt
-    $ check.usernameCheck() # Adds your username to prompt
     $ convo = Convo(chat_history=memory, full_path=path+"/")
 
     $ wait_time = 5

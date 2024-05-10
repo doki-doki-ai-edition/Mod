@@ -135,28 +135,6 @@ init python:
 
 
 
-        def usernameCheck(self):
-            """
-            Checks if the player has a registered username.
-            If they do then it rewrites the first index of chat_history
-            (aka the prompt template) to include it.
-
-            This will make the character address you by your name if
-            necessary
-            """
-            if persistent.playername != None:
-                try:
-                    prompt_name = self.chat_history[0]["content"].replace("<name>", persistent.playername)
-                    self.chat_history[0]["content"] = prompt_name
-
-                    with open(self.full_path+self.msg_history, "w") as f:
-                        json.dump(self.chat_history, f, indent=2)
-                except IndexError:
-                    return "File Currently Doesn't Exist"
-                return prompt_name
-            return "Username is not defined"
-
-
 
 
     class Convo(CheckData):
@@ -464,6 +442,8 @@ init python:
             emotions = ', '.join([e for e in characters[self.char.title()]['head']])
             backgrounds = ', '.join(bg_scenes)
             
+
+            string = raw_examples[0]['content'].replace("<name>", persistent.playername)
             string = string.replace("<char>", self.char)
             string = string.replace("<emotions>", emotions)
             string = string.replace("<backgrounds>", backgrounds)
