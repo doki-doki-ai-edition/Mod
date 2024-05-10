@@ -133,6 +133,7 @@ label AICharacter:
             $ first_response = False
         elif first_response == True:
             $ user_msg = "{RPT}"
+            $ first_response = False
         elif convo.rnd == 6: # Makes the narration/Character add on to what they were saying
             $ user_msg = "continue"
         else:
