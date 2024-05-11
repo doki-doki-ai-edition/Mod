@@ -13,6 +13,10 @@ init python:
             with open(self.path_to_user_dir + "/metadata.json", 'r') as f:
                 return json.load(f)
 
+        @property
+        def getLastMessage(self):
+            with open(self.path_to_user_dir + "/chathistory.json", 'r') as f:
+                return json.load(f)[-1]["content"]
 
         def updateSceneData(self, key, value):
             with open(self.path_to_user_dir + "/scenedata.json", 'r') as f:
@@ -31,6 +35,8 @@ init python:
                     return json.load(f)[key]
             except TypeError:
                 return None
+
+
 
 
 

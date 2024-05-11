@@ -117,26 +117,29 @@ label AICharacter:
 
     while True:
         $ rnd_continue = renpy.random.randint(1, 6)
+        $ current_char = Data(path_to_user_dir=pathSetup).getSceneData("character")
+
         if resume == True:
             $ user_msg = "continue {remember to never speak as the MC, continue the story.}"
             $ resume = False
-        elif rnd_continue == 6: # Makes the narration/Character add on to what they were saying
+        elif current_char != "" and rnd_continue == 4:
             $ user_msg = "continue"
         else:
             $ user_msg = renpy.input("Enter a message: ")
 
-        if user_msg  == "(init_end_sim)":
-            jump monika_zone
+            if user_msg  == "(init_end_sim)":
+                jump monika_zone
 
 
         $ final_msg = chatSetup.chat(path=pathSetup, userInput=user_msg)
+        $ raw_msg = Data(path_to_user_dir=pathSetup).getLastMessage
 
         $ current_char = Data(path_to_user_dir=pathSetup).getSceneData("character")
         $ current_head = Data(path_to_user_dir=pathSetup).getSceneData("head_sprite")
         $ current_left = Data(path_to_user_dir=pathSetup).getSceneData("left_sprite")
         $ current_right = Data(path_to_user_dir=pathSetup).getSceneData("right_sprite")
 
-        if convo.startswith("[SCENE]"):
+        if raw_msg.startswith("[SCENE]"):
             # Narrator is speaking | Also the reason why I'm not using 1 if statement is because for whatever
             # reason, the cache of the previous img doesn't fully reset & the "zoom" remains the same.
             # The AI bg can only be 1024 x 1024 (max) and to fill the screen I need to use zoom.
