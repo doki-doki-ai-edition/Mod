@@ -106,10 +106,7 @@ label AICharacter:
 
 
     $ current_background = Data(path_to_user_dir=pathSetup).getSceneData("background")
-    $ current_char = Data(path_to_user_dir=pathSetup).getSceneData("character")
-    $ current_head = Data(path_to_user_dir=pathSetup).getSceneData("head_sprite")
-    $ current_left = Data(path_to_user_dir=pathSetup).getSceneData("left_sprite")
-    $ current_right = Data(path_to_user_dir=pathSetup).getSceneData("right_sprite")
+
 
     image _bg:
         "bg/[current_background]"
@@ -133,6 +130,11 @@ label AICharacter:
 
 
         $ final_msg = chatSetup.chat(path=pathSetup, userInput=user_msg)
+
+        $ current_char = Data(path_to_user_dir=pathSetup).getSceneData("character")
+        $ current_head = Data(path_to_user_dir=pathSetup).getSceneData("head_sprite")
+        $ current_left = Data(path_to_user_dir=pathSetup).getSceneData("left_sprite")
+        $ current_right = Data(path_to_user_dir=pathSetup).getSceneData("right_sprite")
 
         if convo.startswith("[SCENE]"):
             # Narrator is speaking | Also the reason why I'm not using 1 if statement is because for whatever
@@ -163,6 +165,11 @@ label AICharacter:
                 zoom 0.80
                 yoffset 40
                 uppies
+
+
+            show head
+            show leftside
+            show rightside
 
 
             #if convo.NARRATION == False and convo.voice_mode == True:

@@ -39,8 +39,6 @@ init python:
             userInput = "{RST}"
 
             full_path = self.tools.createRealm(name_of_realm=self.chat_name, scenedata_default=self.scenedata_default)
-            #chathistory = self.tools.checkFile(chathistory)
-            #return self.chat(userInput=userInput, chathistory=chathistory)
             return full_path
 
 

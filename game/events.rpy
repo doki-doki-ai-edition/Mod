@@ -63,6 +63,7 @@ init python:
             leftside_sprite = char_name["left"]
             rightside_sprite = char_name["right"]
 
+            self.dbase.updateSceneData("character", self.character_name)
 
             for h in head_sprite:
                 if h == face.lower():
