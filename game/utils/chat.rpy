@@ -44,14 +44,12 @@ init python:
 
 
         def chat(self, chat_history, userInput):
-            state, msg = AIManager(
+            msg = AIManager(
                 character_name=self.character_name,
                 path_to_user_dir=self.path_to_user_dir,
                 chat_history=chat_history
                 ).ai_response(userInput)
 
-            if state == False:
-                return "**`ERROR:`** {msg}"
 
             return msg
 
