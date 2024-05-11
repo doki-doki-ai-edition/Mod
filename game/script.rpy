@@ -101,71 +101,65 @@ label AICharacter:
             $ path = "chats/"+persistent.chatFolderName[num]
 
     else:
-        $ setup = chatSetup.setup()
-        $ convo = chatSetup.chat()
+        $ pathSetup = chatSetup.setup()
+        $ convo = chatSetup.chat(path=pathSetup)
 
-    if convo.ai_art_mode == False:
-        image _bg:
-            "bg/[convo.scene]"
-        scene _bg
-    else:
-        image ai_bg:
-            zoom 1.5
-            "bg/[convo.scene]"
-        scene ai_bg
+
+    $ current_background = Data(path_to_user_dir=pathSetup).getSceneData("background")
+    $ current_char = Data(path_to_user_dir=pathSetup).getSceneData("character")
+    $ current_head = Data(path_to_user_dir=pathSetup).getSceneData("head_sprite")
+    $ current_left = Data(path_to_user_dir=pathSetup).getSceneData("left_sprite")
+    $ current_right = Data(path_to_user_dir=pathSetup).getSceneData("right_sprite")
+
+    image _bg:
+        "bg/[current_background]"
+    scene _bg
 
     # placeholder text (Will rely on json data later for when users load a file)
     "..."
 
     while True:
+        $ rnd_continue = renpy.random.randint(1, 6)
         if resume == True:
             $ user_msg = "continue {remember to never speak as the MC, continue the story.}"
             $ resume = False
-        elif convo.rnd == 6: # Makes the narration/Character add on to what they were saying
+        elif rnd_continue == 6: # Makes the narration/Character add on to what they were saying
             $ user_msg = "continue"
         else:
             $ user_msg = renpy.input("Enter a message: ")
-            if convo.rnd == 1:
-                $ user_msg = convo.context_to_progress_story(user_msg)
 
-        $ final_msg = convo.ai_response(user_msg)
-
-        if convo.zone == "True":
-            #jump now_everyone_can_be_happy
-            pass
-        elif convo.zone == "Zone":
+        if user_msg  == "(init_end_sim)":
             jump monika_zone
 
-        if convo.NARRATION:
+
+        $ final_msg = chatSetup.chat(path=pathSetup, userInput=user_msg)
+
+        if convo.startswith("[SCENE]"):
             # Narrator is speaking | Also the reason why I'm not using 1 if statement is because for whatever
             # reason, the cache of the previous img doesn't fully reset & the "zoom" remains the same.
             # The AI bg can only be 1024 x 1024 (max) and to fill the screen I need to use zoom.
             # I could import Pillow and resize it that way but installing it isnt working atm.
-            if convo.ai_art_mode == False:
-                image _bg:
-                    "bg/[convo.scene]"
-                scene _bg
-            else:
-                image ai_bg:
-                    "bg/[convo.scene]"
-                    zoom 1.5
-                scene ai_bg
+
+            image _bg:
+                "bg/[current_background]"
+            scene _bg
+
 
             "[final_msg]"
         else:
             # Char is speaking
             image head:
-                "images/[convo.char]/[convo.head_sprite]"
+                "images/[current_char]/[current_head]"
                 zoom 0.80
                 yoffset 40
                 uppies
             image leftside:
-                "images/[convo.char]/[convo.leftside_sprite]"
+                "images/[current_char]/[current_left]"
                 zoom 0.80
                 yoffset 40
                 uppies
             image rightside:
-                "images/[convo.char]/[convo.rightside_sprite]"
+                "images/[current_char]/[current_right]"
                 zoom 0.80
                 yoffset 40
                 uppies
@@ -189,65 +183,7 @@ label AICharacter:
 
 
 label monika_zone:
-    $ show_quick_menu = False
-    scene white
-    play music "audio/bgm/monika-start.ogg" noloop
-    $ renpy.pause(0.5, hard=True)
-    show splash_glitch2 with Dissolve(0.5, alpha=True)
-    $ renpy.pause(2.0, hard=True)
-    hide splash_glitch2 with Dissolve(0.5, alpha=True)
-    #scene black
-    stop music
 
-    show mask_2
-    show mask_3
-    #show room_mask as rm:
-        #size (320,180)
-        #pos (30,200)
-    #show room_mask2 as rm2:
-        #size (320,180)
-        #pos (935,200)
-    show monika_bg
-    show monika_bg_highlight
-    play music m1
-
-
-    $ show_quick_menu = True
-    #scene black with dissolve
-
-    $ chatFolderName = "monikaZone"
-
-    $ user_chats = ManageChat_Folders("monika")
-
-    # "num" is a default value set to None. If a number is
-    # assigned to it, that means the user is opening an old file
-    if num:
-        if num >= 0:
-            $ path = "chats/"+persistent.chatFolderName[num]
-    else:
-        $ path = user_chats.create_folder(name=chatFolderName)
-
-        $ user_chats.create_chat_history()
-        $ user_chats.create_world_history()
-
-    $ check = CheckData(full_path=path+"/")
-    $ memory = check.historyCheck(gamemode="monikaZone", chatmode=0) # Adds Freechat Prompt
-    $ convo = Convo(chat_history=memory, full_path=path+"/")
-
-    $ wait_time = 5
-    while True:
-        $ wait_time -= 1
-        if wait_time > 0: # Determines if you can respond yet
-            $ user_msg = "continue {continue the character monologue here and remember to never speak as me}"
-
-        else:
-            $ user_msg = renpy.input("Enter a message: ")
-            $ wait_time = 5
-        
-        $ final_msg = f"{convo.ai_response(user_msg)}"
-        if convo.NARRATION == False and convo.voice_mode == True:
-            play sound "audio/vocals/monika.wav"
-        monika "[final_msg]"
     return
 
 
