@@ -91,17 +91,17 @@ label AICharacter:
     scene black with dissolve
 
     $ user_chats = ManageChat_Folders(character_name=character_name)
-    $ load = None # Used to check if a file has been loaded
+    $ resume = None # Used to check if a file has been loaded
 
     # "num" is a default value set to None. If a number is
     # assigned to it, that means the user is opening an old file
     if num:
         if num >= 0:
-            $ load = True
+            $ resume = True
             $ path = "chats/"+persistent.chatFolderName[num]
             $ check = CheckData(character_name=character_name, full_path=path+"/")
-            $ memory = check.historyCheck(gamemode="justMonika", chatmode=0, load=True)
-            $ convo = Convo(character_name=character_name, chat_history=memory, full_path=path+"/", load=True)
+            $ memory = check.historyCheck(gamemode="justMonika", chatmode=0, resume=True)
+            $ convo = Convo(character_name=character_name, chat_history=memory, full_path=path+"/", resume=True)
     else:
         $ path = user_chats.create_folder(name=chatFolderName)
 
@@ -127,9 +127,9 @@ label AICharacter:
     "..."
 
     while True:
-        if load == True:
+        if resume == True:
             $ user_msg = "continue {remember to never speak as the MC, continue the story.}"
-            $ load = False
+            $ resume = False
             $ first_response = False
         elif first_response == True:
             $ user_msg = "{RPT}"

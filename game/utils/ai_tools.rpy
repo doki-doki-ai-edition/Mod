@@ -4,9 +4,6 @@ init python:
 
 
 
-    THIS_PATH = os.path.dirname(os.path.realpath(__file__))
-    PATH = os.path.dirname(THIS_PATH)
-
     class AIGen:
 
         def __init__(self):

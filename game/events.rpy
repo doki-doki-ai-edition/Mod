@@ -137,8 +137,7 @@ init python:
 
 
     class AIManager():
-        def __init__(self, character_name, chat_history, full_path, load=False):
-            super().__init__(character_name, full_path)
+        def __init__(self, character_name, chat_history, full_path, resume=False):
             self.full_path = full_path
             self.chat_history = chat_history
             self.NARRATION = False
@@ -152,7 +151,7 @@ init python:
             self.voice_mode = False
             self.ai_art_mode = False
             self.rnd = random.randint(1,7)
-            self.load = load
+            self.resume = resume
             self.retrying = False
 
         @staticmethod
@@ -189,7 +188,7 @@ init python:
         def append_to_chat_history(self, role, msg):
             """Stores updated history of ai and user"""
             self.chat_history.append({"role": role, "content": msg})
-            if not self.load:
+            if not self.resume:
                 with open(f"{self.full_path}/{self.msg_history}", "w") as f:
                     json.dump(self.chat_history, f, indent=2)
                 return
@@ -200,7 +199,7 @@ init python:
         def update_in_saved_actions(self, data, action):
             """Stores mood, visible chars, music in the current scene"""
             self.saved_data[data] = action
-            if not self.load:
+            if not self.resume:
                 with open(f"{self.full_path}/{self.saved_actions}", "w") as f:
                     json.dump(self.saved_data, f, indent=2)
                 return
