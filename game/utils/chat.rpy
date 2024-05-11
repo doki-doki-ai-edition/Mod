@@ -21,9 +21,9 @@ init python:
                                 "music": "none"
                                 "background": "",
                                 "character": "",
-                                "head": "",
-                                "left": "",
-                                "right": "",
+                                "head_sprite": "",
+                                "left_sprite": "",
+                                "right_sprite": "",
                                 "zone": ""
                             }
 

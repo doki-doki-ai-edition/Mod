@@ -98,23 +98,23 @@ init python:
                     self.head_sprite = raw_chars[char_name]['head']
 
                     if h in full_sprite_emotions:
-                        self.update_in_saved_actions("leftside_sprite", raw_chars[char_name]["none"])
-                        self.update_in_saved_actions("rightside_sprite", raw_chars[char_name]["none"])
+                        self.update_in_saved_actions("left_sprite", raw_chars[char_name]["none"])
+                        self.update_in_saved_actions("right_sprite", raw_chars[char_name]["none"])
                         return
 
             if head_sprite in full_sprite_emotions:
-                self.update_in_saved_actions("leftside_sprite", raw_chars[char_name]["none"])
-                self.update_in_saved_actions("rightside_sprite", raw_chars[char_name]["none"])
+                self.update_in_saved_actions("left_sprite", raw_chars[char_name]["none"])
+                self.update_in_saved_actions("right_sprite", raw_chars[char_name]["none"])
                 return
 
 
             for l in leftside_sprite:
                 if body == body.lower():
-                    self.update_in_saved_actions("leftside_sprite", raw_chars[char_name]["none"])
+                    self.update_in_saved_actions("left_sprite", raw_chars[char_name]["none"])
 
             for rr in rightside_sprite:
                 if rr == body.lower():
-                    self.update_in_saved_actions("rightside_sprite", raw_chars[char_name]["none"])
+                    self.update_in_saved_actions("right_sprite", raw_chars[char_name]["none"])
 
 
 
