@@ -237,13 +237,6 @@ label splashscreen:
     return
 
 
-label reset_LLM:
-    $ persistent.chatModel = None
-    $ persistent.chatToken = None
-    jump ai_mod_notice
-    return
-
-
 label ai_mod_notice:
     scene tos
     return
