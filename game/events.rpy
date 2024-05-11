@@ -141,15 +141,12 @@ init python:
             self.full_path = full_path
             self.chat_history = chat_history
             self.NARRATION = False
-            self.options = []
             self.scene = self.saved_data["background"]
             self.char = self.saved_data["character"]
             self.head_sprite = self.saved_data["head_sprite"]
             self.leftside_sprite = self.saved_data["leftside_sprite"]
             self.rightside_sprite = self.saved_data["rightside_sprite"]
             self.zone = self.saved_data["zone"]
-            self.voice_mode = False
-            self.ai_art_mode = False
             self.rnd = random.randint(1,7)
             self.resume = resume
             self.retrying = False
@@ -170,15 +167,8 @@ init python:
 
             return msg + context
 
-        @staticmethod
-        def enforce_static_emotes(msg):
-            """The AI will sometimes get quirky and use unlisted emotions for
-            the chars, this is to help combat that"""
-            with open(f"{config.basedir}/game/assets/prompts/static_emotes.json") as f:
-                emote_reminder = json.load(f)
-            return msg + emote_reminder['emotes']
 
-    
+
         def get_char_name(self, aireply):
             if "[CHAR]" in aireply:
                 pass    

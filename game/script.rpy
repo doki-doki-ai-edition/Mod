@@ -140,8 +140,6 @@ label AICharacter:
             $ user_msg = renpy.input("Enter a message: ")
             if convo.rnd == 1:
                 $ user_msg = convo.context_to_progress_story(user_msg)
-            if convo.rnd == 2:
-                $ user_msg = convo.enforce_static_emotes(user_msg)
 
         $ final_msg = convo.ai_response(user_msg)
 
