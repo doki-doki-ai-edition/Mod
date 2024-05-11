@@ -81,7 +81,6 @@ init python:
 
 
         def chatImg(self, chat_history, userInput):
-
             state, msg = AIManager(
                 character_name=self.character_name,
                 path_to_user_dir=self.path_to_user_dir,

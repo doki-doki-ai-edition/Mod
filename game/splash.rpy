@@ -246,68 +246,6 @@ label reset_LLM:
 
 label ai_mod_notice:
     scene tos
-    if persistent.chatModel == None:
-        "IMPORTANT NOTICE: Paying for OpenAI's API is not required to play this mod. You're able to use any API/LLM model you want 100 percent free (You just need to know what you're doing but instructions for those not as tech savvy will be coming out soon)"
-        "None of the money, tokens, messages etc. are recieved by me or any entity related to me in accordance to DDLC's IP Guidelines"
-        "OpenAI is currently the only model built-in in for your own convinience."
-        "I am not sponsered/partnered with openAI or any API contained in this project and make no profit from this."
-        "Because the built-in A.I. models arent locally hosted, you can follow the steps listed on the github page. https://github.com/syntax-z/DOKI-DOKI-AI-EDITION"
-        "If you aren't able to do that at this moment, you can skip all these steps and change them in the settings later."
-
-        menu:
-            "By playing [config.name] you agree that you understand that paying for any API as an extention to this mod is your optional choice and is not at all required to play."
-            "I agree.":
-                pass
-
-        "Which Language model would you like to use?"
-        "1 is for 'chatGPT' (recommended)"
-        $ chatModel = renpy.input("Which AI model would you like to use? (enter '1')", "1", allow="1").strip()
-        if chatModel == "1":
-            "You chose chatGPT!"
-        #elif chatModel == "2":
-        #    "You choose Bard!"
-        else:
-            "Not a valid chat model, change this in the settings once you get the chance!"
-
-        # Ensures that if the user exited out of the game before completing the steps, they can finish
-        # when they reload
-        $ persistent.chatModel = chatModel
-        $ renpy.save_persistent()
-
-    if persistent.chatToken == None:
-        "Do NOT share any of your tokens to ANYONE. Your tokens will be used here strictly for generating responses."
-        "If someone you do not trust gets it, they can send multiple request to the API, costing you money."
-        "If you think your token has somehow been exposed, you can reset it on the API's official page."
-        $ chatToken = renpy.input("Enter your openAI (chatGPT) token: ").strip()
-
-        "If you misclicked or entered the wrong token by accident, you can always change it in the settings."
-
-        $ persistent.chatToken = chatToken
-        $ renpy.save_persistent()
-
-    if persistent.imgModel == None:
-        "Which Image generation model would you like to use?"
-        "1 is for 'getimgai' (recommended) and 2 is for 'stablediffusionapi' (You can tweak these later in the settings)"
-        $ imgModel = renpy.input("Which Image generation model would you like to use?(1 or 2)", "1", allow="12").strip()
-        if imgModel == "1":
-            "You chose getimgai!"
-        elif imgModel == "2":
-            "You choose stablediffusionapi!"
-        else:
-            "Not a valid image model, change this in the settings once you get the chance!"
-
-        "(reminder) Because the A.I. models arent locally hosted, please follow the steps listed on the github page. https://github.com/syntax-z/DOKI-DOKI-AI-EDITION"
-        "(reminder) If you aren't able to do that at this moment, you can skip the next step and change them in the settings later."
-
-        $ persistent.imgModel = imgModel
-        $ renpy.save_persistent()
-
-    if persistent.imgToken == None:
-        $ imgToken = renpy.input("Enter your image generation token: ").strip()
-        "If you misclicked or entered the wrong token by accident, you can always change it in the settings."
-        $ persistent.imgToken = imgToken
-        $ renpy.save_persistent()
-
     return
 
 
