@@ -36,9 +36,7 @@ init python:
 
 
         def setup(self):
-            chat_history = {
-                self.aimodel: []
-            }
+            chat_history = []
 
             # If the "chats" folder doesn't exist, create it.
             if not os.path.exists(self.path_to_user_dir):
@@ -49,7 +47,7 @@ init python:
             self.path_to_user_dir = self.path_to_user_dir + f"/{chat_name}"
             self.createRealm()
             chat_history = Tools(self.path_to_user_dir).checkFile(chat_history)
-            return self.chatImg(userInput=userInput, chat_history=chat_history)
+            return self.chat(userInput=userInput, chat_history=chat_history)
 
 
 
@@ -80,11 +78,12 @@ init python:
 
 
 
-        def chatImg(self, chat_history, userInput):
+        def chat(self, chat_history, userInput):
             state, msg = AIManager(
                 character_name=self.character_name,
                 path_to_user_dir=self.path_to_user_dir,
-                ).imgConvo(chat_history, userInput)
+                chat_history=chat_history
+                ).ai_response(userInput)
 
             if state == False:
                 return "**`ERROR:`** {msg}"
@@ -105,6 +104,6 @@ init python:
                     return chat_history
             except FileNotFoundError:
                 with open(self.path_to_user_dir + f"/chathistory.json", 'w') as f:
-                    json.dump(chat_history, f, indent=2)
+                    json.dump([], f, indent=2)
             return chat_history
 
