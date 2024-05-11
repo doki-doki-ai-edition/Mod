@@ -67,6 +67,7 @@ init python:
             with open(f"{self.full_path}/chathistory.json", "w") as f:
                 json.dump(self.chat_history, f, indent=2)
 
+
         def update_in_saved_actions(self, data, action):
             """Stores mood, visible chars, music in the current scene"""
             self.saved_data[data] = action
@@ -251,8 +252,6 @@ init python:
             self.retrying = self.retryPrompt(self.chat_history, response, face, body)
             if self.retrying:
                 retrycount -= 1
-                print(f"<<retrying2>> | self.retrying: {self.retrying}")
-                print(response)
                 if retrycount <= 0:
                     self.retrying = False
                     retrycount = 3

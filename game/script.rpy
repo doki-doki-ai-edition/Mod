@@ -99,18 +99,10 @@ label AICharacter:
         if num >= 0:
             $ resume = True
             $ path = "chats/"+persistent.chatFolderName[num]
-            $ check = CheckData(character_name=character_name, full_path=path+"/")
-            $ memory = check.historyCheck(gamemode="justMonika", chatmode=0, resume=True)
-            $ convo = Convo(character_name=character_name, chat_history=memory, full_path=path+"/", resume=True)
+
     else:
-        $ setup = user_chats.create_folder(name=chatFolderName)
-
-        $ user_chats.create_chat_history()
-        $ user_chats.create_world_history()
-
-        $ check = CheckData(character_name=character_name, full_path=path+"/")
-        $ memory = check.historyCheck(gamemode="justMonika", chatmode=0) # Adds Freechat Prompt
-        $ convo = Convo(character_name=character_name, chat_history=memory, full_path=path+"/")
+        $ setup = chatSetup.setup()
+        $ convo = chatSetup.chat()
 
     if convo.ai_art_mode == False:
         image _bg:
@@ -122,7 +114,6 @@ label AICharacter:
             "bg/[convo.scene]"
         scene ai_bg
 
-    $ first_response = True
     # placeholder text (Will rely on json data later for when users load a file)
     "..."
 
@@ -130,10 +121,6 @@ label AICharacter:
         if resume == True:
             $ user_msg = "continue {remember to never speak as the MC, continue the story.}"
             $ resume = False
-            $ first_response = False
-        elif first_response == True:
-            $ user_msg = "{RPT}"
-            $ first_response = False
         elif convo.rnd == 6: # Makes the narration/Character add on to what they were saying
             $ user_msg = "continue"
         else:
@@ -183,10 +170,6 @@ label AICharacter:
                 yoffset 40
                 uppies
 
-            if convo.scene != "coffee.jpg":
-                show head
-                show leftside
-                show rightside
 
             #if convo.NARRATION == False and convo.voice_mode == True:
             #    play sound "audio/vocals/monika.wav"

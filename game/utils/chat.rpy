@@ -30,7 +30,7 @@ init python:
 
 
         def setup(self):
-            chat_history = []
+            chathistory = []
 
             # If the "chats" folder doesn't exist, create it.
             if not os.path.exists(self.path_to_user_dir):
@@ -39,15 +39,15 @@ init python:
             userInput = "{RST}"
 
             self.tools.createRealm(name_of_realm=chat_name)
-            chat_history = self.tools.checkFile(chat_history)
-            return self.chat(userInput=userInput, chat_history=chat_history)
+            chathistory = self.tools.checkFile(chathistory)
+            #return self.chat(userInput=userInput, chathistory=chathistory)
 
 
-        def chat(self, chat_history, userInput):
+        def chat(self, chathistory=[], userInput="{RST}"):
             msg = AIManager(
                 character_name=self.character_name,
                 path_to_user_dir=self.path_to_user_dir,
-                chat_history=chat_history
+                chat_history=chathistory
                 ).ai_response(userInput)
 
 
