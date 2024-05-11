@@ -11,10 +11,6 @@ init python:
             self.chat_name = chat_name
             self.character_name = character_name
             self.path_to_user_dir = f"{config.basedir}/chats/"
-            self.aiManager = AIManager(
-                character_name=self.character_name,
-                path_to_user_dir=self.path_to_user_dir
-                )
             self.tools = Tools(self.path_to_user_dir)
             self.scenedata_default = {
                                 "gamemode": "none",
@@ -43,7 +39,7 @@ init python:
             userInput = "{RST}"
 
             self.tools.createRealm(name_of_realm=chat_name)
-            chat_history = Tools(path_to_user_dir=f"{config.basedir}/chats/").checkFile(chat_history)
+            chat_history = self.tools.checkFile(chat_history)
             return self.chat(userInput=userInput, chat_history=chat_history)
 
 

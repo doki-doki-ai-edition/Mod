@@ -90,7 +90,7 @@ label AICharacter:
     $ custom_quick_menu = True
     scene black with dissolve
 
-    $ user_chats = ManageChat_Folders(character_name=character_name)
+    $ chatSetup = SetupChat(chat_name=chatFolderName, character_name=character_name)
     $ resume = None # Used to check if a file has been loaded
 
     # "num" is a default value set to None. If a number is
@@ -103,7 +103,7 @@ label AICharacter:
             $ memory = check.historyCheck(gamemode="justMonika", chatmode=0, resume=True)
             $ convo = Convo(character_name=character_name, chat_history=memory, full_path=path+"/", resume=True)
     else:
-        $ path = user_chats.create_folder(name=chatFolderName)
+        $ setup = user_chats.create_folder(name=chatFolderName)
 
         $ user_chats.create_chat_history()
         $ user_chats.create_world_history()
