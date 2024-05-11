@@ -26,9 +26,7 @@ init python:
                                 "right": "",
                                 "zone": ""
                             }
-            self.metadata_default = {
-                "chats": []
-            }
+
             with open(f"{config.basedir}/game/assets/prompts/prompt_templates.json") as f:
                 self.prompt_template = json.load(f)
 
@@ -44,38 +42,9 @@ init python:
 
             userInput = "{RST}"
 
-            self.path_to_user_dir = self.path_to_user_dir + f"/{chat_name}"
-            self.createRealm()
-            chat_history = Tools(self.path_to_user_dir).checkFile(chat_history)
+            self.tools.createRealm(name_of_realm=chat_name)
+            chat_history = Tools(path_to_user_dir=f"{config.basedir}/chats/").checkFile(chat_history)
             return self.chat(userInput=userInput, chat_history=chat_history)
-
-
-
-
-        def createRealm(self):
-            with open(self.path_to_user_dir + f"/scenedata.json", 'w') as f:
-                json.dump(self.scenedata_default, f, indent=2)
-
-            metadata_path = f"{config.basedir}/chats/metadata.json"
-            if not os.path.exists(metadata_path):
-                with open(metadata_path, 'w') as f:
-                    json.dump(self.metadata_default, f, indent=2)
-
-            with open(metadata_path, 'r') as f:
-                metadata = json.load(f)
-
-            metadata["chats"].append(
-                {
-                    "name": self.chat_name,
-                    "note": "-",
-                    "character": "",
-                    "gamemode": "none"
-                }
-            )
-
-            with open(metadata_path, 'w') as f:
-                json.dump(metadata, f, indent=2)
-
 
 
         def chat(self, chat_history, userInput):
@@ -107,3 +76,52 @@ init python:
                     json.dump([], f, indent=2)
             return chat_history
 
+
+
+
+        def createRealm(self, name_of_realm):
+            """Creates specific folder in `chats` to store all
+            realms.
+            """
+
+            path = self.path_to_user_dir + name_of_realm
+            full_path = ""
+
+            i = 1
+            while True:
+                full_path = f"{path}_{i}"
+                if not os.path.exists(full_path):
+                    os.makedirs(full_path, mode=0o777)
+                    break
+                else:
+                    i += 1
+
+
+            with open(full_path + "/scenedata.json", 'w') as f:
+                json.dump(self.scenedata_default, f, indent=2)
+
+
+
+            # Metadata for chats
+            metadata_default = {
+                "chats": []
+            }
+            metadata_path = f"{config.basedir}/chats/metadata.json"
+            if not os.path.exists(metadata_path):
+                with open(metadata_path, 'w') as f:
+                    json.dump(self.metadata_default, f, indent=2)
+
+            with open(metadata_path, 'r') as f:
+                metadata = json.load(f)
+
+            metadata["chats"].append(
+                {
+                    "name": self.chat_name,
+                    "note": "-",
+                    "character": "",
+                    "gamemode": "none"
+                }
+            )
+
+            with open(metadata_path, 'w') as f:
+                json.dump(metadata, f, indent=2)
