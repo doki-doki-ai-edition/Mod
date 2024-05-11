@@ -197,40 +197,6 @@ init python:
 
 
 
-        def char_speaks(self, reply, emote):
-            """Convert character's text into vocals"""
-            url = "https://app.coqui.ai/api/v2/samples/from-prompt/"
-            payload = {
-                "prompt": "An 18 year old girl with a sweet voice",
-                "emotion": emote,
-                "speed": 1,
-                "text": reply
-            }
-            headers = {
-                "accept": "application/json",
-                "content-type": "application/json",
-                "authorization": vocal_token
-            }
-
-            response = requests.post(url, json=payload, headers=headers)
-            if response.status_code == 201 or response.status_code == 200:
-                self.voice_mode = True
-                response_data = json.loads(response.text)
-                with open(config.basedir +"/game/audio/vocals/aud.json", "w") as f:
-                    json.dump(response_data, f, indent=2)
-                with open(config.basedir +"/game/audio/vocals/aud.json", "r") as f:
-                    aud = json.load(f)
-
-                url = aud["audio_url"]
-                response = requests.get(url)
-
-                with open(config.basedir +"/game/audio/vocals/monika.wav", "wb") as f:
-                    f.write(response.content)
-            else:
-                self.voice_mode = False
-            return True
-
-
 
         def retryPrompt(self, chat_history, reply, current_emotion, current_body):
             """If the generated response doesnt use the emotions specified in the characters.json list
