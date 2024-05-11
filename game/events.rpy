@@ -49,6 +49,8 @@ init python:
 
 
         def get_char_name(self, aireply):
+            # WIP method that should be used when multiple
+            # characters are speaking
             if "[CHAR]" in aireply:
                 pass    
             return self.char
@@ -58,22 +60,22 @@ init python:
             """Stores updated history of ai and user"""
             self.chat_history.append({"role": role, "content": msg})
             if not self.resume:
-                with open(f"{self.full_path}/{self.msg_history}", "w") as f:
+                with open(f"{self.full_path}/chathistory.json", "w") as f:
                     json.dump(self.chat_history, f, indent=2)
                 return
 
-            with open(f"{config.basedir}/{self.full_path}/{self.msg_history}", "w") as f:
+            with open(f"{self.full_path}/chathistory.json", "w") as f:
                 json.dump(self.chat_history, f, indent=2)
 
         def update_in_saved_actions(self, data, action):
             """Stores mood, visible chars, music in the current scene"""
             self.saved_data[data] = action
             if not self.resume:
-                with open(f"{self.full_path}/{self.saved_actions}", "w") as f:
+                with open(f"{self.full_path}/scenedata.json", "w") as f:
                     json.dump(self.saved_data, f, indent=2)
                 return
 
-            with open(f"{config.basedir}/{self.full_path}/{self.saved_actions}", "w") as f:
+            with open(f"{self.full_path}/scenedata.json", "w") as f:
                 json.dump(self.saved_data, f, indent=2)
 
 
