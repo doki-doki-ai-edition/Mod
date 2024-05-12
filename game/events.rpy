@@ -1,6 +1,5 @@
 init python:
     import json
-    import openai
     import os
     import random
     import requests
@@ -167,10 +166,21 @@ init python:
             if current_emotion and current_body:
                 if (reply.startswith("[FACE]")) and (current_emotion not in Configs().characters[self.character_name.title()]["head"]) or ("explain" not in current_body and "relaxed" not in current_body):
                     print("<<retrying>>")
-                    self.chathistory[f"gpt4_{self.character_name}"].pop()
+                    self.chathistory.pop()
                     return True
             return False
 
+
+
+        def checkForError(self, reply):
+            """If An error happened with the API, return the Error"""
+            try:
+                if reply[0] == False:
+                    false_return = reply[0]
+                    error_message = reply[1]
+                    return false_return, error_message
+            except TypeError:
+                return False
 
 
         def ai_response(self, userInput):
@@ -190,10 +200,14 @@ init python:
             response = AIGen().getGPT(prompt=contextAndUserMsg)
 
 
+            # If An error happened with the API, return the Error
+            check_error = self.checkForError(response)
+            if check_error:
+                return check_error[1]
+
             # Log AI input
-            reply = response = response.choices[0].message.content
             self.chathistory.append({"role": "assistant", "content": response})
-            reply, _, face, body, scene = self.removeKeywords(reply)
+            reply, _, face, body, scene = self.removeKeywords(response)
 
 
             # If the AI responds w/ an emotion/body not listed, redo the response

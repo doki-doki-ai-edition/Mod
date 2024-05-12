@@ -151,6 +151,8 @@ label AICharacter:
 
 
             "[final_msg]"
+        elif final_msg.startswith("<Error>"):
+            show screen error_popup(message=final_msg)
         else:
             # Char is speaking
             image head:

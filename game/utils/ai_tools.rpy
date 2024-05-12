@@ -7,16 +7,14 @@ init python:
     class AIGen:
 
         def __init__(self):
-            self.tokens = self.Configs().config
-
-
+            self.tokens = Configs().config
 
 
         def getGPT(self, prompt):
             url = "https://api.openai.com/v1/chat/completions"
             headers = {
                 "Content-Type": "application/json",
-                "Authorization": f"Bearer {self.tokens["gptToken"]}"
+                "Authorization": f"Bearer {self.tokens['gptToken']}"
             }
             payload = {
                 "model": "gpt-4-1106-preview", # gpt-4-1106-preview, gpt-4-turbo, gpt-4-turbo-2024-04-09, gpt-3.5-turbo-1106, gpt-3.5-turbo-16k
@@ -34,7 +32,7 @@ init python:
 
             except requests.exceptions.RequestException as e:
                 print(f"Error making request: {e}")
-                return False, f"Error: {e}"
+                return False, f"<Error> {e}"
 
 
 

@@ -1769,6 +1769,38 @@ screen info_seed_popup(message, ok_action):
 
 
 
+screen error_popup(message):
+    modal True
+    zorder 200
+
+    style_prefix "confirm"
+
+    add "gui/overlay/confirm.png"
+    key "K_RETURN" action Play("sound", gui.activate_sound)
+
+    frame:
+
+        has vbox:
+            xalign .5
+            yalign .5
+            spacing 30
+
+        label _("ERROR"):
+            style "confirm_prompt"
+            xalign 0.5
+
+        label _(message):
+            style "confirm_prompt"
+
+
+        hbox:
+            xalign 0.5
+            spacing 100
+
+            textbutton _("OK") action Hide("error_popup")
+
+
+
 ################################################################################
 ## Characters
 ################################################################################
