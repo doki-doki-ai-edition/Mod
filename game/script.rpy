@@ -52,6 +52,12 @@ label gamemode_label:
     call screen gamemode_screen
     return
 
+label apikey_label:
+    $ apikey = renpy.input("Enter API Key", f"{persistent.chatToken}").strip()
+    $ persistent.chatToken = apikey
+    $ renpy.save_persistent()
+    return
+
 
 label nameWorld_label:
     scene theme
@@ -85,7 +91,7 @@ define yuri = Character("Yuri", color="#ffffff", window_style="textbox_yuri", wh
 default choice = None
 
 label AICharacter:
-    $ tokenSetter.set_token_persist()
+    $ tokenSetter.set_token()
     stop music
     $ custom_quick_menu = True
     scene black with dissolve

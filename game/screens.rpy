@@ -1248,7 +1248,7 @@ screen preferences():
                 vbox:
                     textbutton _("Model Name") action Show(screen="model_name_input", message="Enter a model name", ok_action=Function(FinishEnterModelName))
                 vbox:
-                    textbutton _("API Key") action Show(screen="APIKey_name_input", message="Enter your API Key", ok_action=Function(FinishEnterAPIKey))
+                    textbutton _("API Key") action Jump("apikey_label")
                 vbox:
                     textbutton _("Model Config") action ShowMenu("llm_model_config_screen")
 
