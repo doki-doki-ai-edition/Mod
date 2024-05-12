@@ -138,6 +138,7 @@ label AICharacter:
         $ current_head = Data(path_to_user_dir=pathSetup).getSceneData("head_sprite")
         $ current_left = Data(path_to_user_dir=pathSetup).getSceneData("left_sprite")
         $ current_right = Data(path_to_user_dir=pathSetup).getSceneData("right_sprite")
+        $ current_background = Data(path_to_user_dir=pathSetup).getSceneData("background")
 
         if raw_msg.startswith("[SCENE]"):
             # Narrator is speaking | Also the reason why I'm not using 1 if statement is because for whatever
