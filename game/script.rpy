@@ -3,46 +3,24 @@
 
 label start:
 
-    if persistent.freedom:
-        init python:
-            config.has_autosave = False
-            config.has_quicksave = False
-            config.autosave_on_quit = False
-            config.autosave_on_choice = False
+    init python:
+        config.has_autosave = False
+        config.has_quicksave = False
+        config.autosave_on_quit = False
+        config.autosave_on_choice = False
 
-        $ input_popup_gui = True
-        if num: # Avoid NoneType error
-            if num >=0:
-                jump AICharacter
-                return
+    $ input_popup_gui = True
+    if num: # Avoid NoneType error
+        if num >=0:
+            jump AICharacter
+            return
 
-        stop music fadeout 0.5
+    stop music fadeout 0.5
 
-        scene theme with dissolve
-        call screen chatmode_screen
-    else:
-        $ chapter = 0
+    scene theme with dissolve
+    call screen chatmode_screen
 
-
-        $ _dismiss_pause = config.developer
-
-
-        $ s_name = "???"
-        $ m_name = "Girl 3"
-        $ n_name = "Girl 2"
-        $ y_name = "Girl 1"
-
-        $ quick_menu = True
-        $ style.say_dialogue = style.normal
-        $ in_sayori_kill = None
-        $ allow_skipping = True
-        $ config.allow_skipping = True
-
-
-        if persistent.playthrough == 0:
-            $ chapter = 0
-            call ch0_main from _call_ch0_main
-        return
+    return
 
 
 

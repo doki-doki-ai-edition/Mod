@@ -1840,7 +1840,7 @@ screen chatmode_screen():
         hover_sound "audio/gui/sfx/hover.ogg"
         activate_sound "audio/gui/sfx/select.ogg"
         action [SetVariable("chatmode_num", 0), Jump("gamemode_label")]
-        
+
 
     imagebutton:
         xanchor 0.5
