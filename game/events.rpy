@@ -175,7 +175,6 @@ init python:
 
         def ai_response(self, userInput):
             """Gets ai generated text based off given prompt"""
-            self.rnd = random.randint(1,7)
             if "(init_end_sim)" in userInput and self.character_name == "monika":
                 self.dbase.updateSceneData("zone", "zone")
                 return '...'
@@ -186,12 +185,9 @@ init python:
             # Log user input
             examples = self.removePlaceholders()
             self.chathistory.append({"role": "user", "content": userInput + reminder})
-            response = openai.ChatCompletion.create(
-                model="gpt-4-1106-preview",
-                messages=examples + self.chathistory,
-                temperature=0.6,
-                max_tokens=90
-                )
+
+            contextAndUserMsg = examples + self.chathistory
+            response = AIGen().getGPT(prompt=contextAndUserMsg)
 
 
             # Log AI input

@@ -1,21 +1,42 @@
 init python:
     import os
     import random
-
+    import requests
 
 
     class AIGen:
 
         def __init__(self):
-            self.config = ""
-            self.openai_client = ""
-            self.groq_client = ""
+            self.tokens = self.Configs().config
 
 
 
 
         def getGPT(self, prompt):
-            pass
+            url = "https://api.openai.com/v1/chat/completions"
+            headers = {
+                "Content-Type": "application/json",
+                "Authorization": f"Bearer {self.tokens["gptToken"]}"
+            }
+            payload = {
+                "model": "gpt-4-1106-preview", # gpt-4-1106-preview, gpt-4-turbo, gpt-4-turbo-2024-04-09, gpt-3.5-turbo-1106, gpt-3.5-turbo-16k
+                "max_tokens": 200,
+                "temperature": 0.6,
+                "stop": "[END]",
+                "messages": prompt
+            }
+
+            try:
+                response = requests.post(url, headers=headers, json=payload)
+                response.raise_for_status()
+                data = response.json()
+                return data["choices"][0]["message"]["content"] + " [END]"
+
+            except requests.exceptions.RequestException as e:
+                print(f"Error making request: {e}")
+                return False, f"Error: {e}"
+
+
 
 
 
@@ -27,7 +48,7 @@ init python:
 
     
 
-
+    # Will be unusable in the mod, just a placeholder
     class ImageGen:
 
 

@@ -48,13 +48,13 @@ init python:
             with open(f'{config.basedir}/PRIVATE_TOKENS_DO_NOT_SHARE.json', 'r') as f:
                 _config = json.load(f)
             return _config
-        
+
         @property
         def getModelDetails(self):
             with open(f'{config.basedir}/game/assets/configs/model_details.json', 'r') as f:
                 modelDetails = json.load(f)
             return modelDetails
-        
+
         @property
         def bg_scenes(self):
             with open(f'{config.basedir}/game/assets/configs/bg_scenes.json', 'r') as f:
@@ -66,7 +66,7 @@ init python:
             with open(f'{config.basedir}/game/assets/configs/characters.json', 'r') as f:
                 chars = json.load(f)
             return chars
-        
+
         def listCharEmotes(self, name):
             emotions = ', '.join([e for e in self.characters[name]['head']])
             return emotions
