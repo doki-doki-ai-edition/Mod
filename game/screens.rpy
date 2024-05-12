@@ -1854,7 +1854,7 @@ screen chatmode_screen():
         #activate_sound "audio/sfx/select_sfx.wav"
         #action [SetVariable("chatmode_num", 1), Jump("gamemode_label")]
         activate_sound "audio/gui/sfx/select.ogg"
-        action [Show(screen="dialog", message="Coming soon...", ok_action=Hide("dialog"))]
+        action [Show(screen="dialog", message="Currently removed", ok_action=Hide("dialog"))]
     
     image "gui/gamemode/freechat_title.png" zoom 0.20 ypos 233 xpos 175
     image "gui/gamemode/freechat_desc.png" zoom 0.24 ypos 270 xpos 200
