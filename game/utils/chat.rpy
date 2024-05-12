@@ -96,27 +96,4 @@ init python:
             with open(full_path + f"/chathistory.json", 'w') as f:
                 json.dump([], f, indent=2)
 
-            # Metadata for chats
-            metadata_default = {
-                "chats": []
-            }
-            metadata_path = f"{config.basedir}/chats/metadata.json"
-            if not os.path.exists(metadata_path):
-                with open(metadata_path, 'w') as f:
-                    json.dump(metadata_default, f, indent=2)
-
-            with open(metadata_path, 'r') as f:
-                metadata = json.load(f)
-
-            metadata["chats"].append(
-                {
-                    "name": name_of_realm,
-                    "note": "-",
-                    "character": "",
-                    "gamemode": "none"
-                }
-            )
-
-            with open(metadata_path, 'w') as f:
-                json.dump(metadata, f, indent=2)
             return full_path
