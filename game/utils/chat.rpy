@@ -19,8 +19,7 @@ init python:
                                 "character": "",
                                 "head_sprite": "",
                                 "left_sprite": "",
-                                "right_sprite": "",
-                                "zone": ""
+                                "right_sprite": ""
                             }
 
             with open(f"{config.basedir}/game/assets/prompts/prompt_templates.json") as f:
