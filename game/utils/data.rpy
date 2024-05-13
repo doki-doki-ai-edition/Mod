@@ -18,6 +18,42 @@ init python:
             with open(self.path_to_user_dir + "/chathistory.json", 'r') as f:
                 return json.load(f)[-1]["content"]
 
+        @property
+        def getChathistory(self):
+            with open(self.path_to_user_dir + "/chathistory.json", 'r') as f:
+                return json.load(f)
+
+        @property
+        def getLastMessageClean(self):
+            with open(self.path_to_user_dir + "/chathistory.json", 'r') as f:
+                reply = json.load(f)[-1]["content"]
+
+            def getContent(start, end, reply=reply):
+                try:
+                    content = reply.split(start)[1].split(end)[0].strip()
+                    return content
+                except IndexError:
+                    return None
+                except AttributeError:
+                    return None
+
+            char = getContent('[CHAR]', '[CONTENT]')
+            face = getContent('[FACE]', '[BODY]')
+            body = getContent('[BODY]', '[CONTENT]')
+            scene = getContent('[SCENE]', '[NARRATION]')
+
+            reply = reply.replace('[END]', '')
+
+            if "[CONTENT]" in reply:
+                reply = reply.split("[CONTENT]")[1].strip()
+            elif "[NARRATION]" in reply:
+                reply = reply.split("[NARRATION]")[1].strip()
+            else:
+                # Typically this means that the model didnt return a proper content field
+                reply = "ERROR"
+
+            return reply
+
         def updateSceneData(self, key, value):
             with open(self.path_to_user_dir + "/scenedata.json", 'r') as f:
                 scenedata = json.load(f)
@@ -35,6 +71,10 @@ init python:
                     return json.load(f)[key]
             except TypeError:
                 return None
+
+
+
+
 
 
 
@@ -66,6 +106,7 @@ init python:
             with open(f'{config.basedir}/game/assets/configs/characters.json', 'r') as f:
                 chars = json.load(f)
             return chars
+
 
         def listCharEmotes(self, name):
             emotions = ', '.join([e for e in self.characters[name]['head']])

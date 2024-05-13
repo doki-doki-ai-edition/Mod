@@ -947,7 +947,7 @@ init python:
         return FileAction(name)
 
 
-default num = None
+#default num = None
 init python:
     import os
     chats = os.listdir(f"{config.basedir}/chats")
@@ -1045,7 +1045,7 @@ screen custom_save_screen():
                     textbutton folder:
                         xpos 250
                         ypos 120
-                        action [SetVariable("num", i), Hide("custom_save_screen"), Start()]
+                        action [SetVariable("num", i), Hide("custom_save_screen"), Jump("AICharacter")]
                     $ chat_list.append(folder)
                     null width 20
                 $ persistent.chatFolderName = chat_list

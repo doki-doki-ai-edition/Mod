@@ -10,10 +10,7 @@ label start:
         config.autosave_on_choice = False
 
     $ input_popup_gui = True
-    if num: # Avoid NoneType error
-        if num >=0:
-            jump AICharacter
-            return
+
 
     stop music fadeout 0.5
 
@@ -39,7 +36,6 @@ label apikey_label:
 
 label nameWorld_label:
     scene theme
-    $ chatFolderName = renpy.input("Name This Realm: ", "realm", allow=" ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789_").strip() 
 
     $ motto = renpy.random.randint(1,300)
     if motto == 15:    
@@ -74,39 +70,72 @@ label AICharacter:
     $ custom_quick_menu = True
     scene black with dissolve
 
-    $ chatSetup = SetupChat(chat_name=chatFolderName, character_name=character_name)
     $ resume = None # Used to check if a file has been loaded
 
     # "num" is a default value set to None. If a number is
     # assigned to it, that means the user is opening an old file
-    if num:
+    if num != None:
         if num >= 0:
             $ resume = True
-            $ path = "chats/"+persistent.chatFolderName[num]
+            $ pathSetup = f"{config.basedir}/chats/"+persistent.chatFolderName[num]
+            $ current_char = Data(path_to_user_dir=pathSetup).getSceneData("character")
+
+            $ chatSetup = SetupChat(chat_name=persistent.chatFolderName[num], character_name=current_char)
+            $ memory = Data(path_to_user_dir=pathSetup).getChathistory
+            default num = None
+
 
     else:
+        $ chatFolderName = renpy.input("Name This Realm: ", "realm", allow=" ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789_").strip() 
+        $ chatSetup = SetupChat(chat_name=chatFolderName, character_name=character_name)
         $ pathSetup = chatSetup.setup()
         $ convo = chatSetup.chat(path=pathSetup)
 
-
+    $ memory = Data(path_to_user_dir=pathSetup).getChathistory
+    $ current_char = Data(path_to_user_dir=pathSetup).getSceneData("character")
+    $ current_head = Data(path_to_user_dir=pathSetup).getSceneData("head_sprite")
+    $ current_left = Data(path_to_user_dir=pathSetup).getSceneData("left_sprite")
+    $ current_right = Data(path_to_user_dir=pathSetup).getSceneData("right_sprite")
     $ current_background = Data(path_to_user_dir=pathSetup).getSceneData("background")
-
 
     image _bg:
         "bg/[current_background]"
     scene _bg
 
-    # placeholder text (Will rely on json data later for when users load a file)
-    "..."
+    if resume:
+        $ last_msg = Data(path_to_user_dir=pathSetup).getLastMessageClean
+
+        image head:
+            "images/[current_char]/[current_head]"
+            zoom 0.80
+            yoffset 40
+            uppies
+        image leftside:
+            "images/[current_char]/[current_left]"
+            zoom 0.80
+            yoffset 40
+            uppies
+        image rightside:
+            "images/[current_char]/[current_right]"
+            zoom 0.80
+            yoffset 40
+            uppies
+
+
+        show head
+        show leftside
+        show rightside
+
+        "[last_msg]"
+    else:
+        "..."
 
     while True:
         $ rnd_continue = renpy.random.randint(1, 6)
         $ current_char = Data(path_to_user_dir=pathSetup).getSceneData("character")
 
-        if resume == True:
-            $ user_msg = "continue {remember to never speak as the MC, continue the story.}"
-            $ resume = False
-        elif current_char != "" and rnd_continue == 4:
+        if current_char != "" and rnd_continue == 4:
+            # Randomly continue the chat to have variety so it's not a constant back and forth
             $ user_msg = "continue"
         else:
             $ user_msg = renpy.input("Enter a message: ")
@@ -115,7 +144,7 @@ label AICharacter:
                 jump monika_zone
 
 
-        $ final_msg = chatSetup.chat(path=pathSetup, userInput=user_msg)
+        $ final_msg = chatSetup.chat(path=pathSetup, chathistory=memory, userInput=user_msg)
         $ raw_msg = Data(path_to_user_dir=pathSetup).getLastMessage
 
         $ current_char = Data(path_to_user_dir=pathSetup).getSceneData("character")

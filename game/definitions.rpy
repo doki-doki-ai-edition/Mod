@@ -1443,8 +1443,7 @@ default chatToken = persistent.chatToken
 
 ##################################
 default character_name = ""
-
-
+default num = None
 
 define _dismiss_pause = config.developer
 
