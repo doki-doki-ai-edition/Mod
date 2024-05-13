@@ -941,10 +941,8 @@ screen save():
 screen load():
     tag menu
 
-    if persistent.freedom:
-        use custom_save_screen()
-    else:
-        use file_slots(_("Load"))
+    use custom_save_screen()
+
 
 init python:
     def FileActionMod(name, page=None, **kwargs):
@@ -1277,7 +1275,7 @@ screen preferences():
                         textbutton _("Mute All"):
                             action Preference("all mute", "toggle")
                             style "mute_all_button"
-
+f
                 vbox:
                     textbutton _("Model Name") action ShowMenu("select_model_name_screen")
                 vbox:
