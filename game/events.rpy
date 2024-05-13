@@ -190,7 +190,8 @@ init python:
                 return '...'
 
             emotions = ', '.join([e for e in Configs().characters[self.character_name.title()]['head']])
-            reminder = "" if self.retrying == False else Info().getReminder[self.character_name.lower()]["emotes"].replace("<emotes>", emotions)
+            parts = ', '.join([e for e in Configs().characters[self.character_name.title()]['left']]) # "explain" and "relaxed" (which honestly should prob just use a number system)
+            reminder = "" if self.retrying == False else Info().getReminder["emotes"].replace("<emotes>", emotions).replace("<body>", parts).replace("<char>", self.character_name)
 
             # Log user input
             examples = self.removePlaceholders()
