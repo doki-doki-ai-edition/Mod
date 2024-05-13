@@ -567,6 +567,10 @@ init python:
         renpy.hide_screen("reset_config_window_popup")
         renpy.show_screen("llm_model_config_screen")
 
+    def FinishUpdateModelName(modelname):
+        persistent.chatModel = modelname
+        renpy.save_persistent()
+
 
     def SwitchToModelConfig():
         renpy.hide_screen("preferences")
@@ -1056,34 +1060,27 @@ screen select_model_name_screen():
     modal True
     zorder 10
     add "bg/theme.png"
+
+    $ local_models = ["llama3-8b-8192", "mixtral-8x7b-32768"]
+    $ api_models = ["gpt-4-1106-preview", "llama3-70b-8192", "gpt-3.5-turbo-1106"]
+    
     use game_menu(_("Load"), scroll="viewport"):
+
 
         hbox:
             style_prefix "slider"
             box_wrap True
 
             vbox:
-                null height 50
-                textbutton "Back":
-                    style_prefix "navigation_button_text"
-
-                    xpos 20
-
-                    hover_sound "audio/gui/sfx/hover.ogg"
-                    activate_sound "audio/gui/sfx/select.ogg"
-                    action [Hide("select_model_name_screen"), MainMenu()]
-
+                label _(f"Current Model: {chatModel}")
+                
 
             vbox:
-                $ chat_list = []
-                for i, folder in enumerate(chats):
-                    textbutton folder:
-                        xpos 250
-                        ypos 120
-                        action [SetVariable("num", i), Hide("custom_save_screen"), Jump("nameWorld_label")]
-                    $ chat_list.append(folder)
-                    null width 20
-                $ persistent.chatFolderName = chat_list
+                label _(f"Local Models")
+                for model in local_models:
+                    textbutton _(f"{model}") action Show(screen="basic_popup", title="Local Models", message="Sucessfully updated model! Start a game for it to change.", ok_action=Function(FinishUpdateModelName, modelname))
+                
+
 
 
 
@@ -1282,7 +1279,7 @@ screen preferences():
                             style "mute_all_button"
 
                 vbox:
-                    textbutton _("Model Name") action Show(screen="model_name_input", message="Enter a model name", ok_action=Function(FinishEnterModelName))
+                    textbutton _("Model Name") action ShowMenu("select_model_name_screen")
                 vbox:
                     textbutton _("API Key") action Jump("apikey_label")
                 vbox:
@@ -1834,6 +1831,39 @@ screen error_popup(message):
             spacing 100
 
             textbutton _("OK") action Hide("error_popup")
+
+
+
+screen basic_popup(title, message):
+    modal True
+    zorder 200
+
+    style_prefix "confirm"
+
+    add "gui/overlay/confirm.png"
+    key "K_RETURN" action Play("sound", gui.activate_sound)
+
+    frame:
+
+        has vbox:
+            xalign .5
+            yalign .5
+            spacing 30
+
+        label _(title):
+            style "confirm_prompt"
+            xalign 0.5
+
+        label _(message):
+            style "confirm_prompt"
+
+
+        hbox:
+            xalign 0.5
+            spacing 100
+
+            textbutton _("OK") action Hide("basic_popup")
+
 
 
 

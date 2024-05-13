@@ -1428,6 +1428,8 @@ default temp = persistent.temp
 default seed = persistent.seed
 
 
+default chatModel = "llama3-8b-8192"
+
 default persistent.chatModel = None
 default persistent.imgModel = None
 #define persistent.charVoice = None
@@ -1436,8 +1438,8 @@ define persistent.imgToken = None
 
 
 default llm_mode = True
-default chatModel = persistent.chatModel
-default chatToken = persistent.chatToken
+default persistent.chatModel = chatModel
+default persistent.chatToken = ""
 
 
 
