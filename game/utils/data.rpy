@@ -8,10 +8,6 @@ init python:
         def __init__(self, path_to_user_dir):
             self.path_to_user_dir = path_to_user_dir
 
-        @property
-        def getMetadata(self):
-            with open(self.path_to_user_dir + "/metadata.json", 'r') as f:
-                return json.load(f)
 
         @property
         def getLastMessage(self):
