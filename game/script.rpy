@@ -43,12 +43,9 @@ label nameWorld_label:
         play sound "audio/sfx/can you hear me.mp3"
         $ renpy.pause(11, hard=True)
 
-    if chatmode_num == 0:
-        jump AICharacter
-    else:
-        # Currently disabled
-        #jump justMonika_Storymode
-        pass
+
+    jump AICharacter
+
     return
 
 
@@ -82,7 +79,7 @@ label AICharacter:
 
             $ chatSetup = SetupChat(chat_name=persistent.chatFolderName[num], character_name=current_char)
             $ memory = Data(path_to_user_dir=pathSetup).getChathistory
-            default num = None
+            $ SetVariable("num", None)
 
 
     else:
@@ -126,7 +123,17 @@ label AICharacter:
         show leftside
         show rightside
 
-        "[last_msg]"
+        if current_char == "monika":
+            monika "[last_msg]"
+        elif current_char == "sayori":
+            sayori "[last_msg]"
+        elif current_char == "natsuki":
+            natsuki "[last_msg]"
+        elif current_char == "yuri":
+            yuri "[last_msg]"
+        else:
+            "[last_msg]"            
+
     else:
         "..."
 

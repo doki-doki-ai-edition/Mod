@@ -1045,7 +1045,7 @@ screen custom_save_screen():
                     textbutton folder:
                         xpos 250
                         ypos 120
-                        action [SetVariable("num", i), Hide("custom_save_screen"), Jump("AICharacter")]
+                        action [SetVariable("num", i), Hide("custom_save_screen"), Jump("nameWorld_label")]
                     $ chat_list.append(folder)
                     null width 20
                 $ persistent.chatFolderName = chat_list
@@ -1798,6 +1798,12 @@ screen error_popup(message):
             spacing 100
 
             textbutton _("OK") action Hide("error_popup")
+
+
+
+
+
+
 
 
 
