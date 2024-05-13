@@ -90,12 +90,6 @@ init python:
             return _config
 
         @property
-        def getModelDetails(self):
-            with open(f'{config.basedir}/game/assets/configs/model_details.json', 'r') as f:
-                modelDetails = json.load(f)
-            return modelDetails
-
-        @property
         def bg_scenes(self):
             with open(f'{config.basedir}/game/assets/configs/bg_scenes.json', 'r') as f:
                 bg_scenes = json.load(f)
