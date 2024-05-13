@@ -1051,6 +1051,42 @@ screen custom_save_screen():
                 $ persistent.chatFolderName = chat_list
 
 
+
+screen select_model_name_screen():
+    modal True
+    zorder 10
+    add "bg/theme.png"
+    use game_menu(_("Load"), scroll="viewport"):
+
+        hbox:
+            style_prefix "slider"
+            box_wrap True
+
+            vbox:
+                null height 50
+                textbutton "Back":
+                    style_prefix "navigation_button_text"
+
+                    xpos 20
+
+                    hover_sound "audio/gui/sfx/hover.ogg"
+                    activate_sound "audio/gui/sfx/select.ogg"
+                    action [Hide("select_model_name_screen"), MainMenu()]
+
+
+            vbox:
+                $ chat_list = []
+                for i, folder in enumerate(chats):
+                    textbutton folder:
+                        xpos 250
+                        ypos 120
+                        action [SetVariable("num", i), Hide("custom_save_screen"), Jump("nameWorld_label")]
+                    $ chat_list.append(folder)
+                    null width 20
+                $ persistent.chatFolderName = chat_list
+
+
+
 screen llm_model_config_screen():
     modal True
     zorder 10

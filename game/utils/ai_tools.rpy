@@ -14,7 +14,7 @@ init python:
             url = "https://api.openai.com/v1/chat/completions"
             headers = {
                 "Content-Type": "application/json",
-                "Authorization": f"Bearer {self.tokens['gptToken']}"
+                "Authorization": f"Bearer {self.tokens['GPT']}"
             }
             payload = {
                 "model": "gpt-4-1106-preview", # gpt-4-1106-preview, gpt-4-turbo, gpt-4-turbo-2024-04-09, gpt-3.5-turbo-1106, gpt-3.5-turbo-16k
@@ -40,9 +40,30 @@ init python:
 
 
 
-        def getGroq(self, prompt, user_id):
-            """Using Groq's API to quickly use large models"""
-            pass
+        def getGroq(self, prompt):
+            url = "https://api.groq.com/openai/v1/chat/completions"
+            headers = {
+                "Content-Type": "application/json",
+                "Authorization": f"Bearer {self.tokens['GROQ']}"
+            }
+            payload = {
+                "model": "llama3-70b-8192", # llama3-70b-8192, llama3-8b-8192, mixtral-8x7b-32768
+                "max_tokens": 200,
+                "temperature": 0.6,
+                "stop": "[END]",
+                "messages": prompt
+            }
+
+            try:
+                response = requests.post(url, headers=headers, json=payload)
+                response.raise_for_status()
+                data = response.json()
+                return data["choices"][0]["message"]["content"] + " [END]"
+
+            except requests.exceptions.RequestException as e:
+                print(f"Error making request: {e}")
+                return False, f"<Error> {e}"
+
 
     
 
