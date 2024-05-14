@@ -43,7 +43,7 @@ label nameWorld_label:
         play sound "audio/sfx/can you hear me.mp3"
         $ renpy.pause(11, hard=True)
 
-
+    "..."
     jump AICharacter
 
     return
