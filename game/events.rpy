@@ -182,6 +182,19 @@ init python:
                 return False
 
 
+        def modelChoices(self, prompt):
+            groq = ["llama3-70b-8192"]
+            openai = ["gpt-4-1106-preview", "gpt-3.5-turbo-1106"]
+
+
+            if persistent.chatModel in groq:
+                AIGen().getGroq(prompt=contextAndUserMsg)
+            elif persistent.chatModel in openai:
+                AIGen().getGPT(prompt=contextAndUserMsg)
+            else:
+                pass # add local model option
+
+
         def ai_response(self, userInput):
             """Gets ai generated text based off given prompt"""
             if "(init_end_sim)" in userInput and self.character_name == "monika":
@@ -197,7 +210,7 @@ init python:
             self.chathistory.append({"role": "user", "content": userInput + reminder})
 
             contextAndUserMsg = examples + self.chathistory
-            response = AIGen().getGPT(prompt=contextAndUserMsg)
+            response = self.modelChoices(contextAndUserMsg)
 
 
             # If An error happened with the API, return the Error

@@ -1071,7 +1071,7 @@ screen select_model_name_screen():
 
             vbox:
                 label _(f"Current Model: {persistent.chatModel}")
-                
+
 
             vbox:
                 label _(f"Local Models")
