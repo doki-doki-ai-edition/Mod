@@ -69,13 +69,13 @@ init python:
                     self.dbase.updateSceneData("head_sprite", head_sprite[h])
 
                     if h in full_sprite_emotions:
-                        self.dbase.updateSceneData("left_sprite", char["none"])
-                        self.dbase.updateSceneData("right_sprite", char["none"])
+                        self.dbase.updateSceneData("left_sprite", char_name["none"])
+                        self.dbase.updateSceneData("right_sprite", char_name["none"])
                         return
 
             if head_sprite in full_sprite_emotions:
-                self.dbase.updateSceneData("left_sprite", char["none"])
-                self.dbase.updateSceneData("right_sprite", char["none"])
+                self.dbase.updateSceneData("left_sprite", char_name["none"])
+                self.dbase.updateSceneData("right_sprite", char_name["none"])
                 return
 
 
