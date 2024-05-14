@@ -1064,6 +1064,10 @@ screen select_model_name_screen():
     
     use game_menu(_("Models"), scroll="viewport"):
 
+        vbox:
+            null height 50
+            textbutton _("Back") action [Return(), renpy.hide_screen("preferences"), renpy.hide_screen("select_model_name_screen")]
+
 
         vbox:
             style_prefix "slider"
@@ -1081,7 +1085,7 @@ screen select_model_name_screen():
                 label _(f"API Models")
                 for model in api_models:
                     textbutton _(f"{model}") action Show(screen="basic_popup", title="API Models", message="Sucessfully updated model!", ok_action=Function(FinishUpdateModelName, model))
-                
+
 
 
 
