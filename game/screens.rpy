@@ -1062,7 +1062,7 @@ screen select_model_name_screen():
     $ local_models = ["llama3-8b-8192", "mixtral-8x7b-32768"]
     $ api_models = ["gpt-4-1106-preview", "llama3-70b-8192", "gpt-3.5-turbo-1106"]
     
-    use game_menu(_("Load"), scroll="viewport"):
+    use game_menu(_("Models"), scroll="viewport"):
 
 
         vbox:
