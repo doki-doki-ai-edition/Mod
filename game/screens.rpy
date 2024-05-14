@@ -1275,7 +1275,7 @@ screen preferences():
                         textbutton _("Mute All"):
                             action Preference("all mute", "toggle")
                             style "mute_all_button"
-f
+
                 vbox:
                     textbutton _("Model Name") action ShowMenu("select_model_name_screen")
                 vbox:
