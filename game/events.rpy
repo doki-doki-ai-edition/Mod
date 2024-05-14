@@ -197,9 +197,6 @@ init python:
 
         def ai_response(self, userInput):
             """Gets ai generated text based off given prompt"""
-            if "(init_end_sim)" in userInput and self.character_name == "monika":
-                self.dbase.updateSceneData("zone", "zone")
-                return '...'
 
             emotions = ', '.join([e for e in Configs().characters[self.character_name.title()]['head']])
             parts = ', '.join([e for e in Configs().characters[self.character_name.title()]['left']]) # "explain" and "relaxed" (which honestly should prob just use a number system)
