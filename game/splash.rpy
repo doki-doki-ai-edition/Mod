@@ -183,9 +183,15 @@ label splashscreen:
     $ quick_menu = False
     scene tos2
 
-    "This is a Doki Doki Literature Club fan game that is not affiliated with Team Salvato."
-    "It is designed to be played only after the official game has been completed."
-    "You can download Doki Doki Literature Club at: http://ddlc.moe"
+    if persistent.firstrun:
+        "This is a Doki Doki Literature Club fan game that is not affiliated with Team Salvato."
+        "It is designed to be played only after the official game has been completed."
+        "You can download Doki Doki Literature Club at: https://ddlc.moe"
+
+    jump ai_mod_notice
+
+
+
     python:
         s_kill_early = None
         m_deleted = False
@@ -224,21 +230,23 @@ label splashscreen:
         $ persistent.playername = renpy.input("What is your name?", "User", allow=" ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789").strip()
 
 
-    if persistent.freedom != None:
-        jump ai_mod_notice
-
-    scene black
-    with Pause(1)
-
-    show text "Please remember that this is just a game and\nthe Doki's aren't actually real." with dissolve
-    $ renpy.pause(3, hard=True)
-    hide text with dissolve
-    with Pause(1.3)
     return
 
 
 label ai_mod_notice:
     scene tos
+
+    if persistent.firstrun:
+        $ persistent.firstrun = False
+        $ renpy.save_persistent()
+        "IMPORTANT NOTICE: I made this mod so that other people could have fun interacting with the characters in a more visual way that goes beyond just text."
+        "But it is important to keep in mind of the following:"
+        "The characters are not real. They do not have emotions. They cannot be offended. They cannot be hurt. What you are interacting with in the simplest of terms is an advanced word guesser."
+        $ renpy.pause(5, hard=True)
+        "I want to ensure that most people playing are at the very least mindful of this and can distinguish reality from fiction."
+        "Have fun!"
+    else:
+        "REMINDER: The characters are not real. They do not have emotions. They cannot be offended. They cannot be hurt. What you are interacting with in the simplest of terms is an advanced word guesser."
     return
 
 
