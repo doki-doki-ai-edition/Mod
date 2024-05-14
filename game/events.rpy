@@ -188,11 +188,11 @@ init python:
 
 
             if persistent.chatModel in groq:
-                AIGen().getGroq(prompt=contextAndUserMsg)
+                return AIGen().getGroq(prompt=prompt)
             elif persistent.chatModel in openai:
-                AIGen().getGPT(prompt=contextAndUserMsg)
+                return AIGen().getGPT(prompt=prompt)
             else:
-                pass # add local model option
+                return f"Model: {persistent.chatModel}"
 
 
         def ai_response(self, userInput):

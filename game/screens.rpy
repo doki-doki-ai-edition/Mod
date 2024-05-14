@@ -1066,7 +1066,7 @@ screen select_model_name_screen():
 
         vbox:
             null height 50
-            textbutton _("Back") action [Return(), renpy.hide_screen("preferences"), renpy.hide_screen("select_model_name_screen")]
+            textbutton _("Back") action [Return(), renpy.hide_screen("select_model_name_screen")]
 
 
         vbox:
