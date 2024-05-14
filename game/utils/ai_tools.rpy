@@ -4,7 +4,7 @@ init python:
     import requests
 
 
-    class AIGen:
+    class TextModel:
 
         def __init__(self):
             self.tokens = Configs().config
@@ -93,7 +93,7 @@ init python:
                     message = body.get("message", "")
                     content = message.get("content", "")
                     output += content
-                    
+       
                     persistent.done_msg = False
                     renpy.save_persistent()
 
@@ -110,7 +110,7 @@ init python:
 
 
     # Will be unusable in the mod, just a placeholder
-    class ImageGen:
+    class ImageModel:
 
 
         def getimgai(self, guide):

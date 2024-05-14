@@ -188,9 +188,9 @@ init python:
 
 
             if persistent.chatModel in groq:
-                return AIGen().getGroq(prompt=prompt)
+                return TextModel().getGroq(prompt=prompt)
             elif persistent.chatModel in openai:
-                return AIGen().getGPT(prompt=prompt)
+                return TextModel().getGPT(prompt=prompt)
             else:
                 return None
 
