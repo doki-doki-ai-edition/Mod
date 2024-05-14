@@ -39,7 +39,6 @@ init python:
 
 
 
-
         def getGroq(self, prompt):
             url = "https://api.groq.com/openai/v1/chat/completions"
             headers = {
