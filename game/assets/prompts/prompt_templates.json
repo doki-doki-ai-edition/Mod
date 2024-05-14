@@ -1,5 +1,5 @@
 {
-    "gpt4":
+    "level1_all":
     [
         {
             "role": "system",
@@ -55,7 +55,7 @@
         }
     ],
 
-    "gpt4_monika":
+    "level1_monika":
     [
         {
             "role": "system",
@@ -142,7 +142,7 @@
             "content": "[FACE] worried [BODY] relaxed [CONTENT] Oh? What's wrong? [END]"
         }
     ],
-    "gpt4_sayori":
+    "level1_sayori":
     [
         {
             "role": "system",
@@ -181,7 +181,7 @@
             "content": "[FACE] pouting [BODY] relaxed [CONTENT] If you came over more often, it would be such a mess. [END]"
         }
     ],
-    "gpt4_natsuki":
+    "level1_natsuki":
     [
         {
             "role": "system",
@@ -220,7 +220,7 @@
             "content": "[FACE] smiling [BODY] relaxed [CONTENT] As long as you understand who's boss around here. [END]"
         }
     ],
-    "gpt4_yuri":
+    "level1_yuri":
     [
         {
             "role": "system",
