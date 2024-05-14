@@ -192,7 +192,7 @@ init python:
             elif persistent.chatModel in openai:
                 return AIGen().getGPT(prompt=prompt)
             else:
-                return f"Model: {persistent.chatModel}"
+                return None
 
 
         def ai_response(self, userInput):

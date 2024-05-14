@@ -11,14 +11,10 @@ init python:
                     json.dump({}, f)
 
 
-            if not TOKEN.get('GPT'):
-                TOKEN['GPT'] = persistent.chatToken
-            if not TOKEN.get('GROQ'):
-                TOKEN['GROQ'] = persistent.chatToken
-            if not TOKEN.get('GETIMG'):
-                TOKEN['getimgToken'] = persistent.imgToken
-            if not TOKEN.get('stableImgToken'):
-                TOKEN['STABLEIMG'] = persistent.imgToken
+            TOKEN['GPT'] = persistent.chatToken
+            TOKEN['GROQ'] = persistent.chatToken
+            TOKEN['getimgToken'] = persistent.imgToken
+            TOKEN['STABLEIMG'] = persistent.imgToken
 
             with open(config.basedir + "/PRIVATE_TOKENS_DO_NOT_SHARE.json", 'w') as f:
                 json.dump(TOKEN, f)
