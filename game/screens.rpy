@@ -1832,14 +1832,14 @@ screen error_popup(message):
 
 
 
-screen basic_popup(title, message):
+screen basic_popup(title, message, ok_action):
     modal True
     zorder 200
 
     style_prefix "confirm"
 
     add "gui/overlay/confirm.png"
-    key "K_RETURN" action Play("sound", gui.activate_sound)
+    key "K_RETURN" action [Play("sound", gui.activate_sound), ok_action]
 
     frame:
 
@@ -1860,7 +1860,7 @@ screen basic_popup(title, message):
             xalign 0.5
             spacing 100
 
-            textbutton _("OK") action Hide("basic_popup")
+            textbutton _("OK") action [Hide("basic_popup"), ok_action]
 
 
 
