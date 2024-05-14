@@ -1065,18 +1065,18 @@ screen select_model_name_screen():
     use game_menu(_("Load"), scroll="viewport"):
 
 
-        hbox:
+        vbox:
             style_prefix "slider"
             box_wrap True
 
             vbox:
-                label _(f"Current Model: {chatModel}")
+                label _(f"Current Model: {persistent.chatModel}")
                 
 
             vbox:
                 label _(f"Local Models")
                 for model in local_models:
-                    textbutton _(f"{model}") action Show(screen="basic_popup", title="Local Models", message="Sucessfully updated model! Start a game for it to change.", ok_action=Function(FinishUpdateModelName, modelname))
+                    textbutton _(f"{model}") action Show(screen="basic_popup", title="Local Models", message="Sucessfully updated model! Start a game for it to change.", ok_action=Function(FinishUpdateModelName, model))
                 
 
 
