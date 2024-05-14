@@ -141,6 +141,8 @@ label AICharacter:
         $ rnd_continue = renpy.random.randint(1, 6)
         $ current_char = Data(path_to_user_dir=pathSetup).getSceneData("character")
 
+        
+
         if current_char != "" and rnd_continue == 4:
             # Randomly continue the chat to have variety so it's not a constant back and forth
             $ user_msg = "continue"
@@ -200,6 +202,16 @@ label AICharacter:
 
             #if convo.NARRATION == False and convo.voice_mode == True:
             #    play sound "audio/vocals/monika.wav"
+
+            while persistent.done_msg == False:
+                if current_char == "monika":
+                    monika "[persistent.current_msg] {nw}"
+                if current_char == "sayori":
+                    sayori "[persistent.current_msg] {nw}"
+                if current_char == "natsuki":
+                    natsuki "[persistent.current_msg] {nw}"
+                if current_char == "yuri":
+                    yuri "[persistent.current_msg] {nw}"
 
             if current_char == "monika":
                 monika "[final_msg]"

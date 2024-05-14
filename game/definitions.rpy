@@ -1449,6 +1449,7 @@ default num = None
 default persistent.firstrun = True
 default persistent.current_msg = ""
 default persistent.done_msg = True
+default done_msg = persistent.done_msg
 
 define _dismiss_pause = config.developer
 
