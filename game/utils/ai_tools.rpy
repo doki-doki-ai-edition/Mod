@@ -66,6 +66,49 @@ init python:
 
 
 
+        def getLLM(self, prompt):
+            options = {
+                "options": {
+                    "temperature": 0.6,
+                    "stop": ['[INST', '[/INST', '[END]']
+                    }
+            }
+
+            context = example + messages
+            response = requests.post(
+                "http://127.0.0.1:11434/api/chat",
+                json={"model": model, "messages": context, "stream": True,
+                    "options": options["options"]},
+            )
+
+
+            response.raise_for_status()
+            output = ""
+
+            for line in response.iter_lines():
+                body = json.loads(line)
+                if "error" in body:
+                    raise Exception(body["error"])
+                if body.get("done") is False:
+                    message = body.get("message", "")
+                    content = message.get("content", "")
+                    output += content
+                    
+                    persistent.done_msg = False
+                    renpy.save_persistent()
+
+                    persistent.current_msg = content
+                    renpy.save_persistent()
+
+                if body.get("done", False):
+                    persistent.done_msg = True
+                    renpy.save_persistent()
+
+                    message["content"] = output
+                    return output.strip()
+
+
+
     # Will be unusable in the mod, just a placeholder
     class ImageGen:
 
