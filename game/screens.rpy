@@ -1787,7 +1787,7 @@ screen info_seed_popup(message, ok_action):
             style "confirm_prompt"
             xalign 0.5
 
-        label _("Deterministic responses. Selecting any seed will always return the same response if your message is written the same."):
+        label _("Same responses. Selecting a specific seed will always return the same response if your message is written the same."):
             style "confirm_prompt"
 
 
