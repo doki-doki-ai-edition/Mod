@@ -1076,9 +1076,12 @@ screen select_model_name_screen():
             vbox:
                 label _(f"Local Models")
                 for model in local_models:
-                    textbutton _(f"{model}") action Show(screen="basic_popup", title="Local Models", message="Sucessfully updated model! Start a game for it to change.", ok_action=Function(FinishUpdateModelName, model))
+                    textbutton _(f"{model}") action Show(screen="basic_popup", title="Local Models", message="Sucessfully updated model!", ok_action=Function(FinishUpdateModelName, model))
                 
-
+                label _(f"API Models")
+                for model in api_models:
+                    textbutton _(f"{model}") action Show(screen="basic_popup", title="API Models", message="Sucessfully updated model!", ok_action=Function(FinishUpdateModelName, model))
+                
 
 
 
