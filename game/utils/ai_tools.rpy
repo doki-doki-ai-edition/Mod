@@ -95,8 +95,6 @@ init python:
 
 
                 if body.get("done", False):
-                    persistent.done_msg = True
-                    renpy.save_persistent()
 
                     message["content"] = output
                     return output.strip()
