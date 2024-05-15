@@ -1059,8 +1059,8 @@ screen select_model_name_screen():
     zorder 10
     add "bg/theme.png"
 
-    $ fav_local_models = ["llama3"] # llama3-8b-8192, mixtral-8x7b-32768
-    $ fav_api_models = ["gpt-4-1106-preview", "llama3-70b-8192"]
+    $ fav_local_models = ["llama3"] # llama3-8b-8192, mistral-8x7b-32768
+    $ fav_api_models = ["gpt-4o", "gpt-4-1106-preview", "llama3-70b-8192"]
     
     $ other_local_models = ["mistral"]
     $ other_api_models = ["gpt-3.5-turbo-1106"]
