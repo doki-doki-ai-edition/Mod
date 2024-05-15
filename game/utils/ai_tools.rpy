@@ -82,7 +82,6 @@ init python:
 
 
             #response.raise_for_status()
-            thing = True
             output = ""
 
             for line in response.iter_lines():
@@ -93,33 +92,7 @@ init python:
                     message = body.get("message", "")
                     prompt = message.get("content", "")
                     output += prompt
-                    """
-                    if "[CONTENT]" in output:
-                        persistent.done_msg = False
-                        renpy.save_persistent()
 
-                        persistent.current_msg = content
-                        renpy.save_persistent()
-                    """
-                    
-                    
-                    filt = f"{output}".replace("[", "").replace("]", "")
-                    renpy.pause(0.5)
-                    renpy.say(None, filt)
-
-                    
-
-                    """
-                    persistent.done_msg = False
-                    renpy.save_persistent()
-
-                    persistent.current_msg = output
-                    renpy.save_persistent()
-                    
-                    if thing:
-                        thing = False
-                        renpy.jump("stream_response")
-                    """
 
                 if body.get("done", False):
                     persistent.done_msg = True

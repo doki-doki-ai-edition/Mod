@@ -201,15 +201,6 @@ label AICharacter:
             #if convo.NARRATION == False and convo.voice_mode == True:
             #    play sound "audio/vocals/monika.wav"
 
-            while persistent.done_msg == False:
-                if current_char == "monika":
-                    monika "[persistent.current_msg] {nw}"
-                if current_char == "sayori":
-                    sayori "[persistent.current_msg] {nw}"
-                if current_char == "natsuki":
-                    natsuki "[persistent.current_msg] {nw}"
-                if current_char == "yuri":
-                    yuri "[persistent.current_msg] {nw}"
 
             if current_char == "monika":
                 monika "[final_msg]"
@@ -230,11 +221,6 @@ label monika_zone:
     return
 
 
-
-label stream_response:
-    "[persistent.current_msg] {nw}"
-    jump stream_response
-    return
 
 
 
