@@ -203,6 +203,7 @@ label AICharacter:
 
 
             if current_char == "monika":
+
                 monika "[final_msg]"
             if current_char == "sayori":
                 sayori "[final_msg]"
