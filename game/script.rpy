@@ -141,8 +141,6 @@ label AICharacter:
         $ rnd_continue = renpy.random.randint(1, 6)
         $ current_char = Data(path_to_user_dir=pathSetup).getSceneData("character")
 
-        
-
         if current_char != "" and rnd_continue == 4:
             # Randomly continue the chat to have variety so it's not a constant back and forth
             $ user_msg = "continue"
@@ -230,6 +228,14 @@ label AICharacter:
 label monika_zone:
 
     return
+
+
+
+label stream_response:
+    "[persistent.current_msg] {nw}"
+    jump stream_response
+    return
+
 
 
 

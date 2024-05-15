@@ -192,7 +192,7 @@ init python:
             elif persistent.chatModel in openai:
                 return TextModel().getGPT(prompt=prompt)
             else:
-                return None
+                return TextModel().getLLM(prompt=prompt)
 
 
         def ai_response(self, userInput):

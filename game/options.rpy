@@ -160,7 +160,7 @@ define config.predict_statements = 50
 #define config.rollback_enabled = config.developer
 define config.menu_clear_layers = ["front"]
 define config.gl_test_image = "white"
-
+#define config.developer = True
 
 # init python:
 #     if len(renpy.loadsave.location.locations) > 1: del(renpy.loadsave.location.locations[1])

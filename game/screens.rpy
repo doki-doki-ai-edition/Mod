@@ -1059,9 +1059,14 @@ screen select_model_name_screen():
     zorder 10
     add "bg/theme.png"
 
-    $ local_models = ["llama3-8b-8192", "mixtral-8x7b-32768"]
-    $ api_models = ["gpt-4-1106-preview", "llama3-70b-8192", "gpt-3.5-turbo-1106"]
+    $ fav_local_models = ["llama3"] # llama3-8b-8192, mixtral-8x7b-32768
+    $ fav_api_models = ["gpt-4-1106-preview", "llama3-70b-8192"]
     
+    $ other_local_models = ["mistral"]
+    $ other_api_models = ["gpt-3.5-turbo-1106"]
+    
+
+    $ important_info = "Type \"ollama run (model name)\" in a console on your computer.\nFor example: ollama run llama3" if llm_mode == True else "Make sure you're using the correct API key for the model name you select."
     use game_menu(_("Models"), scroll="viewport"):
 
         vbox:
@@ -1075,16 +1080,28 @@ screen select_model_name_screen():
 
             vbox:
                 label _(f"Current Model: {persistent.chatModel}")
+                textbutton _("Important Info") action Show(screen="basic_popup", title="Info", message=important_info, ok_action=NullAction())
+
 
 
             vbox:
-                label _(f"Local Models")
-                for model in local_models:
-                    textbutton _(f"{model}") action Show(screen="basic_popup", title="Local Models", message="Sucessfully updated model!", ok_action=Function(FinishUpdateModelName, model))
-                
-                label _(f"API Models")
-                for model in api_models:
-                    textbutton _(f"{model}") action Show(screen="basic_popup", title="API Models", message="Sucessfully updated model!", ok_action=Function(FinishUpdateModelName, model))
+                if llm_mode == True:
+                    label _(f"Suggested Models")
+                    for model in fav_local_models:
+                        textbutton _(f"{model}") action Show(screen="basic_popup", title="Local Models", message="Sucessfully updated model!", ok_action=Function(FinishUpdateModelName, model))
+
+                    label _(f"Other Models")
+                    for model in other_local_models:
+                        textbutton _(f"{model}") action Show(screen="basic_popup", title="Local Models", message="Sucessfully updated model!", ok_action=Function(FinishUpdateModelName, model))
+                else:
+
+                    label _(f"Suggested Models")
+                    for model in fav_api_models:
+                        textbutton _(f"{model}") action Show(screen="basic_popup", title="API Models", message="Sucessfully updated model!", ok_action=Function(FinishUpdateModelName, model))
+
+                    label _(f"Other Models")
+                    for model in other_api_models:
+                        textbutton _(f"{model}") action Show(screen="basic_popup", title="API Models", message="Sucessfully updated model!", ok_action=Function(FinishUpdateModelName, model))
 
 
 

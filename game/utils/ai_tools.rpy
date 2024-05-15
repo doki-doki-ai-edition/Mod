@@ -74,15 +74,15 @@ init python:
                     }
             }
 
-            context = example + messages
             response = requests.post(
-                "http://127.0.0.1:11434/api/chat",
-                json={"model": model, "messages": context, "stream": True,
+                "http://localhost:11434/api/chat",
+                json={"model": persistent.chatModel, "messages": prompt, "stream": True,
                     "options": options["options"]},
             )
 
 
-            response.raise_for_status()
+            #response.raise_for_status()
+            thing = True
             output = ""
 
             for line in response.iter_lines():
@@ -91,14 +91,35 @@ init python:
                     raise Exception(body["error"])
                 if body.get("done") is False:
                     message = body.get("message", "")
-                    content = message.get("content", "")
-                    output += content
-       
+                    prompt = message.get("content", "")
+                    output += prompt
+                    """
+                    if "[CONTENT]" in output:
+                        persistent.done_msg = False
+                        renpy.save_persistent()
+
+                        persistent.current_msg = content
+                        renpy.save_persistent()
+                    """
+                    
+                    
+                    filt = f"{output}".replace("[", "").replace("]", "")
+                    renpy.pause(0.5)
+                    renpy.say(None, filt)
+
+                    
+
+                    """
                     persistent.done_msg = False
                     renpy.save_persistent()
 
-                    persistent.current_msg = content
+                    persistent.current_msg = output
                     renpy.save_persistent()
+                    
+                    if thing:
+                        thing = False
+                        renpy.jump("stream_response")
+                    """
 
                 if body.get("done", False):
                     persistent.done_msg = True
@@ -106,6 +127,9 @@ init python:
 
                     message["content"] = output
                     return output.strip()
+
+
+
 
 
 
