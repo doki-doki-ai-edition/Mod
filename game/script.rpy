@@ -90,6 +90,7 @@ label AICharacter:
 
     $ memory = Data(path_to_user_dir=pathSetup).getChathistory
     $ current_char = Data(path_to_user_dir=pathSetup).getSceneData("character")
+    $ current_char_title = current_char.title()
     $ current_head = Data(path_to_user_dir=pathSetup).getSceneData("head_sprite")
     $ current_left = Data(path_to_user_dir=pathSetup).getSceneData("left_sprite")
     $ current_right = Data(path_to_user_dir=pathSetup).getSceneData("right_sprite")
@@ -102,37 +103,18 @@ label AICharacter:
     if resume:
         $ last_msg = Data(path_to_user_dir=pathSetup).getLastMessageClean
 
-        image head:
-            "images/[current_char]/[current_head]"
-            zoom 0.80
-            yoffset 40
-            uppies
-        image leftside:
-            "images/[current_char]/[current_left]"
-            zoom 0.80
-            yoffset 40
-            uppies
-        image rightside:
-            "images/[current_char]/[current_right]"
-            zoom 0.80
-            yoffset 40
-            uppies
+        image basic:
+            im.Composite((960, 960), (0, 0), f"{current_char}/{current_left}", (0, 0), f"{current_char}/{current_right}", (0, 0), f"{current_char}/{current_head}")
+        image full_sprite:
+            im.Composite((960, 960), (0, 0), f"{current_char}/{current_head}")
 
-
-        show head
-        show leftside
-        show rightside
-
-        if current_char == "monika":
-            monika "[last_msg]"
-        elif current_char == "sayori":
-            sayori "[last_msg]"
-        elif current_char == "natsuki":
-            natsuki "[last_msg]"
-        elif current_char == "yuri":
-            yuri "[last_msg]"
+        if current_head != "3a.png" and current_head != "3b.png" and current_head != "3c.png" and current_head != "3b.png" and current_head != "3d.png" and current_head != "vomit.png":
+            show basic at t11
         else:
-            "[last_msg]"            
+            show full_sprite at t11
+
+        $ renpy.show("sprite basic", at_list=[t11])
+        $ renpy.say("[current_char_title]", last_msg)    
 
     else:
         "..."
@@ -155,6 +137,7 @@ label AICharacter:
         $ raw_msg = Data(path_to_user_dir=pathSetup).getLastMessage
 
         $ current_char = Data(path_to_user_dir=pathSetup).getSceneData("character")
+        $ current_char_title = current_char.title()
         $ current_head = Data(path_to_user_dir=pathSetup).getSceneData("head_sprite")
         $ current_left = Data(path_to_user_dir=pathSetup).getSceneData("left_sprite")
         $ current_right = Data(path_to_user_dir=pathSetup).getSceneData("right_sprite")
@@ -175,14 +158,17 @@ label AICharacter:
         elif final_msg.startswith("<Error>"):
             show screen error_popup(message=final_msg)
         else:
+            image basic:
+                im.Composite((960, 960), (0, 0), f"{current_char}/{current_left}", (0, 0), f"{current_char}/{current_right}", (0, 0), f"{current_char}/{current_head}")
+            image full_sprite:
+                im.Composite((960, 960), (0, 0), f"{current_char}/{current_head}")
 
-            if head_sprite != "3a.png" and head_sprite != "3b.png" and head_sprite != "3c.png" and head_sprite != "3b.png" and head_sprite != "3d.png" and head_sprite != "vomit.png":
-                image sprite basic = im.Composite((960, 960), (0, 0), "[current_char]/[left_sprite]", (0, 0), "[current_char]/[right_sprite]", (0, 0), "[current_char]/[head_sprite]")
+            if current_head != "3a.png" and current_head != "3b.png" and current_head != "3c.png" and current_head != "3b.png" and current_head != "3d.png" and current_head != "vomit.png":
+                show basic at t11
             else:
-                image sprite basic = im.Composite((960, 960), (0, 0), "[current_char]/[head_sprite]")
-            
-            $ renpy.show("sprite basic", at_list=[t11])
-            $ renpy.say("[current_char]", final_msg)
+                show full_sprite at t11
+
+            $ renpy.say("[current_char_title]", final_msg)
     return
 
 
