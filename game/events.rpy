@@ -137,7 +137,7 @@ init python:
 
         def removePlaceholders(self):
             """remove placeholders in json files"""
-            raw_examples = Info().getExamplePrompts[f"level1_{self.character_name}"]
+            raw_examples = Info().getExamplePrompts[f"level2_{self.character_name}"]
 
             bg_scenes = [s for s in Configs().bg_scenes["default"]] + [s for s in Configs().bg_scenes["checks"]]
             emotions = ', '.join([e for e in Configs().characters[self.character_name.title()]['head']])

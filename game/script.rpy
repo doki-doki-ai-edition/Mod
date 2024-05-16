@@ -175,27 +175,7 @@ label AICharacter:
         elif final_msg.startswith("<Error>"):
             show screen error_popup(message=final_msg)
         else:
-            # Char is speaking
-            image head:
-                "images/[current_char]/[current_head]"
-                zoom 0.80
-                yoffset 40
-                uppies
-            image leftside:
-                "images/[current_char]/[current_left]"
-                zoom 0.80
-                yoffset 40
-                uppies
-            image rightside:
-                "images/[current_char]/[current_right]"
-                zoom 0.80
-                yoffset 40
-                uppies
 
-
-            show head
-            show leftside
-            show rightside
 
 
             #if convo.NARRATION == False and convo.voice_mode == True:
@@ -203,13 +183,13 @@ label AICharacter:
 
 
             if current_char == "monika":
-
+                show monika 1a at t11
                 monika "[final_msg]"
-            if current_char == "sayori":
+            elif current_char == "sayori":
                 sayori "[final_msg]"
-            if current_char == "natsuki":
+            elif current_char == "natsuki":
                 natsuki "[final_msg]"
-            if current_char == "yuri":
+            elif current_char == "yuri":
                 yuri "[final_msg]"
     return
 
