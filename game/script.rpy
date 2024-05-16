@@ -42,6 +42,7 @@ label nameWorld_label:
         scene black with dissolve
         play sound "audio/sfx/can you hear me.mp3"
         $ renpy.pause(11, hard=True)
+    jump ch0_motto
 
     "..."
     jump AICharacter
@@ -105,15 +106,16 @@ label AICharacter:
 
         image basic:
             im.Composite((960, 960), (0, 0), f"{current_char}/{current_left}", (0, 0), f"{current_char}/{current_right}", (0, 0), f"{current_char}/{current_head}")
+            uppies
         image full_sprite:
             im.Composite((960, 960), (0, 0), f"{current_char}/{current_head}")
+            uppies
 
         if current_head != "3a.png" and current_head != "3b.png" and current_head != "3c.png" and current_head != "3b.png" and current_head != "3d.png" and current_head != "vomit.png":
             show basic at t11
         else:
             show full_sprite at t11
 
-        $ renpy.show("sprite basic", at_list=[t11])
         $ renpy.say("[current_char_title]", last_msg)    
 
     else:
