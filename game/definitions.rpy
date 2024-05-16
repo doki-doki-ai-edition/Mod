@@ -1346,7 +1346,7 @@ image room_mask2 = Composite((1280, 720), (0, 0), "mask_test3", (0, 0), "mask_te
 
 
 
-image splash_glitch2 = "images/bg_temp/splash-glitch2.png"
+image splash_glitch2 = "images/bg/splash-glitch2.png"
 
 
 image mask_child:

@@ -137,20 +137,21 @@ init python:
 
         def removePlaceholders(self):
             """remove placeholders in json files"""
-            raw_examples = Info().getExamplePrompts[f"level2_{self.character_name}"]
+            raw_examples = Info().getExamplePrompts[f"level2_{self.character_name}"] if "zone" not in self.character_name else Info().getExamplePrompts[f"level1_{self.character_name}"]
 
-            bg_scenes = [s for s in Configs().bg_scenes["default"]] + [s for s in Configs().bg_scenes["checks"]]
-            emotions = ', '.join([e for e in Configs().characters[self.character_name.title()]['head']])
-            backgrounds = ', '.join(bg_scenes)
-            
+            if "zone" not in self.character_name:
+                bg_scenes = [s for s in Configs().bg_scenes["default"]] + [s for s in Configs().bg_scenes["checks"]]
+                emotions = ', '.join([e for e in Configs().characters[self.character_name.title()]['head']])
+                backgrounds = ', '.join(bg_scenes)
+                
 
-            string = raw_examples[0]['content'].replace("<name>", persistent.playername)
-            string = string.replace("<char>", self.character_name)
-            string = string.replace("<emotions>", emotions)
-            string = string.replace("<backgrounds>", backgrounds)
+                string = raw_examples[0]['content'].replace("<name>", persistent.playername)
+                string = string.replace("<char>", self.character_name)
+                string = string.replace("<emotions>", emotions)
+                string = string.replace("<backgrounds>", backgrounds)
 
-            string = raw_examples[0]['content'] = string
-            raw_examples[0]['content'] = string
+                string = raw_examples[0]['content'] = string
+                raw_examples[0]['content'] = string
 
 
             return raw_examples
@@ -197,15 +198,18 @@ init python:
 
         def ai_response(self, userInput):
             """Gets ai generated text based off given prompt"""
-
-            emotions = ', '.join([e for e in Configs().characters[self.character_name.title()]['head']])
-            parts = ', '.join([e for e in Configs().characters[self.character_name.title()]['left']]) # "explain" and "relaxed" (which honestly should prob just use a number system)
-            reminder = "" if self.retrying == False else Info().getReminder["emotes"].replace("<emotes>", emotions).replace("<body>", parts).replace("<char>", self.character_name)
+            
+            reminder = ""
+            if "zone" not in self.character_name:
+                emotions = ', '.join([e for e in Configs().characters[self.character_name.title()]['head']])
+                parts = ', '.join([e for e in Configs().characters[self.character_name.title()]['left']]) # "explain" and "relaxed" (which honestly should prob just use a number system)
+                reminder = "" if self.retrying == False else Info().getReminder["emotes"].replace("<emotes>", emotions).replace("<body>", parts).replace("<char>", self.character_name)
+            
 
             # Log user input
-            examples = self.removePlaceholders()
             self.chathistory.append({"role": "user", "content": userInput + reminder})
 
+            examples = self.removePlaceholders()
             contextAndUserMsg = examples + self.chathistory
             response = self.modelChoices(contextAndUserMsg)
 
@@ -215,28 +219,32 @@ init python:
             if check_error:
                 return check_error[1]
 
-
-            reply, _, face, body, scene = self.removeKeywords(response)
+            reply, face, body, scene = response.replace("[CONTENT]", "").replace("[END]", ""), "", "", ""
+            if "zone" not in self.character_name:
+                reply, _, face, body, scene = self.removeKeywords(response)
 
 
             # If the AI responds w/ an emotion/body not listed, redo the response
-            global retrycount
-            self.retrying = self.retryPrompt(response, face, body)
-            if self.retrying:
-                retrycount -= 1
-                if retrycount <= 0:
-                    self.retrying = False
-                    retrycount = 3
-                else:
-                    self.chathistory.pop()
-                    return self.ai_response(userInput)
+            if "zone" not in self.character_name:
+                global retrycount
+                self.retrying = self.retryPrompt(response, face, body)
+                if self.retrying:
+                    retrycount -= 1
+                    if retrycount <= 0:
+                        self.retrying = False
+                        retrycount = 3
+                    else:
+                        self.chathistory.pop()
+                        return self.ai_response(userInput)
 
 
             # Log AI input
             self.chathistory.append({"role": "assistant", "content": response})
 
-            self.controlMood(face, body)
-            self.controlBackground(scene)
+
+            if "zone" not in self.character_name:
+                self.controlMood(face, body)
+                self.controlBackground(scene)
 
 
             #TODO Should only run if player has voice enabled

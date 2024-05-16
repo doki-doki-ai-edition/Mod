@@ -148,7 +148,7 @@ label AICharacter:
             $ user_msg = renpy.input("Enter a message: ")
 
             if user_msg  == "(init_end_sim)":
-                jump monika_zone
+                jump space_zone
 
 
         $ final_msg = chatSetup.chat(path=pathSetup, chathistory=memory, userInput=user_msg)
@@ -177,13 +177,9 @@ label AICharacter:
         else:
 
 
-
-            #if convo.NARRATION == False and convo.voice_mode == True:
-            #    play sound "audio/vocals/monika.wav"
-
-
             if current_char == "monika":
-                show monika 1a at t11
+                #show monika 1a at t11
+                $ renpy.show("monika 1a", at_list=[t11])
                 monika "[final_msg]"
             elif current_char == "sayori":
                 sayori "[final_msg]"
