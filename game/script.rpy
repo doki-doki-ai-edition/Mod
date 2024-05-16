@@ -176,17 +176,13 @@ label AICharacter:
             show screen error_popup(message=final_msg)
         else:
 
-
-            if current_char == "monika":
-                #show monika 1a at t11
-                $ renpy.show("monika 1a", at_list=[t11])
-                monika "[final_msg]"
-            elif current_char == "sayori":
-                sayori "[final_msg]"
-            elif current_char == "natsuki":
-                natsuki "[final_msg]"
-            elif current_char == "yuri":
-                yuri "[final_msg]"
+            if head_sprite != "3a.png" and head_sprite != "3b.png" and head_sprite != "3c.png" and head_sprite != "3b.png" and head_sprite != "3d.png" and head_sprite != "vomit.png":
+                image sprite basic = im.Composite((960, 960), (0, 0), "[current_char]/[left_sprite]", (0, 0), "[current_char]/[right_sprite]", (0, 0), "[current_char]/[head_sprite]")
+            else:
+                image sprite basic = im.Composite((960, 960), (0, 0), "[current_char]/[head_sprite]")
+            
+            $ renpy.show("sprite basic", at_list=[t11])
+            $ renpy.say("[current_char]", final_msg)
     return
 
 
