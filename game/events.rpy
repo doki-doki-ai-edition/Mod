@@ -54,6 +54,9 @@ init python:
 
         def controlMood(self, face, body):
             """Display different facial expressions"""
+            if self.dbase.getSceneData("zone") == "True":
+                return self.dbase.updateSceneData("character", self.character_name)
+            
             if not face or not body: return
 
             char_name = Configs().characters[self.character_name.title()]
@@ -98,6 +101,7 @@ init python:
             for key in ('default', 'checks'):
                 if scene in bg_scenes[key]:
                     return self.dbase.updateSceneData("background", bg_scenes[key][scene])
+
             return self.dbase.updateSceneData("background", bg_scenes['checks']["clubroom"])
 
 
@@ -137,13 +141,12 @@ init python:
 
         def removePlaceholders(self):
             """remove placeholders in json files"""
-            raw_examples = Info().getExamplePrompts[f"level2_{self.character_name}"] if "zone" not in self.character_name else Info().getExamplePrompts[f"level1_{self.character_name}"]
+            raw_examples = Info().getExamplePrompts[f"level2_{self.character_name}"] if self.dbase.getSceneData("zone") != "True" else Info().getExamplePrompts[f"level1_{self.character_name}_zone"]
 
-            if "zone" not in self.character_name:
+            if self.dbase.getSceneData("zone") != "True":
                 bg_scenes = [s for s in Configs().bg_scenes["default"]] + [s for s in Configs().bg_scenes["checks"]]
                 emotions = ', '.join([e for e in Configs().characters[self.character_name.title()]['head']])
                 backgrounds = ', '.join(bg_scenes)
-                
 
                 string = raw_examples[0]['content'].replace("<name>", persistent.playername)
                 string = string.replace("<char>", self.character_name)
@@ -152,7 +155,6 @@ init python:
 
                 string = raw_examples[0]['content'] = string
                 raw_examples[0]['content'] = string
-
 
             return raw_examples
 
@@ -198,13 +200,13 @@ init python:
 
         def ai_response(self, userInput):
             """Gets ai generated text based off given prompt"""
-            
+
             reminder = ""
-            if "zone" not in self.character_name:
+            if self.dbase.getSceneData("zone") != "True":
                 emotions = ', '.join([e for e in Configs().characters[self.character_name.title()]['head']])
                 parts = ', '.join([e for e in Configs().characters[self.character_name.title()]['left']]) # "explain" and "relaxed" (which honestly should prob just use a number system)
                 reminder = "" if self.retrying == False else Info().getReminder["emotes"].replace("<emotes>", emotions).replace("<body>", parts).replace("<char>", self.character_name)
-            
+
 
             # Log user input
             self.chathistory.append({"role": "user", "content": userInput + reminder})
@@ -220,12 +222,12 @@ init python:
                 return check_error[1]
 
             reply, face, body, scene = response.replace("[CONTENT]", "").replace("[END]", ""), "", "", ""
-            if "zone" not in self.character_name:
+            if self.dbase.getSceneData("zone") != "True":
                 reply, _, face, body, scene = self.removeKeywords(response)
 
 
             # If the AI responds w/ an emotion/body not listed, redo the response
-            if "zone" not in self.character_name:
+            if self.dbase.getSceneData("zone") != "True":
                 global retrycount
                 self.retrying = self.retryPrompt(response, face, body)
                 if self.retrying:
@@ -241,10 +243,8 @@ init python:
             # Log AI input
             self.chathistory.append({"role": "assistant", "content": response})
 
-
-            if "zone" not in self.character_name:
-                self.controlMood(face, body)
-                self.controlBackground(scene)
+            self.controlMood(face, body)
+            self.controlBackground(scene)
 
 
             #TODO Should only run if player has voice enabled

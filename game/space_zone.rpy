@@ -26,15 +26,19 @@ label space_zone:
             $ pathSetup = f"{config.basedir}/chats/"+persistent.chatFolderName[num]
             $ current_char = Data(path_to_user_dir=pathSetup).getSceneData("character")
 
-            $ chatSetup = SetupChat(chat_name=persistent.chatFolderName[num], character_name=current_char)
+            $ chatSetup = SetupChat(chat_name=persistent.chatFolderName[num], character_name=f"{current_char}")
             $ memory = Data(path_to_user_dir=pathSetup).getChathistory
             $ SetVariable("num", None)
 
 
     else:
-        $ chatSetup = SetupChat(chat_name=chatFolderName, character_name=f"{character_name}_zone")
+        $ chatSetup = SetupChat(chat_name=chatFolderName, character_name=f"{character_name}")
         $ pathSetup = chatSetup.setup()
-        $ convo = chatSetup.chat(path=pathSetup)
+        $ convo = chatSetup.chat(path=pathSetup, userInput="umm...")
+        $ DataSetup = Data(path_to_user_dir=pathSetup)
+        $ DataSetup.updateSceneData("zone", "True")
+
+
 
     $ memory = Data(path_to_user_dir=pathSetup).getChathistory
 

@@ -69,6 +69,15 @@ label AICharacter:
     scene black with dissolve
 
     $ resume = None # Used to check if a file has been loaded
+    $ zone_type = None
+    $ current_char = None
+    $ current_char_title = None
+    $ current_head = None
+    $ current_left = None
+    $ current_right = None
+    $ current_background = None
+    $ zone_type = None
+
 
     # "num" is a default value set to None. If a number is
     # assigned to it, that means the user is opening an old file
@@ -96,6 +105,11 @@ label AICharacter:
     $ current_left = Data(path_to_user_dir=pathSetup).getSceneData("left_sprite")
     $ current_right = Data(path_to_user_dir=pathSetup).getSceneData("right_sprite")
     $ current_background = Data(path_to_user_dir=pathSetup).getSceneData("background")
+    $ zone_type = Data(path_to_user_dir=pathSetup).getSceneData("zone")
+
+    if zone_type == "True":
+        jump space_zone
+
 
     image _bg:
         "bg/[current_background]"
@@ -112,8 +126,10 @@ label AICharacter:
             uppies
 
         if current_head != "3a.png" and current_head != "3b.png" and current_head != "3c.png" and current_head != "3b.png" and current_head != "3d.png" and current_head != "vomit.png":
+            hide full_sprite
             show basic at t11
         else:
+            hide basic
             show full_sprite at t11
 
         if current_char_title != "":
@@ -133,7 +149,7 @@ label AICharacter:
         else:
             $ user_msg = renpy.input("Enter a message: ")
 
-            if user_msg  == "(init_end_sim)":
+            if user_msg  == "(init_end_sim)" and character_name == "monika":
                 jump space_zone
 
 
@@ -170,8 +186,10 @@ label AICharacter:
                 uppies
 
             if current_head != "3a.png" and current_head != "3b.png" and current_head != "3c.png" and current_head != "3b.png" and current_head != "3d.png" and current_head != "vomit.png":
+                hide full_sprite
                 show basic at t11
             else:
+                hide basic
                 show full_sprite at t11
 
             $ renpy.say("[current_char_title]", final_msg)
