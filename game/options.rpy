@@ -161,7 +161,7 @@ define config.predict_statements = 50
 define config.menu_clear_layers = ["front"]
 define config.gl_test_image = "white"
 #define config.developer = True
-#define config.log = "log.txt"
+define config.log = "log.txt"
 
 # init python:
 #     if len(renpy.loadsave.location.locations) > 1: del(renpy.loadsave.location.locations[1])

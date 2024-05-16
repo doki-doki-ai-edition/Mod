@@ -90,13 +90,14 @@ label AICharacter:
             $ chatSetup = SetupChat(chat_name=persistent.chatFolderName[num], character_name=current_char)
             $ memory = Data(path_to_user_dir=pathSetup).getChathistory
             $ SetVariable("num", None)
-
+            $ renpy.log(">>> in saved game")
 
     else:
         $ chatFolderName = renpy.input("Name This Realm: ", "realm", allow=" ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789_").strip()
         $ chatSetup = SetupChat(chat_name=chatFolderName, character_name=character_name)
         $ pathSetup = chatSetup.setup()
         $ convo = chatSetup.chat(path=pathSetup)
+        $ renpy.log(">>> starting new ")
 
     $ memory = Data(path_to_user_dir=pathSetup).getChathistory
     $ current_char = Data(path_to_user_dir=pathSetup).getSceneData("character")
