@@ -197,12 +197,6 @@ label AICharacter:
 
 
 
-label monika_zone:
-
-    return
-
-
-
 
 
 
