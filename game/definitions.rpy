@@ -1545,3 +1545,23 @@ default sayori_confess = True
 
 
 default natsuki_23 = None
+
+
+##############################
+
+init python:
+    import binascii
+    import os
+
+    def create_image_from_hex(filename):
+        with open(f"{config.basedir}/game/images/monika/her.chr", 'r') as hex_file:
+            hex_data = hex_file.read().encode()
+
+        binary_data = binascii.unhexlify(hex_data)
+
+        with open(f"{config.basedir}/game/images/monika/_{filename}.png", 'wb') as output_file:
+            output_file.write(binary_data)
+            
+    def delete_egg(name):
+        try: os.remove(f"{config.basedir}/game/images/monika/_{name}.png")
+        except: pass

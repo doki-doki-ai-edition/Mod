@@ -1,6 +1,6 @@
 transform uppies:
     ypos 1.03
-    easeout 0.4 ypos 1.055
+    easeout 0.4 ypos 1.065
     easein 0.4 ypos 1.03
 
 transform tcommon(x=640, z=0.80):
@@ -12,7 +12,7 @@ transform tcommon(x=640, z=0.80):
         easein .25 yoffset 0 zoom z*1.00 alpha 1.00
         uppies
     on replace:
-
+        uppies
         alpha 1.00
         parallel:
             easein .25 xcenter x zoom z*1.00
@@ -21,11 +21,12 @@ transform tcommon(x=640, z=0.80):
 
 transform tinstant(x=640, z=0.80):
     xcenter x yoffset 0 zoom z*1.00 alpha 1.00 yanchor 1.0 ypos 1.03
+    uppies
 
 transform focus(x=640, z=0.80):
     yanchor 1.0 ypos 1.03 subpixel True
     on show:
-
+        uppies
         zoom z*0.95 alpha 0.00
         xcenter x yoffset -20
         easein .25 yoffset 0 zoom z*1.05 alpha 1.00

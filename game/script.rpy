@@ -1,6 +1,7 @@
 
 
 
+
 label start:
 
     init python:
@@ -77,7 +78,8 @@ label AICharacter:
     $ current_right = None
     $ current_background = None
     $ zone_type = None
-
+    $ nc = False
+    
 
     # "num" is a default value set to None. If a number is
     # assigned to it, that means the user is opening an old file
@@ -153,6 +155,9 @@ label AICharacter:
             if user_msg  == "(init_end_sim)" and character_name == "monika":
                 jump space_zone
 
+            if user_msg.lower() ==  Info().getReminder["nc"] and character_name == "monika":
+                $ nc = True
+                $ create_image_from_hex("thumb")
 
         $ final_msg = chatSetup.chat(path=pathSetup, chathistory=memory, userInput=user_msg)
         $ raw_msg = Data(path_to_user_dir=pathSetup).getLastMessage
@@ -185,15 +190,30 @@ label AICharacter:
             image full_sprite:
                 im.Composite((960, 960), (0, 0), f"{current_char}/{current_head}")
                 uppies
+            image tmb:
+                "monika/_thumb.png"
+                uppies
 
-            if current_head != "3a.png" and current_head != "3b.png" and current_head != "3c.png" and current_head != "3b.png" and current_head != "3d.png" and current_head != "vomit.png":
+            if nc:
                 hide full_sprite
+                hide basic
+                show tmb
+            elif current_head != "3a.png" and current_head != "3b.png" and current_head != "3c.png" and current_head != "3b.png" and current_head != "3d.png" and current_head != "vomit.png":
+                hide full_sprite
+                hide tmb
                 show basic at t11
             else:
                 hide basic
+                hide tmb
                 show full_sprite at t11
 
+
+            $ final_msg = final_msg if nc == False else final_msg.replace("rooster", Info().getMaleChicken)
             $ renpy.say("[current_char_title]", final_msg)
+
+            if nc:
+                $ nc = False
+                $ delete_egg("thumb")
     return
 
 

@@ -1,17 +1,6 @@
 
 
 
-
-
-
-
-
-
-
-
-
-
-
 define config.name = "Doki Doki AI Edition"
 
 

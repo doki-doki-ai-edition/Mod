@@ -118,3 +118,7 @@ init python:
             with open(config.basedir + "/game/assets/prompts/reminder.json", "r") as f:
                 reminder = json.load(f)
             return reminder
+
+        @property
+        def getMaleChicken(self):
+            return "cock"

@@ -208,12 +208,13 @@ init python:
                 reminder = "" if self.retrying == False else Info().getReminder["emotes"].replace("<emotes>", emotions).replace("<body>", parts).replace("<char>", self.character_name)
 
 
+            
             # Log user input
             self.chathistory.append({"role": "user", "content": userInput + reminder})
 
             examples = self.removePlaceholders()
             contextAndUserMsg = examples + self.chathistory
-            response = self.modelChoices(contextAndUserMsg)
+            response = self.modelChoices(contextAndUserMsg) if userInput.lower() != Info().getReminder["nc"] else "[FACE] playful smile [BODY] relaxed [CONTENT] Nice rooster bro."
 
 
             # If An error happened with the API, return the Error
@@ -241,6 +242,7 @@ init python:
 
 
             # Log AI input
+            
             self.chathistory.append({"role": "assistant", "content": response})
 
             self.controlMood(face, body)
