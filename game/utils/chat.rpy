@@ -36,7 +36,6 @@ init python:
             if not os.path.exists(self.path_to_user_dir):
                 os.makedirs(self.path_to_user_dir, mode=0o777)
 
-            userInput = "{RST}"
 
             full_path = self.tools.createRealm(name_of_realm=self.chat_name, scenedata_default=self.scenedata_default)
             return full_path
