@@ -207,10 +207,7 @@ label AICharacter:
         $ current_background = Data(path_to_user_dir=pathSetup).getSceneData("background")
 
         if raw_msg.startswith("[SCENE]"):
-            # Narrator is speaking | Also the reason why I'm not using 1 if statement is because for whatever
-            # reason, the cache of the previous img doesn't fully reset & the "zoom" remains the same.
-            # The AI bg can only be 1024 x 1024 (max) and to fill the screen I need to use zoom.
-            # I could import Pillow and resize it that way but installing it isnt working atm.
+            # Narrator is speaking 
 
             image _bg:
                 "bg/[current_background]"
