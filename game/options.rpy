@@ -35,6 +35,7 @@ define build.name = "DDAE"
 define config.has_sound = True
 define config.has_music = True
 define config.has_voice = False
+define config.debug_sound = True
 
 
 

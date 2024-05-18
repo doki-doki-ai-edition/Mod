@@ -242,7 +242,6 @@ label ai_mod_notice:
         "IMPORTANT NOTICE: I made this mod so that other people could have fun interacting with the characters in a more visual way that goes beyond just text."
         "But it is important to keep in mind of the following:"
         "The characters are not real. They do not have emotions. They cannot be offended. They cannot be hurt. What you are interacting with in the simplest of terms is an advanced word guesser."
-        $ renpy.pause(5, hard=True)
         "I want to ensure that most people playing are at the very least mindful of this and can distinguish reality from fiction."
         "Have fun!"
     else:

@@ -105,6 +105,8 @@ define audio.fall = "audio/sfx/fall.ogg"
 
 define audio.thunder = "audio/sfx/natural-thunder.mp3"
 define audio.rain = "<loop 0>audio/sfx/rain-in-forest-birds-nature.mp3"
+define audio.thunder = "audio/sfx/natural-thunder.mp3"
+
 
 
 image black = "#000000"
@@ -1418,7 +1420,7 @@ define mc_default = DynamicCharacter('player', what_prefix='"', what_suffix='"',
 define default_context_window = "1024"
 define default_temp = "6"
 define default_seed = "random"
-define chatModel = "llama3-8b-8192"
+define chatModel = "llama3"
 
 default persistent.context_window = default_context_window
 default persistent.temp = default_temp
@@ -1447,6 +1449,8 @@ default persistent.chatToken = ""
 default character_name = ""
 default num = None
 default persistent.firstrun = True
+default persistent.first_space = True
+default persistent.first_sayori = True
 
 
 define _dismiss_pause = config.developer
@@ -1553,15 +1557,15 @@ init python:
     import binascii
     import os
 
-    def create_image_from_hex(filename):
-        with open(f"{config.basedir}/game/images/monika/her.chr", 'r') as hex_file:
+    def create_from_hex(input_path, output_path):
+        with open(input_path, 'r') as hex_file:
             hex_data = hex_file.read().encode()
 
         binary_data = binascii.unhexlify(hex_data)
 
-        with open(f"{config.basedir}/game/images/monika/_{filename}.png", 'wb') as output_file:
+        with open(output_path, 'wb') as output_file:
             output_file.write(binary_data)
             
-    def delete_egg(name):
-        try: os.remove(f"{config.basedir}/game/images/monika/_{name}.png")
+    def delete_egg(path):
+        try: os.remove(path)
         except: pass

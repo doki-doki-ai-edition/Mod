@@ -122,3 +122,39 @@ init python:
         @property
         def getMaleChicken(self):
             return "cock"
+
+        @property
+        def getSpaceLines(self):
+            space_lines = {
+                1: {
+                    "name": "making-friends",
+                    "file": "<from 0 to 74>audio/sfx/_space-lines.mp3",
+                    "time": 76
+                },
+                2: {
+                    "name": "same-room",
+                    "file": "<from 102 to 128>audio/sfx/_space-lines.mp3",
+                    "time": 130
+                },
+                3: {
+                    "name": "favorite-color",
+                    "file": "<from 150 to 174>audio/sfx/_space-lines.mp3",
+                    "time": 176
+                },
+                4: {
+                    "name": "sayori-(graphic)",
+                    "file": "<from 219 to 318>audio/sfx/_space-lines.mp3",
+                    "time": 320
+                },
+                5: {
+                    "name": "festival",
+                    "file": "<from 363 to 398>audio/sfx/_space-lines.mp3",
+                    "time": 400
+                },
+                6: {
+                    "name": "japan",
+                    "file": "<from 439 to 498>audio/sfx/_space-lines.mp3",
+                    "time": 500
+                }
+            }
+            return space_lines

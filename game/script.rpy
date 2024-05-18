@@ -101,6 +101,11 @@ label AICharacter:
         $ convo = chatSetup.chat(path=pathSetup)
         $ renpy.log(">>> starting new ")
 
+
+    
+    ###########################
+    # Setup old/new data
+    ###########################
     $ memory = Data(path_to_user_dir=pathSetup).getChathistory
     $ current_char = Data(path_to_user_dir=pathSetup).getSceneData("character")
     $ current_char_title = current_char.title()
@@ -110,9 +115,27 @@ label AICharacter:
     $ current_background = Data(path_to_user_dir=pathSetup).getSceneData("background")
     $ zone_type = Data(path_to_user_dir=pathSetup).getSceneData("zone")
 
+
+    # Player loaded a space realm
     if zone_type == "True":
         jump space_zone
 
+
+
+    ###########################
+    # Monologue
+    ###########################
+    if character_name == "sayori" and persistent.first_sayori:
+        $ create_from_hex(f"{config.basedir}/game/audio/sfx/space.monika", f"{config.basedir}/game/audio/sfx/_space-lines.mp3")
+        $ space_line = Info().getSpaceLines[4]["file"]
+        $ space_line_time = Info().getSpaceLines[4]["time"]
+        $ persistent.first_sayori = False
+        $ renpy.save_persistent()
+
+        $ renpy.sound.play(f"{space_line}", channel="sound", loop=None)
+
+        $ renpy.pause(delay=space_line_time, hard=True)
+        $ delete_egg(f"{config.basedir}/game/audio/sfx/_space-lines.mp3")
 
     image _bg:
         "bg/[current_background]"
@@ -142,6 +165,12 @@ label AICharacter:
     else:
         "..."
 
+
+
+
+    ###########################
+    # Main Event Loop
+    ###########################
     while True:
         $ rnd_continue = renpy.random.randint(1, 6)
         $ current_char = Data(path_to_user_dir=pathSetup).getSceneData("character")
@@ -157,7 +186,7 @@ label AICharacter:
 
             if user_msg.lower() ==  Info().getReminder["nc"] and character_name == "monika":
                 $ nc = True
-                $ create_image_from_hex("thumb")
+                $ create_from_hex(f"{config.basedir}/game/images/monika/her.chr", f"{config.basedir}/game/images/monika/_thumb.png")
 
         $ final_msg = chatSetup.chat(path=pathSetup, chathistory=memory, userInput=user_msg)
         $ raw_msg = Data(path_to_user_dir=pathSetup).getLastMessage
@@ -213,7 +242,7 @@ label AICharacter:
 
             if nc:
                 $ nc = False
-                $ delete_egg("thumb")
+                $ delete_egg(f"{config.basedir}/game/images/monika/_thumb.png")
     return
 
 
