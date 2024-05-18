@@ -134,27 +134,27 @@ init python:
                 2: {
                     "name": "same-room",
                     "file": "<from 102 to 128>audio/sfx/_space-lines.mp3",
-                    "time": 130
+                    "time": 26
                 },
                 3: {
                     "name": "favorite-color",
                     "file": "<from 150 to 174>audio/sfx/_space-lines.mp3",
-                    "time": 176
+                    "time": 24
                 },
                 4: {
                     "name": "sayori-(graphic)",
                     "file": "<from 219 to 318>audio/sfx/_space-lines.mp3",
-                    "time": 320
+                    "time": 99
                 },
                 5: {
                     "name": "festival",
                     "file": "<from 363 to 398>audio/sfx/_space-lines.mp3",
-                    "time": 400
+                    "time": 35
                 },
                 6: {
                     "name": "japan",
                     "file": "<from 439 to 498>audio/sfx/_space-lines.mp3",
-                    "time": 500
+                    "time": 59
                 }
             }
             return space_lines
