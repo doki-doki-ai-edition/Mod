@@ -96,7 +96,7 @@ init python:
 
                 if body.get("done", False):
                     message["content"] = output
-                    return output.strip()
+                    return output.strip() + " [END]"
 
 
 
