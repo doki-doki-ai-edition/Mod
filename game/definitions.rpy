@@ -108,6 +108,9 @@ define audio.rain = "<loop 0>audio/sfx/rain-in-forest-birds-nature.mp3"
 define audio.thunder = "audio/sfx/natural-thunder.mp3"
 
 
+image credits_cg9_locked:
+    "images/cg/credits/9b.png"
+    size (1280, 720)
 
 image black = "#000000"
 image dark = "#000000e4"
