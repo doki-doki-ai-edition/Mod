@@ -126,6 +126,11 @@ init python:
             scene = getContent('[SCENE]', '[NARRATION]')
 
             reply = reply.replace('[END]', '')
+            if scene:
+                # Sometimes a model responds w/ text before [SCENE]
+                # This removes any text before and only keep [SCENE] and
+                # everything that comes after it
+                reply = "[SCENE] " + reply.split("[SCENE]")[1]
 
             if "[CONTENT]" in reply:
                 reply = reply.split("[CONTENT]")[1].strip()
