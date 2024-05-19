@@ -248,12 +248,6 @@ init python:
             self.controlBackground(scene)
 
 
-            #TODO Should only run if player has voice enabled
-            if self.NARRATION != True:
-                #self.char_speaks(final_res, emote=emote)
-                pass
-
-
             with open(f"{self.full_path}/chathistory.json", 'w') as f:
                 json.dump(self.chathistory, f, indent=2)
             return reply
