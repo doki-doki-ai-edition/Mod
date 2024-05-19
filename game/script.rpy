@@ -171,7 +171,7 @@ label AICharacter:
 
 
     else:
-        "..."
+        $ renpy.say(None, convo)
 
 
 
