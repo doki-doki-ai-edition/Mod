@@ -13,7 +13,12 @@ init python:
         @property
         def getLastMessage(self):
             with open(self.path_to_user_dir + "/chathistory.json", 'r') as f:
-                return json.load(f)[-1]["content"]
+                last_msg = json.load(f)[-1]["content"]
+
+            try: last_msg = "[SCENE]" + last_msg.split("[SCENE]")[1]
+            except IndexError: pass
+            
+            return last_msg
 
         @property
         def getChathistory(self):
