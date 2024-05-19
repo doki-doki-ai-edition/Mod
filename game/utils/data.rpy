@@ -1,7 +1,8 @@
 init python:
     import os
     import json
-
+    import binascii
+    import os
 
     class Data:
 
@@ -101,6 +102,20 @@ init python:
         def listCharEmotes(self, name):
             emotions = ', '.join([e for e in self.characters[name]['head']])
             return emotions
+
+
+        def create_from_hex(self, input_path, output_path):
+            with open(input_path, 'r') as hex_file:
+                hex_data = hex_file.read().encode()
+
+            binary_data = binascii.unhexlify(hex_data)
+
+            with open(output_path, 'wb') as output_file:
+                output_file.write(binary_data)
+                
+        def delete_egg(self, path):
+            try: os.remove(path)
+            except: pass
 
 
 

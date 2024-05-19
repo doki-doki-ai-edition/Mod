@@ -50,7 +50,10 @@ label space_zone:
 
     else:
         "..."
-        $ create_from_hex(f"{config.basedir}/game/audio/sfx/space.monika", f"{config.basedir}/game/audio/sfx/_space-lines.mp3")
+        ###########################
+        # Monologue
+        ###########################
+        $ Configs().create_from_hex(f"{config.basedir}/game/audio/sfx/space.monika", f"{config.basedir}/game/audio/sfx/_space-lines.mp3")
         $ space_line = Info().getSpaceLines[2]["file"]
         $ space_line_time = Info().getSpaceLines[2]["time"]
         $ rnd_line = renpy.random.randint(1, 6)
@@ -67,7 +70,7 @@ label space_zone:
             $ renpy.sound.play(f"{space_line}", channel="sound", loop=None)
 
         $ renpy.pause(space_line_time, hard=True)
-        $ delete_egg(f"{config.basedir}/game/audio/sfx/_space-lines.mp3")
+        $ Configs().delete_egg(f"{config.basedir}/game/audio/sfx/_space-lines.mp3")
 
     while True:
         $ rnd_continue = renpy.random.randint(1, 6)

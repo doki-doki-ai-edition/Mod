@@ -58,7 +58,7 @@ init python:
                 return self.dbase.updateSceneData("character", self.character_name)
             
             if not face or not body: return
-            
+
 
             char_name = Configs().characters[self.character_name.title()]
             full_sprite_emotions = char_name["full_sprites"] # dont render "left" or "right" body sprites if head_sprite returns smthing from this list
@@ -68,10 +68,10 @@ init python:
 
             self.dbase.updateSceneData("character", self.character_name)
 
-            if self.character_name == "monika" and head_sprite == "cheeky":
-                create_from_hex(f"{config.basedir}/game/images/monika/cheeky.chr", f"{config.basedir}/game/images/monika/_cheeky.png")
+            if self.character_name == "monika" and face == "nonchalant":
+                Configs().create_from_hex(f"{config.basedir}/game/images/monika/nonchalant.chr", f"{config.basedir}/game/images/monika/nonchalant.png")
             else:
-                delete_egg(f"{config.basedir}/game/images/monika/_cheeky.png")
+                Configs().delete_egg(f"{config.basedir}/game/images/monika/nonchalant.png")
 
             for h in head_sprite:
                 if h == face.lower():

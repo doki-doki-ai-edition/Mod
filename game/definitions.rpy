@@ -1568,20 +1568,3 @@ default natsuki_23 = None
 
 
 ##############################
-
-init python:
-    import binascii
-    import os
-
-    def create_from_hex(input_path, output_path):
-        with open(input_path, 'r') as hex_file:
-            hex_data = hex_file.read().encode()
-
-        binary_data = binascii.unhexlify(hex_data)
-
-        with open(output_path, 'wb') as output_file:
-            output_file.write(binary_data)
-            
-    def delete_egg(path):
-        try: os.remove(path)
-        except: pass
