@@ -2,7 +2,8 @@
     "Monika":{
         "full_sprites": [
             "playful frown",
-            "playful smile"
+            "playful smile",
+            "cheeky"
         ],
         "head": {
             "angry": "i.png",
@@ -11,6 +12,7 @@
             "concerned": "c.png",
             "crying": "o.png",
             "curious": "c.png",
+            "nonchalant": "nonchalant.png",
             "embarrassed": "l.png",
             "flirty": "3a.png",
             "glad": "j.png",

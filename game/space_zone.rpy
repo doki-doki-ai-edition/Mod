@@ -51,19 +51,20 @@ label space_zone:
     else:
         "..."
         $ create_from_hex(f"{config.basedir}/game/audio/sfx/space.monika", f"{config.basedir}/game/audio/sfx/_space-lines.mp3")
-        $ space_line = Info().getSpaceLines[1]["file"]
-        $ space_line_time = Info().getSpaceLines[1]["time"]
+        $ space_line = Info().getSpaceLines[2]["file"]
+        $ space_line_time = Info().getSpaceLines[2]["time"]
         $ rnd_line = renpy.random.randint(1, 6)
 
         if persistent.first_space == True:
-            play voice "[space_line]" noloop
+            $ renpy.sound.play(f"{space_line}", channel="sound", loop=None)
+
             $ persistent.first_space = False
             $ renpy.save_persistent()
         else:
             $ rnd_line = rnd_line if rnd_line != 4 else 1
             $ space_line = Info().getSpaceLines[rnd_line]["file"]
             $ space_line_time = Info().getSpaceLines[rnd_line]["time"]
-            play voice "[space_line]" noloop
+            $ renpy.sound.play(f"{space_line}", channel="sound", loop=None)
 
         $ renpy.pause(space_line_time, hard=True)
         $ delete_egg(f"{config.basedir}/game/audio/sfx/_space-lines.mp3")
