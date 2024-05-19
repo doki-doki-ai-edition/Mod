@@ -195,6 +195,19 @@ init python:
             except TypeError:
                 return False
 
+        def checkForRepeat(self):
+            """Checks if {RST} is sent more than once and falls back on a
+            default prompt"""
+            if self.dbase.getSceneData("zone") != "True":
+                if len(self.chathistory) >=4 and len(self.chathistory) <= 8:
+                    amnt = 0
+                    for rst in self.chathistory:
+                        if "{RST}" in rst['content']:
+                            amnt += 1
+
+                    if amnt >= 2:
+                        self.chathistory = Info().getReminder['backup_prompt']
+
 
         def modelChoices(self, prompt):
             groq = chat_model_dict["groq"]["suggested"] + chat_model_dict["groq"]["other"]
@@ -258,6 +271,7 @@ init python:
             self.controlMood(face, body)
             self.controlBackground(scene)
 
+            self.checkForRepeat()
 
             with open(f"{self.full_path}/chathistory.json", 'w') as f:
                 json.dump(self.chathistory, f, indent=2)
