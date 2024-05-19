@@ -952,7 +952,10 @@ init python:
 #default num = None
 init python:
     import os
-    chats = os.listdir(f"{config.basedir}/chats")
+    chats = ""
+    try: chats = os.listdir(f"{config.basedir}/chats")
+    except FileNotFoundError: pass
+    
 
 screen file_slots(title):
     default page_name_value = FilePageNameInputValue()
@@ -1042,15 +1045,18 @@ screen custom_save_screen():
 
 
             vbox:
-                $ chat_list = []
-                for i, folder in enumerate(chats):
-                    textbutton folder:
-                        xpos 250
-                        ypos 120
-                        action [SetVariable("num", i), Hide("custom_save_screen"), Jump("nameWorld_label")]
-                    $ chat_list.append(folder)
-                    null width 20
-                $ persistent.chatFolderName = chat_list
+                if chats == "":
+                    pass
+                else:
+                    $ chat_list = []
+                    for i, folder in enumerate(chats):
+                        textbutton folder:
+                            xpos 250
+                            ypos 120
+                            action [SetVariable("num", i), Hide("custom_save_screen"), Jump("nameWorld_label")]
+                        $ chat_list.append(folder)
+                        null width 20
+                    $ persistent.chatFolderName = chat_list
 
 
 

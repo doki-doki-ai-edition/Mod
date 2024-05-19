@@ -228,7 +228,7 @@ label AICharacter:
                 "monika/[current_head]"
                 uppies
 
-            if current_head == "nonchalant.png" or current_head == "_thumb.png":
+            if current_head == "nonchalant.png" or nc:
                 hide full_sprite
                 hide basic
                 show tmb
