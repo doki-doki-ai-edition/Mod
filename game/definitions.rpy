@@ -1454,7 +1454,20 @@ default num = None
 default persistent.firstrun = True
 default persistent.first_space = True
 default persistent.first_sayori = True
-
+define chat_model_dict = {
+    "openai": {
+        "suggested": ["gpt-4o", "gpt-4-1106-preview"],
+        "other": ["gpt-3.5-turbo-1106"]
+    },
+    "groq": {
+        "suggested": ["llama3-70b-8192"],
+        "other": []
+    },
+    "llms": {
+        "suggested": ["llama3"],
+        "other": ["mistral"]
+    }
+}
 
 define _dismiss_pause = config.developer
 

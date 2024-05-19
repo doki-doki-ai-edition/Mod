@@ -1059,11 +1059,11 @@ screen select_model_name_screen():
     zorder 10
     add "bg/theme.png"
 
-    $ fav_local_models = ["llama3"] # llama3-8b-8192, mistral-8x7b-32768
-    $ fav_api_models = ["gpt-4o", "gpt-4-1106-preview", "llama3-70b-8192"]
+    $ fav_local_models = chat_model_dict["llms"]["suggested"]
+    $ other_local_models = chat_model_dict["llms"]["other"]
     
-    $ other_local_models = ["mistral"]
-    $ other_api_models = ["gpt-3.5-turbo-1106"]
+    $ fav_api_models = chat_model_dict["openai"]["suggested"] + chat_model_dict["groq"]["suggested"]
+    $ other_api_models = chat_model_dict["openai"]["other"] + chat_model_dict["groq"]["other"]
     
 
     $ important_info = "Type \"ollama run (model name)\" in a console on your computer.\nFor example: ollama run llama3" if llm_mode == True else "Make sure you're using the correct API key for the model name you select."

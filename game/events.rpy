@@ -186,9 +186,8 @@ init python:
 
 
         def modelChoices(self, prompt):
-            groq = ["llama3-70b-8192"]
-            openai = ["gpt-4o", "gpt-4-1106-preview", "gpt-3.5-turbo-1106"]
-
+            groq = chat_model_dict["groq"]["suggested"] + chat_model_dict["groq"]["other"]
+            openai = chat_model_dict["openai"]["suggested"] + chat_model_dict["openai"]["other"]
 
             if persistent.chatModel in groq:
                 return TextModel().getGroq(prompt=prompt)
