@@ -67,12 +67,21 @@ init python:
 
 
         def getLLM(self, prompt):
-            options = {
-                "options": {
-                    "temperature": float(f".{persistent.temp}"),
-                    "stop": ['[INST', '[/INST', '[END]']
-                    }
-            }
+            if persistent.seed == "random":
+                options = {
+                    "options": {
+                        "temperature": float(f".{persistent.temp}"),
+                        "stop": ['[INST', '[/INST', '[END]']
+                        }
+                }
+            else:
+                options = {
+                    "options": {
+                        "temperature": float(f".{persistent.temp}"),
+                        "stop": ['[INST', '[/INST', '[END]'],
+                        "seed": persistent.seed
+                        }
+                }
 
             response = requests.post(
                 "http://localhost:11434/api/chat",
