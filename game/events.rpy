@@ -134,7 +134,7 @@ init python:
             reply = reply.replace('[END]', '')
             if scene:
                 # Sometimes a model responds w/ text before [SCENE]
-                # This removes any text before and only keep [SCENE] and
+                # This removes any text before and only keeps [SCENE] and
                 # everything that comes after it
                 reply = "[SCENE] " + reply.split("[SCENE]")[1]
 
