@@ -123,7 +123,7 @@ init python:
             if "[SCENE]" in clean_response:
                 clean_response = "[SCENE]" + clean_response.split("[SCENE]")[1]
 
-            elif "[CONTENT]" in clean_response and self.dbase.getSceneData("zone") == "True":
+            elif self.dbase.getSceneData("zone") == "True":
                 clean_response =  "[CONTENT]" + clean_response.split("[CONTENT]")[1].strip()
 
             return clean_response
