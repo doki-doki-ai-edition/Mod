@@ -71,7 +71,8 @@ init python:
                 options = {
                     "options": {
                         "temperature": float(f".{persistent.temp}"),
-                        "stop": ['[INST', '[/INST', '[END]']
+                        "stop": ['[INST', '[/INST', '[END]'],
+                        "num_ctx": persistent.context_window
                         }
                 }
             else:
@@ -79,6 +80,7 @@ init python:
                     "options": {
                         "temperature": float(f".{persistent.temp}"),
                         "stop": ['[INST', '[/INST', '[END]'],
+                        "num_ctx": persistent.context_window,
                         "seed": persistent.seed
                         }
                 }
