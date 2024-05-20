@@ -105,7 +105,12 @@ define audio.fall = "audio/sfx/fall.ogg"
 
 define audio.thunder = "audio/sfx/natural-thunder.mp3"
 define audio.rain = "<loop 0>audio/sfx/rain-in-forest-birds-nature.mp3"
+define audio.thunder = "audio/sfx/natural-thunder.mp3"
 
+
+image credits_cg9_locked:
+    "images/cg/credits/9b.png"
+    size (1280, 720)
 
 image black = "#000000"
 image dark = "#000000e4"
@@ -1346,7 +1351,7 @@ image room_mask2 = Composite((1280, 720), (0, 0), "mask_test3", (0, 0), "mask_te
 
 
 
-image splash_glitch2 = "images/bg_temp/splash-glitch2.png"
+image splash_glitch2 = "images/bg/splash-glitch2.png"
 
 
 image mask_child:
@@ -1418,6 +1423,7 @@ define mc_default = DynamicCharacter('player', what_prefix='"', what_suffix='"',
 define default_context_window = "1024"
 define default_temp = "6"
 define default_seed = "random"
+define chatModel = "llama3"
 
 default persistent.context_window = default_context_window
 default persistent.temp = default_temp
@@ -1428,6 +1434,7 @@ default temp = persistent.temp
 default seed = persistent.seed
 
 
+
 default persistent.chatModel = None
 default persistent.imgModel = None
 #define persistent.charVoice = None
@@ -1436,15 +1443,31 @@ define persistent.imgToken = None
 
 
 default llm_mode = True
-default chatModel = persistent.chatModel
-default chatToken = persistent.chatToken
+default persistent.chatModel = chatModel
+default persistent.chatToken = ""
 
 
 
 ##################################
 default character_name = ""
-
-
+default num = None
+default persistent.firstrun = True
+default persistent.first_space = True
+default persistent.first_sayori = True
+define chat_model_dict = {
+    "openai": {
+        "suggested": ["gpt-4o", "gpt-4-1106-preview"],
+        "other": ["gpt-3.5-turbo-1106"]
+    },
+    "groq": {
+        "suggested": ["llama3-70b-8192"],
+        "other": []
+    },
+    "llms": {
+        "suggested": ["llama3"],
+        "other": ["mistral"]
+    }
+}
 
 define _dismiss_pause = config.developer
 
@@ -1542,3 +1565,6 @@ default sayori_confess = True
 
 
 default natsuki_23 = None
+
+
+##############################

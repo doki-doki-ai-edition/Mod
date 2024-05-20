@@ -567,6 +567,10 @@ init python:
         renpy.hide_screen("reset_config_window_popup")
         renpy.show_screen("llm_model_config_screen")
 
+    def FinishUpdateModelName(modelname):
+        persistent.chatModel = modelname
+        renpy.save_persistent()
+
 
     def SwitchToModelConfig():
         renpy.hide_screen("preferences")
@@ -937,20 +941,21 @@ screen save():
 screen load():
     tag menu
 
-    if persistent.freedom:
-        use custom_save_screen()
-    else:
-        use file_slots(_("Load"))
+    use custom_save_screen()
+
 
 init python:
     def FileActionMod(name, page=None, **kwargs):
         return FileAction(name)
 
 
-default num = None
+#default num = None
 init python:
     import os
-    chats = os.listdir(f"{config.basedir}/chats")
+    chats = ""
+    try: chats = os.listdir(f"{config.basedir}/chats")
+    except FileNotFoundError: pass
+    
 
 screen file_slots(title):
     default page_name_value = FilePageNameInputValue()
@@ -1040,15 +1045,71 @@ screen custom_save_screen():
 
 
             vbox:
-                $ chat_list = []
-                for i, folder in enumerate(chats):
-                    textbutton folder:
-                        xpos 250
-                        ypos 120
-                        action [SetVariable("num", i), Hide("custom_save_screen"), Start()]
-                    $ chat_list.append(folder)
-                    null width 20
-                $ persistent.chatFolderName = chat_list
+                if chats == "":
+                    pass
+                else:
+                    $ chat_list = []
+                    for i, folder in enumerate(chats):
+                        textbutton folder:
+                            xpos 250
+                            ypos 120
+                            action [SetVariable("num", i), Hide("custom_save_screen"), Jump("nameWorld_label")]
+                        $ chat_list.append(folder)
+                        null width 20
+                    $ persistent.chatFolderName = chat_list
+
+
+
+screen select_model_name_screen():
+    modal True
+    zorder 10
+    add "bg/theme.png"
+
+    $ fav_local_models = chat_model_dict["llms"]["suggested"]
+    $ other_local_models = chat_model_dict["llms"]["other"]
+    
+    $ fav_api_models = chat_model_dict["openai"]["suggested"] + chat_model_dict["groq"]["suggested"]
+    $ other_api_models = chat_model_dict["openai"]["other"] + chat_model_dict["groq"]["other"]
+    
+
+    $ important_info = "Type \"ollama run (model name)\" in a console on your computer.\nFor example: ollama run llama3" if llm_mode == True else "Make sure you're using the correct API key for the model name you select."
+    use game_menu(_("Models"), scroll="viewport"):
+
+        vbox:
+            null height 50
+            textbutton _("Back") action [Return(), renpy.hide_screen("select_model_name_screen")]
+
+
+        vbox:
+            style_prefix "slider"
+            box_wrap True
+
+            vbox:
+                label _(f"Current Model: {persistent.chatModel}")
+                textbutton _("Important Info") action Show(screen="basic_popup", title="Info", message=important_info, ok_action=NullAction())
+
+
+
+            vbox:
+                if llm_mode == True:
+                    label _(f"Suggested Models")
+                    for model in fav_local_models:
+                        textbutton _(f"{model}") action Show(screen="basic_popup", title="Local Models", message="Sucessfully updated model!", ok_action=Function(FinishUpdateModelName, model))
+
+                    label _(f"Other Models")
+                    for model in other_local_models:
+                        textbutton _(f"{model}") action Show(screen="basic_popup", title="Local Models", message="Sucessfully updated model!", ok_action=Function(FinishUpdateModelName, model))
+                else:
+
+                    label _(f"Suggested Models")
+                    for model in fav_api_models:
+                        textbutton _(f"{model}") action Show(screen="basic_popup", title="API Models", message="Sucessfully updated model!", ok_action=Function(FinishUpdateModelName, model))
+
+                    label _(f"Other Models")
+                    for model in other_api_models:
+                        textbutton _(f"{model}") action Show(screen="basic_popup", title="API Models", message="Sucessfully updated model!", ok_action=Function(FinishUpdateModelName, model))
+
+
 
 
 screen llm_model_config_screen():
@@ -1246,9 +1307,9 @@ screen preferences():
                             style "mute_all_button"
 
                 vbox:
-                    textbutton _("Model Name") action Show(screen="model_name_input", message="Enter a model name", ok_action=Function(FinishEnterModelName))
+                    textbutton _("Model Name") action ShowMenu("select_model_name_screen")
                 vbox:
-                    textbutton _("API Key") action Show(screen="APIKey_name_input", message="Enter your API Key", ok_action=Function(FinishEnterAPIKey))
+                    textbutton _("API Key") action Jump("apikey_label")
                 vbox:
                     textbutton _("Model Config") action ShowMenu("llm_model_config_screen")
 
@@ -1756,7 +1817,7 @@ screen info_seed_popup(message, ok_action):
             style "confirm_prompt"
             xalign 0.5
 
-        label _("Deterministic responses. Selecting any seed will always return the same response if your message is written the same."):
+        label _("Same responses. Selecting a specific seed will always return the same response if your message is written the same."):
             style "confirm_prompt"
 
 
@@ -1765,6 +1826,77 @@ screen info_seed_popup(message, ok_action):
             spacing 100
 
             textbutton _("OK") action ok_action
+
+
+
+
+screen error_popup(message):
+    modal True
+    zorder 200
+
+    style_prefix "confirm"
+
+    add "gui/overlay/confirm.png"
+    key "K_RETURN" action Play("sound", gui.activate_sound)
+
+    frame:
+
+        has vbox:
+            xalign .5
+            yalign .5
+            spacing 30
+
+        label _("ERROR"):
+            style "confirm_prompt"
+            xalign 0.5
+
+        label _(message):
+            style "confirm_prompt"
+
+
+        hbox:
+            xalign 0.5
+            spacing 100
+
+            textbutton _("OK") action Hide("error_popup")
+
+
+
+screen basic_popup(title, message, ok_action):
+    modal True
+    zorder 200
+
+    style_prefix "confirm"
+
+    add "gui/overlay/confirm.png"
+    key "K_RETURN" action [Play("sound", gui.activate_sound), ok_action]
+
+    frame:
+
+        has vbox:
+            xalign .5
+            yalign .5
+            spacing 30
+
+        label _(title):
+            style "confirm_prompt"
+            xalign 0.5
+
+        label _(message):
+            style "confirm_prompt"
+
+
+        hbox:
+            xalign 0.5
+            spacing 100
+
+            textbutton _("OK") action [Hide("basic_popup"), ok_action]
+
+
+
+
+
+
 
 
 
@@ -1808,7 +1940,7 @@ screen chatmode_screen():
         hover_sound "audio/gui/sfx/hover.ogg"
         activate_sound "audio/gui/sfx/select.ogg"
         action [SetVariable("chatmode_num", 0), Jump("gamemode_label")]
-        
+
 
     imagebutton:
         xanchor 0.5
@@ -1822,7 +1954,7 @@ screen chatmode_screen():
         #activate_sound "audio/sfx/select_sfx.wav"
         #action [SetVariable("chatmode_num", 1), Jump("gamemode_label")]
         activate_sound "audio/gui/sfx/select.ogg"
-        action [Show(screen="dialog", message="Coming soon...", ok_action=Hide("dialog"))]
+        action [Show(screen="dialog", message="Currently removed", ok_action=Hide("dialog"))]
     
     image "gui/gamemode/freechat_title.png" zoom 0.20 ypos 233 xpos 175
     image "gui/gamemode/freechat_desc.png" zoom 0.24 ypos 270 xpos 200

@@ -1,3 +1,14 @@
 {
-    "emotes": " (Remember that the only [FACE] type responses should be: <emotes>. AND the only [BODY] type responses must be <body>. ONLY do this if <char> is speaking)"
+    "emotes": " (Remember that the only [FACE] type responses should be: <emotes>. AND the only [BODY] type responses must be <body>. ONLY do this if <char> is speaking)",
+    "nc": "*i pull out my rooster*",
+    "backup_prompt": [
+        {
+          "role": "user",
+          "content": "{RST}"
+        },
+        {
+          "role": "assistant",
+          "content": "[SCENE] outside [NARRATION] You wake up in a familiar place.  [END]"
+        }
+    ]
 }

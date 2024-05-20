@@ -1,48 +1,24 @@
 
 
 
+
 label start:
 
-    if persistent.freedom:
-        init python:
-            config.has_autosave = False
-            config.has_quicksave = False
-            config.autosave_on_quit = False
-            config.autosave_on_choice = False
+    init python:
+        config.has_autosave = False
+        config.has_quicksave = False
+        config.autosave_on_quit = False
+        config.autosave_on_choice = False
 
-        $ input_popup_gui = True
-        if num: # Avoid NoneType error
-            if num >=0:
-                jump AICharacter
-                return
-
-        stop music fadeout 0.5
-
-        scene theme with dissolve
-        call screen chatmode_screen
-    else:
-        $ chapter = 0
+    $ input_popup_gui = True
 
 
-        $ _dismiss_pause = config.developer
+    stop music fadeout 0.5
 
+    scene theme with dissolve
+    call screen chatmode_screen
 
-        $ s_name = "???"
-        $ m_name = "Girl 3"
-        $ n_name = "Girl 2"
-        $ y_name = "Girl 1"
-
-        $ quick_menu = True
-        $ style.say_dialogue = style.normal
-        $ in_sayori_kill = None
-        $ allow_skipping = True
-        $ config.allow_skipping = True
-
-
-        if persistent.playthrough == 0:
-            $ chapter = 0
-            call ch0_main from _call_ch0_main
-        return
+    return
 
 
 
@@ -52,23 +28,26 @@ label gamemode_label:
     call screen gamemode_screen
     return
 
+label apikey_label:
+    $ apikey = renpy.input("Enter API Key", f"{persistent.chatToken}").strip()
+    $ persistent.chatToken = apikey
+    $ renpy.save_persistent()
+    return
+
 
 label nameWorld_label:
     scene theme
-    $ chatFolderName = renpy.input("Name This Realm: ", "realm", allow=" ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789_").strip() 
 
     $ motto = renpy.random.randint(1,300)
     if motto == 15:    
         scene black with dissolve
         play sound "audio/sfx/can you hear me.mp3"
         $ renpy.pause(11, hard=True)
+        jump ch0_motto
 
-    if chatmode_num == 0:
-        jump AICharacter
-    else:
-        # Currently disabled
-        #jump justMonika_Storymode
-        pass
+    "..."
+    jump AICharacter
+
     return
 
 
@@ -85,189 +64,196 @@ define yuri = Character("Yuri", color="#ffffff", window_style="textbox_yuri", wh
 default choice = None
 
 label AICharacter:
-    $ tokenSetter.set_token_persist()
+    $ tokenSetter.set_token()
     stop music
     $ custom_quick_menu = True
     scene black with dissolve
 
-    $ user_chats = ManageChat_Folders(character_name=character_name)
-    $ load = None # Used to check if a file has been loaded
+    $ resume = None # Used to check if a file has been loaded
+    $ zone_type = None
+    $ current_char = None
+    $ current_char_title = None
+    $ current_head = None
+    $ current_left = None
+    $ current_right = None
+    $ current_background = None
+    $ zone_type = None
+    $ nc = False
+
+
+
+    ###########################
+    # Monologue
+    ###########################
+    if character_name == "sayori" and persistent.first_sayori:
+        $ Configs().create_from_hex(f"{config.basedir}/game/audio/sfx/space.monika", f"{config.basedir}/game/audio/sfx/_space-lines.mp3")
+        $ space_line = Info().getSpaceLines[4]["file"]
+        $ space_line_time = Info().getSpaceLines[4]["time"]
+        $ persistent.first_sayori = False
+        $ renpy.save_persistent()
+
+        $ renpy.sound.play(f"{space_line}", channel="sound", loop=None)
+
+        $ renpy.pause(delay=space_line_time/2, hard=True)
+        scene credits_cg9_locked with Dissolve(space_line_time/2)
+
+        $ Configs().delete_egg(f"{config.basedir}/game/audio/sfx/_space-lines.mp3")
+
+
+
 
     # "num" is a default value set to None. If a number is
     # assigned to it, that means the user is opening an old file
-    if num:
+    if num != None:
         if num >= 0:
-            $ load = True
-            $ path = "chats/"+persistent.chatFolderName[num]
-            $ check = CheckData(character_name=character_name, full_path=path+"/")
-            $ memory = check.historyCheck(gamemode="justMonika", chatmode=0, load=True)
-            $ convo = Convo(character_name=character_name, chat_history=memory, full_path=path+"/", load=True)
+            $ resume = True
+            $ pathSetup = f"{config.basedir}/chats/"+persistent.chatFolderName[num]
+            $ current_char = Data(path_to_user_dir=pathSetup).getSceneData("character")
+
+            $ chatSetup = SetupChat(chat_name=persistent.chatFolderName[num], character_name=current_char)
+            $ memory = Data(path_to_user_dir=pathSetup).getChathistory
+            $ SetVariable("num", None)
+            $ renpy.log(">>> in saved game")
+
     else:
-        $ path = user_chats.create_folder(name=chatFolderName)
+        $ chatFolderName = renpy.input("Name This Realm: ", "realm", allow=" ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789_").strip()
+        $ chatSetup = SetupChat(chat_name=chatFolderName, character_name=character_name)
+        $ pathSetup = chatSetup.setup()
+        $ convo = chatSetup.chat(path=pathSetup)
+        $ renpy.log(">>> starting new ")
 
-        $ user_chats.create_chat_history()
-        $ user_chats.create_world_history()
 
-        $ check = CheckData(character_name=character_name, full_path=path+"/")
-        $ memory = check.historyCheck(gamemode="justMonika", chatmode=0) # Adds Freechat Prompt
-        $ convo = Convo(character_name=character_name, chat_history=memory, full_path=path+"/")
+    
+    ###########################
+    # Setup old/new data
+    ###########################
+    $ memory = Data(path_to_user_dir=pathSetup).getChathistory
+    $ current_char = Data(path_to_user_dir=pathSetup).getSceneData("character")
+    $ current_char_title = current_char.title()
+    $ current_head = Data(path_to_user_dir=pathSetup).getSceneData("head_sprite")
+    $ current_left = Data(path_to_user_dir=pathSetup).getSceneData("left_sprite")
+    $ current_right = Data(path_to_user_dir=pathSetup).getSceneData("right_sprite")
+    $ current_background = Data(path_to_user_dir=pathSetup).getSceneData("background")
+    $ zone_type = Data(path_to_user_dir=pathSetup).getSceneData("zone")
 
-    if convo.ai_art_mode == False:
-        image _bg:
-            "bg/[convo.scene]"
-        scene _bg
+
+    # Player loaded a space realm
+    if zone_type == "True":
+        jump space_zone
+
+
+
+
+    
+    image _bg:
+        "bg/[current_background]"
+    scene _bg
+
+    if resume:
+        $ last_msg = Data(path_to_user_dir=pathSetup).getLastMessageClean
+
+        image basic:
+            im.Composite((960, 960), (0, 0), f"{current_char}/{current_left}", (0, 0), f"{current_char}/{current_right}", (0, 0), f"{current_char}/{current_head}")
+            uppies
+        image full_sprite:
+            im.Composite((960, 960), (0, 0), f"{current_char}/{current_head}")
+            uppies
+
+        if current_head != "3a.png" and current_head != "3b.png" and current_head != "3c.png" and current_head != "3b.png" and current_head != "3d.png" and current_head != "vomit.png":
+            hide full_sprite
+            show basic at t11
+        else:
+            hide basic
+            show full_sprite at t11
+
+        if current_char_title != "":
+            $ renpy.say("[current_char_title]", last_msg)
+
+
     else:
-        image ai_bg:
-            zoom 1.5
-            "bg/[convo.scene]"
-        scene ai_bg
+        $ renpy.say(None, convo)
 
-    $ first_response = True
-    # placeholder text (Will rely on json data later for when users load a file)
-    "..."
 
+
+
+    ###########################
+    # Main Event Loop
+    ###########################
     while True:
-        if load == True:
-            $ user_msg = "continue {remember to never speak as the MC, continue the story.}"
-            $ load = False
-            $ first_response = False
-        elif first_response == True:
-            $ user_msg = "{RPT}"
-            $ first_response = False
-        elif convo.rnd == 6: # Makes the narration/Character add on to what they were saying
+        $ rnd_continue = renpy.random.randint(1, 6)
+        $ current_char = Data(path_to_user_dir=pathSetup).getSceneData("character")
+
+        if current_char != "" and rnd_continue == 4:
+            # Randomly continue the chat to have variety so it's not a constant back and forth
             $ user_msg = "continue"
         else:
             $ user_msg = renpy.input("Enter a message: ")
-            if convo.rnd == 1:
-                $ user_msg = convo.context_to_progress_story(user_msg)
-            if convo.rnd == 2:
-                $ user_msg = convo.enforce_static_emotes(user_msg)
 
-        $ final_msg = convo.ai_response(user_msg)
+            if user_msg  == "(init_end_sim)" and character_name == "monika":
+                jump space_zone
 
-        if convo.zone == "True":
-            #jump now_everyone_can_be_happy
-            pass
-        elif convo.zone == "Zone":
-            jump monika_zone
+            if user_msg.lower() ==  Info().getReminder["nc"] and character_name == "monika":
+                $ nc = True
+                $ Configs().create_from_hex(f"{config.basedir}/game/images/monika/her.chr", f"{config.basedir}/game/images/monika/_thumb.png")
 
-        if convo.NARRATION:
-            # Narrator is speaking | Also the reason why I'm not using 1 if statement is because for whatever
-            # reason, the cache of the previous img doesn't fully reset & the "zoom" remains the same.
-            # The AI bg can only be 1024 x 1024 (max) and to fill the screen I need to use zoom.
-            # I could import Pillow and resize it that way but installing it isnt working atm.
-            if convo.ai_art_mode == False:
-                image _bg:
-                    "bg/[convo.scene]"
-                scene _bg
-            else:
-                image ai_bg:
-                    "bg/[convo.scene]"
-                    zoom 1.5
-                scene ai_bg
+        $ final_msg = chatSetup.chat(path=pathSetup, chathistory=memory, userInput=user_msg)
+        $ raw_msg = Data(path_to_user_dir=pathSetup).getLastMessage
+
+        $ current_char = Data(path_to_user_dir=pathSetup).getSceneData("character")
+        $ current_char_title = current_char.title()
+        $ current_head = Data(path_to_user_dir=pathSetup).getSceneData("head_sprite")
+        $ current_left = Data(path_to_user_dir=pathSetup).getSceneData("left_sprite")
+        $ current_right = Data(path_to_user_dir=pathSetup).getSceneData("right_sprite")
+        $ current_background = Data(path_to_user_dir=pathSetup).getSceneData("background")
+
+        if raw_msg.startswith("[SCENE]"):
+            # Narrator is speaking 
+
+            image _bg:
+                "bg/[current_background]"
+            scene _bg
+
 
             "[final_msg]"
+        elif final_msg.startswith("<Error>"):
+            show screen error_popup(message=final_msg)
         else:
-            # Char is speaking
-            image head:
-                "images/[convo.char]/[convo.head_sprite]"
-                zoom 0.80
-                yoffset 40
+            image basic:
+                im.Composite((960, 960), (0, 0), f"{current_char}/{current_left}", (0, 0), f"{current_char}/{current_right}", (0, 0), f"{current_char}/{current_head}")
                 uppies
-            image leftside:
-                "images/[convo.char]/[convo.leftside_sprite]"
-                zoom 0.80
-                yoffset 40
+            image full_sprite:
+                im.Composite((960, 960), (0, 0), f"{current_char}/{current_head}")
                 uppies
-            image rightside:
-                "images/[convo.char]/[convo.rightside_sprite]"
-                zoom 0.80
-                yoffset 40
+            image tmb:
+                "monika/[current_head]"
                 uppies
 
-            if convo.scene != "coffee.jpg":
-                show head
-                show leftside
-                show rightside
+            if current_head == "nonchalant.png" or nc:
+                hide full_sprite
+                hide basic
+                show tmb
+            elif current_head != "3a.png" and current_head != "3b.png" and current_head != "3c.png" and current_head != "3b.png" and current_head != "3d.png" and current_head != "vomit.png":
+                hide full_sprite
+                hide tmb
+                show basic at t11
+            else:
+                hide basic
+                hide tmb
+                show full_sprite at t11
 
-            #if convo.NARRATION == False and convo.voice_mode == True:
-            #    play sound "audio/vocals/monika.wav"
 
-            if character_name == "monika":
-                monika "[final_msg]"
-            if character_name == "sayori":
-                sayori "[final_msg]"
-            if character_name == "natsuki":
-                natsuki "[final_msg]"
-            if character_name == "yuri":
-                yuri "[final_msg]"
+            $ final_msg = final_msg if nc == False else final_msg.replace("rooster", Info().getMaleChicken)
+            $ renpy.say("[current_char_title]", final_msg)
+
+            if nc:
+                $ nc = False
+                $ Configs().delete_egg(f"{config.basedir}/game/images/monika/_thumb.png")
     return
 
 
 
 
 
-label monika_zone:
-    $ show_quick_menu = False
-    scene white
-    play music "audio/bgm/monika-start.ogg" noloop
-    $ renpy.pause(0.5, hard=True)
-    show splash_glitch2 with Dissolve(0.5, alpha=True)
-    $ renpy.pause(2.0, hard=True)
-    hide splash_glitch2 with Dissolve(0.5, alpha=True)
-    #scene black
-    stop music
-
-    show mask_2
-    show mask_3
-    #show room_mask as rm:
-        #size (320,180)
-        #pos (30,200)
-    #show room_mask2 as rm2:
-        #size (320,180)
-        #pos (935,200)
-    show monika_bg
-    show monika_bg_highlight
-    play music m1
-
-
-    $ show_quick_menu = True
-    #scene black with dissolve
-
-    $ chatFolderName = "monikaZone"
-
-    $ user_chats = ManageChat_Folders("monika")
-
-    # "num" is a default value set to None. If a number is
-    # assigned to it, that means the user is opening an old file
-    if num:
-        if num >= 0:
-            $ path = "chats/"+persistent.chatFolderName[num]
-    else:
-        $ path = user_chats.create_folder(name=chatFolderName)
-
-        $ user_chats.create_chat_history()
-        $ user_chats.create_world_history()
-
-    $ check = CheckData(full_path=path+"/")
-    $ memory = check.historyCheck(gamemode="monikaZone", chatmode=0) # Adds Freechat Prompt
-    $ convo = Convo(chat_history=memory, full_path=path+"/")
-
-    $ wait_time = 5
-    while True:
-        $ wait_time -= 1
-        if wait_time > 0: # Determines if you can respond yet
-            $ user_msg = "continue {continue the character monologue here and remember to never speak as me}"
-
-        else:
-            $ user_msg = renpy.input("Enter a message: ")
-            $ wait_time = 5
-        
-        $ final_msg = f"{convo.ai_response(user_msg)}"
-        if convo.NARRATION == False and convo.voice_mode == True:
-            play sound "audio/vocals/monika.wav"
-        monika "[final_msg]"
-    return
 
 
 

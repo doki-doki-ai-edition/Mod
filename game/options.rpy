@@ -1,17 +1,6 @@
 
 
 
-
-
-
-
-
-
-
-
-
-
-
 define config.name = "Doki Doki AI Edition"
 
 
@@ -46,6 +35,7 @@ define build.name = "DDAE"
 define config.has_sound = True
 define config.has_music = True
 define config.has_voice = False
+define config.debug_sound = True
 
 
 
@@ -160,7 +150,8 @@ define config.predict_statements = 50
 #define config.rollback_enabled = config.developer
 define config.menu_clear_layers = ["front"]
 define config.gl_test_image = "white"
-
+#define config.developer = True
+define config.log = "log.txt"
 
 # init python:
 #     if len(renpy.loadsave.location.locations) > 1: del(renpy.loadsave.location.locations[1])
