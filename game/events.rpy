@@ -157,7 +157,7 @@ init python:
 
                 # If the character replies with smthing like *giggles* remove it.
                 # (and yes im using regex here)
-                reply = re.sub(r"\*\S+\*", "", reply)
+                reply = re.sub(r'\*.*?\*', '', reply)
             elif "[NARRATION]" in reply:
                 reply = reply.split("[NARRATION]")[1].strip()
             else:
