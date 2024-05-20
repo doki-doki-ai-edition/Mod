@@ -7,6 +7,7 @@ init python:
     import time
     import base64
     import io
+    import re
 
 
     with open(config.basedir + "/game/assets/prompts/prompt_templates.json", "r") as f:
@@ -140,6 +141,7 @@ init python:
 
             if "[CONTENT]" in reply:
                 reply = reply.split("[CONTENT]")[1].strip()
+                reply = re.sub(r"\*\S+\*", "", reply)
             elif "[NARRATION]" in reply:
                 reply = reply.split("[NARRATION]")[1].strip()
             else:
