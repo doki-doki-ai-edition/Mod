@@ -209,6 +209,7 @@ init python:
                         self.chathistory = Info().getReminder['backup_prompt']
 
 
+
         def modelChoices(self, prompt):
             groq = chat_model_dict["groq"]["suggested"] + chat_model_dict["groq"]["other"]
             openai = chat_model_dict["openai"]["suggested"] + chat_model_dict["openai"]["other"]

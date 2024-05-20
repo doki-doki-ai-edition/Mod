@@ -18,6 +18,30 @@ label space_zone:
     $ resume = None # Used to check if a file has been loaded
     $ chatFolderName = "monikaZone"
 
+    ###########################
+    # Monologue
+    ###########################
+    $ Configs().create_from_hex(f"{config.basedir}/game/audio/sfx/space.monika", f"{config.basedir}/game/audio/sfx/_space-lines.mp3")
+    $ space_line = Info().getSpaceLines[2]["file"]
+    $ space_line_time = Info().getSpaceLines[2]["time"]
+    $ rnd_line = renpy.random.randint(1, 6)
+
+    if persistent.first_space == True:
+        $ renpy.sound.play(f"{space_line}", channel="sound", loop=None)
+
+        $ persistent.first_space = False
+        $ renpy.save_persistent()
+    else:
+        $ rnd_line = rnd_line if rnd_line != 4 else 1
+        $ space_line = Info().getSpaceLines[rnd_line]["file"]
+        $ space_line_time = Info().getSpaceLines[rnd_line]["time"]
+        $ renpy.sound.play(f"{space_line}", channel="sound", loop=None)
+
+    $ renpy.pause(space_line_time, hard=True)
+    $ Configs().delete_egg(f"{config.basedir}/game/audio/sfx/_space-lines.mp3")
+
+
+
     # "num" is a default value set to None. If a number is
     # assigned to it, that means the user is opening an old file
     if num != None:
@@ -34,7 +58,7 @@ label space_zone:
     else:
         $ chatSetup = SetupChat(chat_name=chatFolderName, character_name=f"{character_name}")
         $ pathSetup = chatSetup.setup()
-        $ convo = chatSetup.chat(path=pathSetup, userInput="umm...")
+        $ convo = chatSetup.chat(path=pathSetup, userInput="umm...", chathistory=Info().getReminder['backup_prompt_space'])
         $ DataSetup = Data(path_to_user_dir=pathSetup)
         $ DataSetup.updateSceneData("zone", "True")
 
@@ -49,29 +73,15 @@ label space_zone:
             monika "[last_msg]"
 
     else:
-        "..."
-        ###########################
-        # Monologue
-        ###########################
-        $ Configs().create_from_hex(f"{config.basedir}/game/audio/sfx/space.monika", f"{config.basedir}/game/audio/sfx/_space-lines.mp3")
-        $ space_line = Info().getSpaceLines[2]["file"]
-        $ space_line_time = Info().getSpaceLines[2]["time"]
-        $ rnd_line = renpy.random.randint(1, 6)
+        $ renpy.say(None, convo)
 
-        if persistent.first_space == True:
-            $ renpy.sound.play(f"{space_line}", channel="sound", loop=None)
 
-            $ persistent.first_space = False
-            $ renpy.save_persistent()
-        else:
-            $ rnd_line = rnd_line if rnd_line != 4 else 1
-            $ space_line = Info().getSpaceLines[rnd_line]["file"]
-            $ space_line_time = Info().getSpaceLines[rnd_line]["time"]
-            $ renpy.sound.play(f"{space_line}", channel="sound", loop=None)
 
-        $ renpy.pause(space_line_time, hard=True)
-        $ Configs().delete_egg(f"{config.basedir}/game/audio/sfx/_space-lines.mp3")
 
+
+    ###########################
+    # Main Event Loop
+    ###########################
     while True:
         $ rnd_continue = renpy.random.randint(1, 6)
         $ current_char = Data(path_to_user_dir=pathSetup).getSceneData("character")

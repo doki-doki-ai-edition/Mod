@@ -10,5 +10,15 @@
           "role": "assistant",
           "content": "[SCENE] outside [NARRATION] You wake up in a familiar place.  [END]"
         }
-    ]
+    ],
+    "backup_prompt_space": [
+      {
+        "role": "user",
+        "content": "umm..."
+      },
+      {
+        "role": "assistant",
+        "content": "[CONTENT] We're alone now.  [END]"
+      }
+  ]
 }
