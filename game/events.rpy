@@ -114,6 +114,19 @@ init python:
 
 
 
+            
+        def safeResponse(self, raw_response):
+            """A response that's not entirely raw. If the AI
+            speaks out of character but still returns the correct
+            format, only capture the format it outputs"""
+            clean_response = raw_response
+            if "[SCENE]" in clean_response:
+                clean_response = "[SCENE]" + clean_response.split("[SCENE]")[1]
+
+            elif "[CONTENT]" in clean_response and self.dbase.getSceneData("zone") == "True":
+                clean_response =  "[CONTENT]" + clean_response.split("[CONTENT]")[1].strip()
+
+            return clean_response
 
         def removeKeywords(self, reply):
             """Get rid of keywords and return a clean string"""
@@ -141,6 +154,9 @@ init python:
 
             if "[CONTENT]" in reply:
                 reply = reply.split("[CONTENT]")[1].strip()
+
+                # If the character replies with smthing like *giggles* remove it.
+                # (and yes im using regex here)
                 reply = re.sub(r"\*\S+\*", "", reply)
             elif "[NARRATION]" in reply:
                 reply = reply.split("[NARRATION]")[1].strip()
@@ -248,9 +264,8 @@ init python:
             if check_error:
                 return check_error[1]
 
-            reply, face, body, scene = response.replace("[CONTENT]", "").replace("[END]", ""), "", "", ""
-            if self.dbase.getSceneData("zone") != "True":
-                reply, _, face, body, scene = self.removeKeywords(response)
+
+            reply, _, face, body, scene = self.removeKeywords(response)
 
 
             # If the AI responds w/ an emotion/body not listed, redo the response
@@ -268,7 +283,7 @@ init python:
 
 
             # Log AI input
-            
+            response = self.safeResponse(response)
             self.chathistory.append({"role": "assistant", "content": response})
 
             self.controlMood(face, body)
