@@ -22,3 +22,5 @@ firstrun
 **/game/saves/*
 
 **/game/cache/*
+
+**/game/audio/sfx/_space-lines.mp3

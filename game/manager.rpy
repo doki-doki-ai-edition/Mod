@@ -55,7 +55,8 @@ init python:
 
         def controlMood(self, face, body):
             """Display different facial expressions"""
-            if self.dbase.getSceneData("zone") == "True":
+            spacezone = self.dbase.getSceneData("zone")
+            if spacezone == "true":
                 return self.dbase.updateSceneData("character", self.character_name)
             
             if not face or not body: return
@@ -120,10 +121,11 @@ init python:
             speaks out of character but still returns the correct
             format, only capture the format it outputs"""
             clean_response = raw_response
+            spacezone = self.dbase.getSceneData("zone")
             if "[SCENE]" in clean_response:
                 clean_response = "[SCENE]" + clean_response.split("[SCENE]")[1]
 
-            elif self.dbase.getSceneData("zone") == "True":
+            elif spacezone == "true":
                 clean_response =  "[CONTENT]" + clean_response.split("[CONTENT]")[1].strip()
 
             return clean_response
@@ -170,9 +172,15 @@ init python:
 
         def removePlaceholders(self):
             """remove placeholders in json files"""
-            raw_examples = Info().getExamplePrompts[f"level2_{self.character_name}"] if self.dbase.getSceneData("zone") != "True" else Info().getExamplePrompts[f"level1_{self.character_name}_zone"]
+            level_normal = Info().getExamplePrompts[f"level2_{self.character_name}"]
+            level_zone = Info().getExamplePrompts[f"level2_{self.character_name}_zone"]
+            spacezone = self.dbase.getSceneData("zone")
 
-            if self.dbase.getSceneData("zone") != "True":
+            renpy.log(f">>> rmvPlace func: spacezone is {spacezone}")
+            renpy.log(f">>> rmvPlace func (PERSISTENT): spacezone is {spacezone}")
+            raw_examples = level_normal if spacezone != True else  level_zone
+
+            if spacezone != "true":
                 bg_scenes = [s for s in Configs().bg_scenes["default"]] + [s for s in Configs().bg_scenes["checks"]]
                 emotions = ', '.join([e for e in Configs().characters[self.character_name.title()]['head']])
                 backgrounds = ', '.join(bg_scenes)
@@ -216,7 +224,8 @@ init python:
         def checkForRepeat(self):
             """Checks if {RST} is sent more than once and falls back on a
             default prompt"""
-            if self.dbase.getSceneData("zone") != "True":
+            spacezone = self.dbase.getSceneData("zone")
+            if  spacezone != "true":
                 if len(self.chathistory) >=4 and len(self.chathistory) <= 8:
                     amnt = 0
                     for rst in self.chathistory:
@@ -244,18 +253,21 @@ init python:
             """Gets ai generated text based off given prompt"""
 
             reminder = ""
-            if self.dbase.getSceneData("zone") != "True":
+            spacezone = self.dbase.getSceneData("zone")
+
+            renpy.log(f">>> ai response func: spacezone is {spacezone}")
+            if spacezone != "true":
                 emotions = ', '.join([e for e in Configs().characters[self.character_name.title()]['head']])
                 parts = ', '.join([e for e in Configs().characters[self.character_name.title()]['left']]) # "explain" and "relaxed" (which honestly should prob just use a number system)
                 reminder = "" if self.retrying == False else Info().getReminder["emotes"].replace("<emotes>", emotions).replace("<body>", parts).replace("<char>", self.character_name)
 
 
-            
+
             # Log user input
             self.chathistory.append({"role": "user", "content": userInput + reminder})
 
             examples = self.removePlaceholders()
-            contextAndUserMsg = examples + self.chathistory
+            contextAndUserMsg = examples + self.chathistory if spacezone != "true" else self.chathistory
             response = self.modelChoices(contextAndUserMsg) if userInput.lower() != Info().getReminder["nc"] else "[FACE] playful smile [BODY] relaxed [CONTENT] Nice rooster bro."
 
 
@@ -269,7 +281,7 @@ init python:
 
 
             # If the AI responds w/ an emotion/body not listed, redo the response
-            if self.dbase.getSceneData("zone") != "True":
+            if spacezone != "true":
                 global retrycount
                 self.retrying = self.retryPrompt(response, face, body)
                 if self.retrying:
@@ -289,7 +301,7 @@ init python:
             self.controlMood(face, body)
             self.controlBackground(scene)
 
-            self.checkForRepeat()
+            #self.checkForRepeat()
 
             with open(f"{self.full_path}/chathistory.json", 'w') as f:
                 json.dump(self.chathistory, f, indent=2)

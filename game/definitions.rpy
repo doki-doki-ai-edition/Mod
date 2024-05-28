@@ -1469,6 +1469,9 @@ define chat_model_dict = {
     }
 }
 
+default spacezone = None
+default persistent.purgatory = None
+
 define _dismiss_pause = config.developer
 
 define persistent.freedom = None

@@ -23,6 +23,7 @@ init python:
         @property
         def getChathistory(self):
             with open(self.path_to_user_dir + "/chathistory.json", 'r') as f:
+                renpy.log("chathistory directory path: self.path_to_user_dir")
                 return json.load(f)
 
         @property
@@ -56,6 +57,16 @@ init python:
 
             return reply
 
+
+
+        def getSceneData(self, key):
+            try:
+                with open(self.path_to_user_dir + "/scenedata.json", 'r') as f:
+                    return json.load(f)[key]
+            except TypeError:
+                return None
+
+
         def updateSceneData(self, key, value):
             with open(self.path_to_user_dir + "/scenedata.json", 'r') as f:
                 scenedata = json.load(f)
@@ -67,12 +78,6 @@ init python:
             return value
 
 
-        def getSceneData(self, key):
-            try:
-                with open(self.path_to_user_dir + "/scenedata.json", 'r') as f:
-                    return json.load(f)[key]
-            except TypeError:
-                return None
 
 
 
