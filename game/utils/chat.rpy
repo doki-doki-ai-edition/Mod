@@ -71,7 +71,7 @@ init python:
 
 
 
-        def createRealm(self, name_of_realm, scenedata_default):
+        def createRealm(self, name_of_realm, scenedata_default, purgatory=False):
             """Creates specific folder in `chats` to store all
             realms.
             """
@@ -80,10 +80,14 @@ init python:
 
             i = 1
             while True:
-                full_path = f"{path}_{i}"
+                full_path = f"{path}_{i}" if purgatory == False else path
                 if not os.path.exists(full_path):
                     os.makedirs(full_path, mode=0o777)
                     break
+                elif purgatory == True:
+                    # The folder already exists, so don't bother making a new
+                    # purgatory chat
+                    return
                 else:
                     i += 1
 
