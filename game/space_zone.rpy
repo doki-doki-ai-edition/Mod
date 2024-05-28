@@ -21,7 +21,7 @@ label space_zone:
 
     $ tokenSetter.set_token()
     $ resume = None # Used to check if a file has been loaded
-    $ chatFolderName = "monikaZone"
+    $ chatFolderName = "monika_purgatory"
 
     ###########################
     # Monologue
