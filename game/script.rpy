@@ -122,13 +122,6 @@ label AICharacter:
         $ chatFolderName = renpy.input("Name This Realm: ", "realm", allow=" ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789_").strip()
         $ chatSetup = SetupChat(chat_name=chatFolderName, character_name=character_name)
         $ pathSetup = chatSetup.setup(purgatory=False)
-        $ zone_type = Data(path_to_user_dir=pathSetup).getSceneData("zone")
-
-
-        # Player loaded a space realm
-        if zone_type == "true":
-            jump space_zone
-
 
         $ convo = chatSetup.chat(path=pathSetup)
         $ renpy.log(">>> starting new ")
