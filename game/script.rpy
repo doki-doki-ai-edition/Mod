@@ -203,7 +203,9 @@ label AICharacter:
 
             if user_msg  == "(init_end_sim)" and character_name == "monika":
                 $ main_event_loop = False
-                $ SetVariable("spacezone", True)
+
+                $ persistent.purgatory_name = character_name
+                $ renpy.save_persistent()
                 $ persistent.purgatory = True
                 $ renpy.save_persistent()
 
