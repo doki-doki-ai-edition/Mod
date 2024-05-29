@@ -145,6 +145,7 @@ label AICharacter:
     $ current_left = Data(path_to_user_dir=pathSetup).getSceneData("left_sprite")
     $ current_right = Data(path_to_user_dir=pathSetup).getSceneData("right_sprite")
     $ current_background = Data(path_to_user_dir=pathSetup).getSceneData("background")
+    $ zone_type = Data(path_to_user_dir=pathSetup).getSceneData("zone")
     
 
 
@@ -152,7 +153,7 @@ label AICharacter:
     if zone_type == "true":
         jump space_zone
     
-    
+
 
 
     
