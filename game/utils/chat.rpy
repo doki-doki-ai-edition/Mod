@@ -87,7 +87,7 @@ init python:
                 elif purgatory == True:
                     # The folder already exists, so don't bother making a new
                     # purgatory chat
-                    return
+                    return path
                 else:
                     i += 1
 
