@@ -93,7 +93,7 @@ init python:
 
 
 
-            for line in r.iter_lines():
+            for line in response.iter_lines():
                 body = json.loads(line)
                 if "error" in body:
                     raise Exception(body["error"])
