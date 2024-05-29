@@ -121,7 +121,7 @@ label AICharacter:
     else:
         $ chatFolderName = renpy.input("Name This Realm: ", "realm", allow=" ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789_").strip()
         $ chatSetup = SetupChat(chat_name=chatFolderName, character_name=character_name)
-        $ pathSetup = chatSetup.setup()
+        $ pathSetup = chatSetup.setup(purgatory=False)
         $ zone_type = Data(path_to_user_dir=pathSetup).getSceneData("zone")
 
 
