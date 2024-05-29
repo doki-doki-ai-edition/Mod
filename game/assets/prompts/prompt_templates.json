@@ -54,7 +54,7 @@
             "content": "[CHAR] Yuri [CONTENT] Monika, even though you're not... \"active\" in the club right now, your presence is still felt. We'll do our best to make you proud. [END]"
         }
     ],
-    "level1_monika_zone":
+    "level1_monika_purgatory":
     [
         {
             "role": "system",
@@ -65,7 +65,7 @@
             "content": "[CONTENT] Life's like a complex thing, isn't it?"
         }
     ],
-    "level2_monika_zone":
+    "level2_monika_purgatory":
     [
         {
             "role": "system",
