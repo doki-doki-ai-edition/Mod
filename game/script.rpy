@@ -1,7 +1,6 @@
 
 
 
-
 label start:
 
     init python:
@@ -12,11 +11,14 @@ label start:
 
     $ input_popup_gui = True
 
-
     stop music fadeout 0.5
 
-    scene theme with dissolve
-    call screen chatmode_screen
+    if persistent.purgatory == True:
+        jump space_zone
+    else:
+        scene theme with dissolve
+        call screen chatmode_screen
+        
 
     return
 
@@ -82,6 +84,7 @@ label AICharacter:
 
 
 
+
     ###########################
     # Monologue
     ###########################
@@ -118,12 +121,13 @@ label AICharacter:
     else:
         $ chatFolderName = renpy.input("Name This Realm: ", "realm", allow=" ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789_").strip()
         $ chatSetup = SetupChat(chat_name=chatFolderName, character_name=character_name)
-        $ pathSetup = chatSetup.setup()
+        $ pathSetup = chatSetup.setup(purgatory=False)
+
         $ convo = chatSetup.chat(path=pathSetup)
         $ renpy.log(">>> starting new ")
 
 
-    
+
     ###########################
     # Setup old/new data
     ###########################
@@ -135,12 +139,13 @@ label AICharacter:
     $ current_right = Data(path_to_user_dir=pathSetup).getSceneData("right_sprite")
     $ current_background = Data(path_to_user_dir=pathSetup).getSceneData("background")
     $ zone_type = Data(path_to_user_dir=pathSetup).getSceneData("zone")
+    
 
 
     # Player loaded a space realm
-    if zone_type == "True":
+    if zone_type == "true":
         jump space_zone
-
+    
 
 
 
@@ -179,7 +184,8 @@ label AICharacter:
     ###########################
     # Main Event Loop
     ###########################
-    while True:
+    $ main_event_loop = True
+    while main_event_loop == True:
         $ rnd_continue = renpy.random.randint(1, 6)
         $ current_char = Data(path_to_user_dir=pathSetup).getSceneData("character")
 
@@ -190,7 +196,14 @@ label AICharacter:
             $ user_msg = renpy.input("Enter a message: ")
 
             if user_msg  == "(init_end_sim)" and character_name == "monika":
-                jump space_zone
+                $ main_event_loop = False
+
+                $ persistent.purgatory_name = character_name
+                $ renpy.save_persistent()
+                $ persistent.purgatory = True
+                $ renpy.save_persistent()
+
+                jump purgatory_seq
 
             if user_msg.lower() ==  Info().getReminder["nc"] and character_name == "monika":
                 $ nc = True
@@ -255,7 +268,12 @@ label AICharacter:
 
 
 
-
+label purgatory_seq:
+    scene black with dissolve
+    $ SetVariable("spacezone", True)
+    "...Are you sure?"
+    return
+    
 
 label endgame(pause_length=4.0):
     $ quick_menu = False

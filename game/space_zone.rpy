@@ -14,9 +14,16 @@ label space_zone:
     show monika_bg_highlight
     play music m1
 
+
+    $ purg_name = persistent.purgatory_name
+    $ persistent.purgatory = False
+    $ renpy.save_persistent()
+    $ persistent.purgatory_name = ""
+    $ renpy.save_persistent()
+
     $ tokenSetter.set_token()
     $ resume = None # Used to check if a file has been loaded
-    $ chatFolderName = "monikaZone"
+    $ chatFolderName = f"{purg_name}_purgatory"
 
     ###########################
     # Monologue
@@ -56,11 +63,14 @@ label space_zone:
 
 
     else:
-        $ chatSetup = SetupChat(chat_name=chatFolderName, character_name=f"{character_name}")
-        $ pathSetup = chatSetup.setup()
-        $ convo = chatSetup.chat(path=pathSetup, userInput="umm...", chathistory=Info().getReminder['backup_prompt_space'])
+        $ chatSetup = SetupChat(chat_name=chatFolderName, character_name=f"{purg_name}")
+        $ pathSetup = chatSetup.setup(purgatory=True)
+        $ renpy.log(f">>> pathSetup is: {pathSetup}")
         $ DataSetup = Data(path_to_user_dir=pathSetup)
-        $ DataSetup.updateSceneData("zone", "True")
+        $ DataSetup.updateSceneData("zone", "true")
+        $ DataSetup.updateSceneData("character", f"{purg_name}")
+        $ convo = chatSetup.chat(path=pathSetup, userInput="umm...", chathistory=Info().getExamplePrompts[f"level2_{purg_name}_purgatory"])
+
 
 
 

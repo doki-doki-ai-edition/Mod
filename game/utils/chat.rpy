@@ -29,7 +29,7 @@ init python:
 
 
 
-        def setup(self):
+        def setup(self, purgatory):
             chathistory = []
 
             # If the "chats" folder doesn't exist, create it.
@@ -37,7 +37,7 @@ init python:
                 os.makedirs(self.path_to_user_dir, mode=0o777)
 
 
-            full_path = self.tools.createRealm(name_of_realm=self.chat_name, scenedata_default=self.scenedata_default)
+            full_path = self.tools.createRealm(name_of_realm=self.chat_name, scenedata_default=self.scenedata_default, purgatory=purgatory)
             return full_path
 
 
@@ -71,7 +71,7 @@ init python:
 
 
 
-        def createRealm(self, name_of_realm, scenedata_default):
+        def createRealm(self, name_of_realm, scenedata_default, purgatory):
             """Creates specific folder in `chats` to store all
             realms.
             """
@@ -80,10 +80,14 @@ init python:
 
             i = 1
             while True:
-                full_path = f"{path}_{i}"
+                full_path = f"{path}_{i}" if purgatory == False else path
                 if not os.path.exists(full_path):
                     os.makedirs(full_path, mode=0o777)
                     break
+                elif purgatory == True:
+                    # The folder already exists, so don't bother making a new
+                    # purgatory chat
+                    return path
                 else:
                     i += 1
 

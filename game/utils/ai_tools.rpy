@@ -87,27 +87,21 @@ init python:
 
             response = requests.post(
                 "http://localhost:11434/api/chat",
-                json={"model": persistent.chatModel, "messages": prompt, "stream": True,
+                json={"model": persistent.chatModel, "messages": prompt, "stream": False,
                     "options": options["options"]},
             )
 
 
-            #response.raise_for_status()
-            output = ""
 
             for line in response.iter_lines():
                 body = json.loads(line)
                 if "error" in body:
-                    raise Exception(body["error"])
-                if body.get("done") is False:
-                    message = body.get("message", "")
-                    prompt = message.get("content", "")
-                    output += prompt
+                    return False, f"<Error> {Exception(body['error'])}" 
 
+                message = body.get("message", "")
+                content = message.get("content", "")
 
-                if body.get("done", False):
-                    message["content"] = output
-                    return output.strip() + " [END]"
+            return content.strip() + " [END]"
 
 
 
