@@ -16,6 +16,8 @@ label space_zone:
 
 
     $ purg_name = persistent.purgatory_name
+    $ purg_name_title = purg_name.title()
+
     $ persistent.purgatory = False
     $ renpy.save_persistent()
     $ persistent.purgatory_name = ""
@@ -82,18 +84,19 @@ label space_zone:
             monika "[last_msg]"
 
     else:
-        $ renpy.say(None, convo)
+        $ renpy.say("[purg_name_title]", convo)
 
 
 
     $ counter = 0
-
+    $ special_check = False
     ###########################
     # Main Event Loop
     ###########################
     while True:
         $ rnd_continue = renpy.random.randint(1, 6)
         $ current_char = Data(path_to_user_dir=pathSetup).getSceneData("character")
+        $ final_msg = "..."
 
         if current_char != "" and rnd_continue == 4:
             # Randomly continue the chat to have variety so it's not a constant back and forth
@@ -104,24 +107,29 @@ label space_zone:
             $ counter += 1
 
 
-        $ final_msg = chatSetup.chat(path=pathSetup, chathistory=memory, userInput=user_msg)
-        $ raw_msg = Data(path_to_user_dir=pathSetup).getLastMessage
 
-
-        if final_msg.startswith("<Error>"):
-            show screen error_popup(message=final_msg)
-        elif counter == 8 and persistent.first_scare == False:
+        if counter == 1: #if counter == 1 and persistent.first_scare == False:
             hide monika_bg
             hide monika_bg_highlight
             show monika_scare
             play sound "sfx/mscare.ogg"
             $ persistent.first_scare = True
             $ renpy.save_persistent()
+            $ special_check = True
+        else:
+            $ final_msg = chatSetup.chat(path=pathSetup, chathistory=memory, userInput=user_msg)
+            $ raw_msg = Data(path_to_user_dir=pathSetup).getLastMessage
+
+
+        if final_msg.startswith("<Error>"):
+            show screen error_popup(message=final_msg)
+        elif special_check:
             "..."
+            $ special_check = False
         else:
             hide monika_scare
             show monika_bg
             show monika_bg_highlight
-            monika "[final_msg]"
+            $ renpy.say("[purg_name_title]", final_msg)
 
     return
