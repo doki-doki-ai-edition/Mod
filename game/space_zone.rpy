@@ -73,7 +73,6 @@ label space_zone:
 
 
 
-
     $ memory = Data(path_to_user_dir=pathSetup).getChathistory
 
     if resume:
@@ -87,7 +86,7 @@ label space_zone:
 
 
 
-
+    $ counter = 0
 
     ###########################
     # Main Event Loop
@@ -99,8 +98,10 @@ label space_zone:
         if current_char != "" and rnd_continue == 4:
             # Randomly continue the chat to have variety so it's not a constant back and forth
             $ user_msg = "continue"
+
         else:
             $ user_msg = renpy.input("Enter a message: ")
+            $ counter += 1
 
 
         $ final_msg = chatSetup.chat(path=pathSetup, chathistory=memory, userInput=user_msg)
@@ -109,8 +110,18 @@ label space_zone:
 
         if final_msg.startswith("<Error>"):
             show screen error_popup(message=final_msg)
+        elif counter == 2 and persistent.first_scare == False:
+            hide monika_bg
+            hide monika_bg_highlight
+            show monika_scare
+            play sound "sfx/mscare.ogg"
+            $ persistent.first_scare = True
+            $ renpy.save_persistent()
+            "..."
         else:
-
+            hide monika_scare
+            show monika_bg
+            show monika_bg_highlight
             monika "[final_msg]"
 
     return

@@ -1472,6 +1472,7 @@ define chat_model_dict = {
 default spacezone = None
 default persistent.purgatory = None
 default persistent.purgatory_name = None
+default persistent.first_scare = False
 
 define _dismiss_pause = config.developer
 
