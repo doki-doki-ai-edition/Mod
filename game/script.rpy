@@ -237,21 +237,21 @@ label AICharacter:
             image full_sprite:
                 im.Composite((960, 960), (0, 0), f"{current_char}/{current_head}")
                 uppies
-            image tmb:
+            image chibi:
                 "monika/[current_head]"
                 uppies
 
             if current_head == "nonchalant.png" or nc:
                 hide full_sprite
                 hide basic
-                show tmb
+                show chibi
             elif current_head != "3a.png" and current_head != "3b.png" and current_head != "3c.png" and current_head != "3b.png" and current_head != "3d.png" and current_head != "vomit.png":
                 hide full_sprite
-                hide tmb
+                hide chibi
                 show basic at t11
             else:
                 hide basic
-                hide tmb
+                hide chibi
                 show full_sprite at t11
 
 
