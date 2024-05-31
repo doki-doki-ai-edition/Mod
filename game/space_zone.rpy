@@ -110,7 +110,7 @@ label space_zone:
 
         if final_msg.startswith("<Error>"):
             show screen error_popup(message=final_msg)
-        elif counter == 2 and persistent.first_scare == False:
+        elif counter == 8 and persistent.first_scare == False:
             hide monika_bg
             hide monika_bg_highlight
             show monika_scare
