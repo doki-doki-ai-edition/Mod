@@ -178,7 +178,7 @@ init python:
 
             renpy.log(f">>> rmvPlace func: spacezone is {spacezone}")
             renpy.log(f">>> rmvPlace func (PERSISTENT): spacezone is {spacezone}")
-            raw_examples = level_normal if spacezone != True else  level_zone
+            raw_examples = level_normal if spacezone != "true" else  level_zone
 
             if spacezone != "true":
                 bg_scenes = [s for s in Configs().bg_scenes["default"]] + [s for s in Configs().bg_scenes["checks"]]
@@ -236,6 +236,15 @@ init python:
                         self.chathistory = Info().getReminder['backup_prompt']
 
 
+        def checkForPurgatory(self):
+            """This functions as a hotfix for a bug with the LLM. This puts the prompt template into the
+            chathistory file instead of having it be empty."""
+            spacezone = self.dbase.getSceneData("zone")
+            if spacezone == "true":
+                with open(f"{self.full_path}/chathistory.json", 'w') as f:
+                    json.dump(self.chathistory, f, indent=2)
+
+
 
         def modelChoices(self, prompt):
             groq = chat_model_dict["groq"]["suggested"] + chat_model_dict["groq"]["other"]
@@ -261,24 +270,22 @@ init python:
                 parts = ', '.join([e for e in Configs().characters[self.character_name.title()]['left']]) # "explain" and "relaxed" (which honestly should prob just use a number system)
                 reminder = "" if self.retrying == False else Info().getReminder["emotes"].replace("<emotes>", emotions).replace("<body>", parts).replace("<char>", self.character_name)
 
-
+            self.checkForPurgatory()
 
             # Log user input
             self.chathistory.append({"role": "user", "content": userInput + reminder})
 
             examples = self.removePlaceholders()
             contextAndUserMsg = examples + self.chathistory if spacezone != "true" else self.chathistory
-            response = self.modelChoices(contextAndUserMsg) if userInput.lower() != Info().getReminder["nc"] else "[FACE] playful smile [BODY] relaxed [CONTENT] Nice rooster bro."
 
+            response = self.modelChoices(contextAndUserMsg) if userInput.lower() != Info().getReminder["nc"] else "[FACE] playful smile [BODY] relaxed [CONTENT] Nice rooster bro."
 
             # If An error happened with the API, return the Error
             check_error = self.checkForError(response)
             if check_error:
                 return check_error[1]
 
-
             reply, _, face, body, scene = self.removeKeywords(response)
-
 
             # If the AI responds w/ an emotion/body not listed, redo the response
             if spacezone != "true":
@@ -293,9 +300,9 @@ init python:
                         self.chathistory.pop()
                         return self.ai_response(userInput)
 
-
             # Log AI input
             response = self.safeResponse(response)
+
             self.chathistory.append({"role": "assistant", "content": response})
 
             self.controlMood(face, body)

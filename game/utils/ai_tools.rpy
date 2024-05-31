@@ -96,7 +96,7 @@ init python:
             for line in response.iter_lines():
                 body = json.loads(line)
                 if "error" in body:
-                    raise Exception(body["error"])
+                    return False, f"<Error> {Exception(body['error'])}" 
 
                 message = body.get("message", "")
                 content = message.get("content", "")
