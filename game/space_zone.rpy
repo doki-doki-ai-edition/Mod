@@ -96,7 +96,6 @@ label space_zone:
     while True:
         $ rnd_continue = renpy.random.randint(1, 6)
         $ current_char = Data(path_to_user_dir=pathSetup).getSceneData("character")
-        $ final_msg = "..."
 
         if current_char != "" and rnd_continue == 4:
             # Randomly continue the chat to have variety so it's not a constant back and forth
@@ -116,17 +115,19 @@ label space_zone:
             $ persistent.first_scare = True
             $ renpy.save_persistent()
             $ special_check = True
-        else:
-            $ final_msg = chatSetup.chat(path=pathSetup, chathistory=memory, userInput=user_msg)
-            $ raw_msg = Data(path_to_user_dir=pathSetup).getLastMessage
+            $ user_msg = user_msg + " *I also suddenly scream really loudly because you just scared me*"
+
+        $ final_msg = chatSetup.chat(path=pathSetup, chathistory=memory, userInput=user_msg)
+        $ raw_msg = Data(path_to_user_dir=pathSetup).getLastMessage
 
 
         if final_msg.startswith("<Error>"):
             show screen error_popup(message=final_msg)
-        elif special_check:
-            "..."
-            $ special_check = False
         else:
+            if special_check:
+                $ renpy.pause(10, hard=True)
+                "..."
+                $ special_check = False
             hide monika_scare
             show monika_bg
             show monika_bg_highlight
