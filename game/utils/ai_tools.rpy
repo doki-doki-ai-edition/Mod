@@ -37,8 +37,6 @@ init python:
 
 
 
-
-
         def getGroq(self, prompt):
             url = "https://api.groq.com/openai/v1/chat/completions"
             headers = {
@@ -86,22 +84,19 @@ init python:
                 }
 
             response = requests.post(
-                "http://localhost:11434/api/chat",
+                "http://localhost:11434/v1/chat/completions",
                 json={"model": persistent.chatModel, "messages": prompt, "stream": False,
                     "options": options["options"]},
             )
 
+            try:
+                response.raise_for_status()
+                data = response.json()
+                return data["choices"][0]["message"]["content"] + " [END]"
 
-
-            for line in response.iter_lines():
-                body = json.loads(line)
-                if "error" in body:
-                    return False, f"<Error> {Exception(body['error'])}" 
-
-                message = body.get("message", "")
-                content = message.get("content", "")
-
-            return content.strip() + " [END]"
+            except requests.exceptions.RequestException as e:
+                print(f"Error making request: {e}")
+                return False, f"<Error> {e}"
 
 
 
