@@ -43,7 +43,7 @@ label nameWorld_label:
     $ motto = renpy.random.randint(1,300)
     if motto == 15:    
         scene black with dissolve
-        play sound "audio/sfx/can you hear me.mp3"
+        play sound "<from 0 to 9>audio/bgm/end-voice.ogg"
         $ renpy.pause(11, hard=True)
         jump ch0_motto
 
