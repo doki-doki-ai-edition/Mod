@@ -197,7 +197,7 @@ init python:
 
 
 
-        # Reminder: Remember to check if user is using a local model
+
         def checkForContextLimit(self, range=40, contains_system_prompt=False):
             """Estimates the amount of tokens in the chathistory.
             If the max context window for an LLM is set to (for eg.) 1024 then if the tokens
