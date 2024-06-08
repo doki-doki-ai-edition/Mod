@@ -328,6 +328,7 @@ init python:
             # Log user input
             self.chathistory.append({"role": "user", "content": userInput + reminder})
 
+            # Make sure the user's msg doesn't go over the context window
             self.checkForContextLimit()
             examples = self.removePlaceholders()
             contextAndUserMsg = examples + self.chathistory if spacezone != "true" else self.chathistory
