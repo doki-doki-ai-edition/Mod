@@ -107,7 +107,7 @@ label space_zone:
 
 
 
-        if counter == 1: #if counter == 1 and persistent.first_scare == False:
+        if counter >= 6 and persistent.first_scare == False:
             hide monika_bg
             hide monika_bg_highlight
             show monika_scare

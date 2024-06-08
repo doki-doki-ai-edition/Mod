@@ -198,6 +198,45 @@ init python:
 
 
 
+        def checkForContextLimit(self, range=40, contains_system_prompt=False):
+            """Estimates the amount of tokens in the chathistory.
+            If the max context window for an LLM is set to (for eg.) 1024 then if the tokens
+            exceed that amount, the start of the chathistory will be deleted.
+            
+            Both the user message and the assistant message.
+
+            Args:
+                range -- the amount of words it will take before clearing up the chat. eg.
+                        if the max context window is 1024, with a range of 40 and the current
+                        context of the chathistory is >= 984 then it will delete the chat (first 2 msgs or more)
+                        once the current tokens reach 984 or higher.
+                
+                contains_system_prompt -- Determines if the first index should be deleted or skipped
+                                        (which would typically be the system prompt)
+            """
+            max_tokens = int(persistent.context_window)
+            delete_pos = 0 if contains_system_prompt == False else 1
+            current_tokens = count_tokens()
+            
+            while (current_tokens) >= max_tokens - range:
+                self.chathistory.pop(0 + delete_pos)
+                self.chathistory.pop(1 + delete_pos)
+                with open(f"{self.full_path}/chathistory.json", 'w') as f:
+                    json.dump(self.chathistory, f, indent=2)
+                print("***POPPED 2 MESSAGES***")
+                current_tokens = count_tokens()
+
+
+
+        def count_tokens():
+            current_tokens = 0
+            for content in self.chathistory:
+                words_amnt = len(content['content'].split())
+                current_tokens += words_amnt
+            return current_tokens
+
+
+
         def retryPrompt(self, reply, current_emotion, current_body):
             """If the generated response doesnt use the emotions specified in the characters.json list
             eg. '[FACE] super shy' then remind the ai to only use what's in
@@ -267,7 +306,7 @@ init python:
             renpy.log(f">>> ai response func: spacezone is {spacezone}")
             if spacezone != "true":
                 emotions = ', '.join([e for e in Configs().characters[self.character_name.title()]['head']])
-                parts = ', '.join([e for e in Configs().characters[self.character_name.title()]['left']]) # "explain" and "relaxed" (which honestly should prob just use a number system)
+                parts = ', '.join([e for e in Configs().characters[self.character_name.title()]['left']]) # "explain" and "relaxed"
                 reminder = "" if self.retrying == False else Info().getReminder["emotes"].replace("<emotes>", emotions).replace("<body>", parts).replace("<char>", self.character_name)
 
             self.checkForPurgatory()
@@ -275,6 +314,7 @@ init python:
             # Log user input
             self.chathistory.append({"role": "user", "content": userInput + reminder})
 
+            self.checkForContextLimit()
             examples = self.removePlaceholders()
             contextAndUserMsg = examples + self.chathistory if spacezone != "true" else self.chathistory
 
