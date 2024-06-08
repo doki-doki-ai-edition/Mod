@@ -53,6 +53,7 @@ init python:
 
 
 
+
         def controlMood(self, face, body):
             """Display different facial expressions"""
             spacezone = self.dbase.getSceneData("zone")
@@ -114,7 +115,6 @@ init python:
 
 
 
-
             
         def safeResponse(self, raw_response):
             """A response that's not entirely raw. If the AI
@@ -129,6 +129,9 @@ init python:
                 clean_response =  "[CONTENT]" + clean_response.split("[CONTENT]")[1].strip()
 
             return clean_response
+
+
+
 
         def removeKeywords(self, reply):
             """Get rid of keywords and return a clean string"""

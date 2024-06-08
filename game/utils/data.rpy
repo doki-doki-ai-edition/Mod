@@ -150,44 +150,14 @@ init python:
 
         @property
         def getSpaceLines(self):
-            space_lines = {
-                1: {
-                    "name": "making-friends",
-                    "file": "<from 0 to 74>audio/sfx/_space-lines.mp3",
-                    "time": 76
-                },
-                2: {
-                    "name": "same-room",
-                    "file": "<from 102 to 128>audio/sfx/_space-lines.mp3",
-                    "time": 26
-                },
-                3: {
-                    "name": "favorite-color",
-                    "file": "<from 150 to 174>audio/sfx/_space-lines.mp3",
-                    "time": 24
-                },
-                4: {
-                    "name": "sayori-(graphic)",
-                    "file": "<from 219 to 318>audio/sfx/_space-lines.mp3",
-                    "time": 99
-                },
-                5: {
-                    "name": "festival",
-                    "file": "<from 363 to 398>audio/sfx/_space-lines.mp3",
-                    "time": 35
-                },
-                6: {
-                    "name": "japan",
-                    "file": "<from 439 to 498>audio/sfx/_space-lines.mp3",
-                    "time": 59
-                }
-            }
-            return space_lines
+            with open(f'{config.basedir}/game/assets/configs/purgatory_lines.json', 'r') as f:
+                purgatory_lines = json.load(f)
+            return purgatory_lines
 
         @property
         def getChatModelInfo(self):
             with open(f'{config.basedir}/game/assets/configs/chat_model_info.json', 'r') as f:
-                chat_model_info json.load(f)
+                chat_model_info = json.load(f)
             return chat_model_info
 
 

@@ -31,9 +31,9 @@ label space_zone:
     # Monologue
     ###########################
     $ Configs().create_from_hex(f"{config.basedir}/game/audio/sfx/space.mp3", f"{config.basedir}/game/audio/sfx/_space-lines.mp3")
-    $ space_line = Info().getSpaceLines[2]["file"]
-    $ space_line_time = Info().getSpaceLines[2]["time"]
-    $ rnd_line = renpy.random.randint(1, 6)
+    $ space_line = Info().getSpaceLines[1]["file"]
+    $ space_line_time = Info().getSpaceLines[1]["time"]
+    $ rnd_line = renpy.random.randint(0, 5)
 
     if persistent.first_space == True:
         $ renpy.sound.play(f"{space_line}", channel="sound", loop=None)
@@ -41,7 +41,7 @@ label space_zone:
         $ persistent.first_space = False
         $ renpy.save_persistent()
     else:
-        $ rnd_line = rnd_line if rnd_line != 4 else 1
+        $ rnd_line = rnd_line if rnd_line != 3 else 0
         $ space_line = Info().getSpaceLines[rnd_line]["file"]
         $ space_line_time = Info().getSpaceLines[rnd_line]["time"]
         $ renpy.sound.play(f"{space_line}", channel="sound", loop=None)
