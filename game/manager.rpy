@@ -197,7 +197,7 @@ init python:
 
 
 
-
+        # Reminder: Remember to check if user is using a local model
         def checkForContextLimit(self, range=40, contains_system_prompt=False):
             """Estimates the amount of tokens in the chathistory.
             If the max context window for an LLM is set to (for eg.) 1024 then if the tokens
@@ -214,10 +214,20 @@ init python:
                 contains_system_prompt -- Determines if the first index should be deleted or skipped
                                         (which would typically be the system prompt)
             """
-            max_tokens = int(persistent.context_window)
+
+            def checkForLLM():
+                if persistent.chatModel in Info().getChatModelInfo["openai"] or persistent.chatModel in Info().getChatModelInfo["groq"]:
+                    return False
+                return True
+
+            
+
+            max_tokens = int(persistent.context_window) if checkForLLM() else int(Info().getChatModelInfo[persistent.chatModel]["context_win"])
             delete_pos = 0 if contains_system_prompt == False else 1
             current_tokens = count_tokens()
-            
+
+            # Continues to delete the chat from the top if
+            # The current_tokens is still greater than max_tokens
             while (current_tokens) >= max_tokens - range:
                 self.chathistory.pop(0 + delete_pos)
                 self.chathistory.pop(1 + delete_pos)
@@ -225,6 +235,7 @@ init python:
                     json.dump(self.chathistory, f, indent=2)
                 print("***POPPED 2 MESSAGES***")
                 current_tokens = count_tokens()
+
 
 
 
