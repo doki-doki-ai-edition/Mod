@@ -214,15 +214,18 @@ init python:
                 contains_system_prompt -- Determines if the first index should be deleted or skipped
                                         (which would typically be the system prompt)
             """
+            parent_model = "openai"
 
-            def checkForLLM():
-                if persistent.chatModel in Info().getChatModelInfo["openai"] or persistent.chatModel in Info().getChatModelInfo["groq"]:
-                    return False
-                return True
+            for model in Info().getChatModelInfo["openai"]:
+                if persistent.chatModel == model:
+                    parent_model = model
+                    break
+            for model in Info().getChatModelInfo["groq"]:
+                if persistent.chatModel == model:
+                    parent_model = model
+                    break
 
-            
-
-            max_tokens = int(persistent.context_window) if checkForLLM() else int(Info().getChatModelInfo[persistent.chatModel]["context_win"])
+            max_tokens = int(persistent.context_window) if checkForLLM() else int(Info().getChatModelInfo[parent_model][persistent.chatModel]["context_win"])
             delete_pos = 0 if contains_system_prompt == False else 1
             current_tokens = count_tokens()
 
