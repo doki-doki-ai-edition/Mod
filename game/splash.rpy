@@ -184,7 +184,7 @@ label splashscreen:
     scene tos2
 
     if persistent.firstrun:
-        "This is a Doki Doki Literature Club fan game that is not affiliated with Team Salvato."
+        "This is a Doki Doki Literature Club mod that is not affiliated with Team Salvato."
         "It is designed to be played only after the official game has been completed."
         "You can download Doki Doki Literature Club at: https://ddlc.moe"
 
@@ -244,6 +244,9 @@ label ai_mod_notice:
         "The characters are not real. They do not have emotions. They cannot be offended. They cannot be hurt. What you are interacting with in the simplest of terms is an advanced word guesser."
         "I want to ensure that most people playing are at the very least mindful of this and can distinguish reality from fiction."
         "Have fun!"
+        show text "Any voices you hear is not AI generated." with dissolve
+        $ renpy.pause(4, hard=True)
+        "..."
     else:
         "REMINDER: The characters are not real. They do not have emotions. They cannot be offended. They cannot be hurt. What you are interacting with in the simplest of terms is an advanced word guesser."
     return
