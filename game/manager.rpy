@@ -218,15 +218,16 @@ init python:
                                         (which would typically be the system prompt)
             """
             parent_model = "groq"
-
+            checkForLLM = True
             for model in Info().getChatModelInfo["groq"]:
                 if persistent.chatModel == model:
                     parent_model = model
+                    checkForLLM = False
                     break
 
-            max_tokens = int(persistent.context_window) if checkForLLM() else int(Info().getChatModelInfo[parent_model][persistent.chatModel]["context_win"])
+            max_tokens = int(persistent.context_window) if checkForLLM else int(Info().getChatModelInfo[parent_model][persistent.chatModel]["context_win"])
             delete_pos = 0 if contains_system_prompt == False else 1
-            current_tokens = count_tokens()
+            current_tokens = self.count_tokens()
 
             # Continues to delete the chat from the top if
             # The current_tokens is still greater than max_tokens
@@ -236,12 +237,12 @@ init python:
                 with open(f"{self.full_path}/chathistory.json", 'w') as f:
                     json.dump(self.chathistory, f, indent=2)
                 print("***POPPED 2 MESSAGES***")
-                current_tokens = count_tokens()
+                current_tokens = self.count_tokens()
 
 
 
 
-        def count_tokens():
+        def count_tokens(self):
             current_tokens = 0
             for content in self.chathistory:
                 words_amnt = len(content['content'].split())
