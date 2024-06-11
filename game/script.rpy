@@ -99,9 +99,9 @@ label AICharacter:
     # Monologue
     ###########################
     if character_name == "sayori" and persistent.first_sayori:
-        $ Configs().create_from_hex(f"{config.basedir}/game/audio/sfx/space.monika", f"{config.basedir}/game/audio/sfx/_space-lines.mp3")
-        $ space_line = Info().getSpaceLines[4]["file"]
-        $ space_line_time = Info().getSpaceLines[4]["time"]
+        $ Configs().create_from_hex(f"{config.basedir}/game/audio/sfx/space.mp3", f"{config.basedir}/game/audio/sfx/_space-lines.mp3")
+        $ space_line = Info().getSpaceLines[3]["file"]
+        $ space_line_time = Info().getSpaceLines[3]["time"]
         $ persistent.first_sayori = False
         $ renpy.save_persistent()
 
