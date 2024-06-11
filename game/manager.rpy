@@ -217,12 +217,8 @@ init python:
                 contains_system_prompt -- Determines if the first index should be deleted or skipped
                                         (which would typically be the system prompt)
             """
-            parent_model = "openai"
+            parent_model = "groq"
 
-            for model in Info().getChatModelInfo["openai"]:
-                if persistent.chatModel == model:
-                    parent_model = model
-                    break
             for model in Info().getChatModelInfo["groq"]:
                 if persistent.chatModel == model:
                     parent_model = model
@@ -304,12 +300,9 @@ init python:
 
         def modelChoices(self, prompt):
             groq = chat_model_dict["groq"]["suggested"] + chat_model_dict["groq"]["other"]
-            openai = chat_model_dict["openai"]["suggested"] + chat_model_dict["openai"]["other"]
 
             if persistent.chatModel in groq:
                 return TextModel().getGroq(prompt=prompt)
-            elif persistent.chatModel in openai:
-                return TextModel().getGPT(prompt=prompt)
             else:
                 return TextModel().getLLM(prompt=prompt)
 

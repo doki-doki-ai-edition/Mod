@@ -1068,8 +1068,8 @@ screen select_model_name_screen():
     $ fav_local_models = chat_model_dict["llms"]["suggested"]
     $ other_local_models = chat_model_dict["llms"]["other"]
 
-    $ fav_api_models = chat_model_dict["openai"]["suggested"] + chat_model_dict["groq"]["suggested"]
-    $ other_api_models = chat_model_dict["openai"]["other"] + chat_model_dict["groq"]["other"]
+    $ fav_api_models = chat_model_dict["groq"]["suggested"]
+    $ other_api_models = chat_model_dict["groq"]["other"]
 
 
     $ important_info = "Type \"ollama run (model name)\" in a console on your computer.\nFor example: ollama run llama3" if llm_mode == True else "Make sure you're using the correct API key for the model name you select."
