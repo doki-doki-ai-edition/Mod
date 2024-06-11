@@ -37,6 +37,15 @@ label apikey_label:
     return
 
 
+label custom_chat_model_label:
+    "Enter a model from your ollama list"
+    "You can check what models you have available by typing \"ollama list\" in a command line on your device."
+    $ model = renpy.input("Enter a model", f"{persistent.chatModel}").strip()
+    $ persistent.chatModel = model 
+    $ renpy.save_persistent()
+    return
+
+
 label nameWorld_label:
     scene theme
 
