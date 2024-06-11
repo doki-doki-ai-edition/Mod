@@ -17,6 +17,7 @@ label start:
         jump space_zone
     else:
         scene theme with dissolve
+
         call screen chatmode_screen
         
 

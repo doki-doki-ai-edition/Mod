@@ -111,7 +111,7 @@ default preferences.text_cps = 50
 default preferences.afm_time = 15
 
 default preferences.music_volume = 0.75
-default preferences.sfx_volume = 0.75
+default preferences.sfx_volume = 1
 
 
 
