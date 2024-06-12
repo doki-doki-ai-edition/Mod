@@ -37,8 +37,7 @@
         "right": {
             "explain": "2r.png",
             "relaxed": "1r.png"
-        },
-        "none": "mtea.png"
+        }
     },
 
     "Sayori":{
@@ -76,8 +75,7 @@
         "right": {
             "relaxed": "1r.png",
             "excited": "2r.png"
-        },
-        "none": "mtea.png"
+        }
     },
 
     "Natsuki":{
@@ -113,8 +111,7 @@
         "right": {
             "explain": "1r.png",
             "relaxed": "2r.png"
-        },
-        "none": "mtea.png"
+        }
     },
 
     "Yuri":{
@@ -146,7 +143,6 @@
         "right": {
             "explain": "2r.png",
             "relaxed": "1r.png"
-        },
-        "none": "mtea.png"
+        }
     }
 }
