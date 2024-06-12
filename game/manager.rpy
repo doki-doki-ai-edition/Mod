@@ -26,21 +26,6 @@ init python:
             self.retrying = False
             self.dbase = Data(path_to_user_dir=self.full_path)
 
-        @staticmethod
-        def context_to_progress_story(msg):
-            rng = random.randint(1,3)
-            context = ""
-
-            with open(f"{config.basedir}/game/assets/prompts/progress_story.json") as f:
-                structs = json.load(f)
-            if rng == 1:
-                context += structs["1"]
-            elif rng == 2:
-                context += structs["2"]
-            elif rng == 3:
-                context += structs["3"]
-
-            return msg + context
 
 
 

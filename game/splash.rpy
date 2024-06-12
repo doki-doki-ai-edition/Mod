@@ -1,12 +1,12 @@
 
 image menu_bg:
     topleft
-    "/game/assets/imgs/gui/menu_bg.png"
+    "assets/imgs/gui/menu_bg.png"
     menu_bg_move
 
 image game_menu_bg:
     topleft
-    "/game/assets/imgs/gui/menu_bg.png"
+    "assets/imgs/gui/menu_bg.png"
     menu_bg_loop
 
 image menu_fade:
@@ -79,18 +79,18 @@ image menu_art_m_ghost:
 
 image menu_art_s_glitch:
     subpixel True
-    "/game/assets/imgs/gui/menu_art_s_g.png"
+    "assets/imgs/gui/menu_art_s_g.png"
     xcenter 470
     ycenter 600
     zoom 0.68
     menu_art_move(.8, 470, .8)
 
 image menu_nav:
-    "/game/assets/imgs/gui/overlay/main_menu.png"
+    "assets/imgs/gui/overlay/main_menu.png"
     menu_nav_move
 
 image menu_logo:
-    "/game/assets/imgs/gui/logo.png"
+    "assets/imgs/gui/logo.png"
     subpixel True
     xcenter 240
     ycenter 120
