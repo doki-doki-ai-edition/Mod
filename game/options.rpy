@@ -136,7 +136,7 @@ define config.save_directory = "DDAE-1454445547"
 
 
 
-define config.window_icon = "gui/window_icon.png"
+define config.window_icon = "/game/assets/imgs/gui/window_icon.png"
 
 
 

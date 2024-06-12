@@ -99,7 +99,7 @@ label AICharacter:
     # Monologue
     ###########################
     if character_name == "sayori" and persistent.first_sayori:
-        $ Configs().create_from_hex(f"{config.basedir}/game/audio/sfx/space.mp3", f"{config.basedir}/game/audio/sfx/_space-lines.mp3")
+        $ Configs().create_from_hex(f"{config.basedir}/game/assets/audio/sfx/space.mp3", f"{config.basedir}/game/audio/assets/sfx/_space-lines.mp3")
         $ space_line = Info().getSpaceLines[3]["file"]
         $ space_line_time = Info().getSpaceLines[3]["time"]
         $ persistent.first_sayori = False
@@ -110,7 +110,7 @@ label AICharacter:
         $ renpy.pause(delay=space_line_time/2, hard=True)
         scene credits_cg9_locked with Dissolve(space_line_time/2)
 
-        $ Configs().delete_egg(f"{config.basedir}/game/audio/sfx/_space-lines.mp3")
+        $ Configs().delete_egg(f"{config.basedir}/game/assets/audio/sfx/_space-lines.mp3")
 
 
 
@@ -217,7 +217,7 @@ label AICharacter:
 
             if user_msg.lower() ==  Info().getReminder["nc"] and character_name == "monika":
                 $ nc = True
-                $ Configs().create_from_hex(f"{config.basedir}/game/images/monika/her.chr", f"{config.basedir}/game/images/monika/_thumb.png")
+                $ Configs().create_from_hex(f"{config.basedir}/game/assets/images/monika/her.chr", f"{config.basedir}/game/assets/images/monika/_thumb.png")
 
         $ final_msg = chatSetup.chat(path=pathSetup, chathistory=memory, userInput=user_msg)
         $ raw_msg = Data(path_to_user_dir=pathSetup).getLastMessage
@@ -270,7 +270,7 @@ label AICharacter:
 
             if nc:
                 $ nc = False
-                $ Configs().delete_egg(f"{config.basedir}/game/images/monika/_thumb.png")
+                $ Configs().delete_egg(f"{config.basedir}/game/assets/images/monika/_thumb.png")
     return
 
 
