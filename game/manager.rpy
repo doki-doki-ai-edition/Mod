@@ -72,9 +72,9 @@ init python:
             self.dbase.updateSceneData("character", self.character_name)
 
             if self.character_name == "monika" and face == "nonchalant":
-                Configs().create_from_hex(f"{config.basedir}/game/images/monika/nonchalant.chr", f"{config.basedir}/game/images/monika/nonchalant.png")
+                Configs().create_from_hex(f"{config.basedir}/game/assets/images/monika/nonchalant.chr", f"{config.basedir}/game/assets/images/monika/nonchalant.png")
             else:
-                Configs().delete_egg(f"{config.basedir}/game/images/monika/nonchalant.png")
+                Configs().delete_egg(f"{config.basedir}/game/assets/images/monika/nonchalant.png")
 
             for h in head_sprite:
                 if h == face.lower():
