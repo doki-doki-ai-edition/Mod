@@ -1,6 +1,6 @@
 label space_zone:
     scene white
-    play music "audio/bgm/monika-start.ogg" noloop
+    play music "bgm/monika-start.ogg" noloop
     $ renpy.pause(0.5, hard=True)
     show splash_glitch2 with Dissolve(0.5, alpha=True)
     $ renpy.pause(2.0, hard=True)
