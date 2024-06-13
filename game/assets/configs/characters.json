@@ -44,12 +44,13 @@
         "full_sprites": [
             "annoyed",
             "nervous",
-            "pouting"
+            "pouting",
+            "blushing"
         ],
         "head": {
             "angry": "j.png",
             "annoyed": "3c.png",
-            "blushing": "e.png",
+            "blushing": "3b.png",
             "concerned": "m.png",
             "crying": "cry.png",
             "curious": "b.png",
