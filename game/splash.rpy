@@ -31,7 +31,7 @@ image menu_art_n:
 
 image menu_art_s:
     subpixel True
-    "gui/menu_art_s.png"
+    "assets/imgs/gui/menu_art_s_g.png"
     xcenter 510
     ycenter 500
     zoom 0.68
@@ -79,7 +79,7 @@ image menu_art_m_ghost:
 
 image menu_art_s_glitch:
     subpixel True
-    "assets/imgs/gui/menu_art_s_g.png"
+    "gui/menu_art_s_break.png"
     xcenter 470
     ycenter 600
     zoom 0.68

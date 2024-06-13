@@ -263,6 +263,10 @@ image glitch_color2:
 
 
 
+image theme:
+    "assets/imgs/bg/theme.png"
+
+
 
 image sayori 1 = im.Composite((960, 960), (0, 0), "sayori/1l.png", (0, 0), "sayori/1r.png", (0, 0), "sayori/a.png")
 image sayori 1a = im.Composite((960, 960), (0, 0), "sayori/1l.png", (0, 0), "sayori/1r.png", (0, 0), "sayori/a.png")

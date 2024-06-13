@@ -270,7 +270,7 @@ label AICharacter:
 
             if nc:
                 $ nc = False
-                $ Configs().delete_egg(f"{config.basedir}/game/assets/images/monika/_thumb.png")
+                $ Configs().delete_egg(f"{config.basedir}/game/assets/imgs/monika/_thumb.png")
     return
 
 
