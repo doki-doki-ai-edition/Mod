@@ -1025,7 +1025,7 @@ screen file_slots(title):
 screen custom_save_screen():
     modal True
     zorder 10
-    add "assets/bg/theme.png"
+    add "assets/imgs/bg/theme.png"
     use game_menu(_("Load"), scroll="viewport"):
 
         hbox:
@@ -1063,7 +1063,7 @@ screen custom_save_screen():
 screen select_model_name_screen():
     modal True
     zorder 10
-    add "assets/bg/theme.png"
+    add "assets/imgs/bg/theme.png"
 
     $ fav_local_models = chat_model_dict["llms"]["suggested"]
     $ other_local_models = chat_model_dict["llms"]["other"]
@@ -1938,8 +1938,8 @@ screen chatmode_screen():
 
             xpos 20
             
-            hover_sound "assets/audio/gui/sfx/hover.ogg"
-            activate_sound "assets/audio/gui/sfx/select.ogg"
+            hover_sound "gui/sfx/hover.ogg"
+            activate_sound "gui/sfx/select.ogg"
             action [Hide("chatmode_screen"), MainMenu()]
 
     imagebutton:
@@ -1950,8 +1950,8 @@ screen chatmode_screen():
         idle "assets/imgs/gui/gamemode/unselected_mode.png"
         hover "assets/imgs/gui/gamemode/selected_mode.png"
 
-        hover_sound "assets/audio/gui/sfx/hover.ogg"
-        activate_sound "assets/audio/gui/sfx/select.ogg"
+        hover_sound "gui/sfx/hover.ogg"
+        activate_sound "gui/sfx/select.ogg"
         action [SetVariable("chatmode_num", 0), Jump("gamemode_label")]
 
 
@@ -1963,10 +1963,10 @@ screen chatmode_screen():
         idle "assets/imgs/gui/gamemode/unselected_mode.png"
         hover "assets/imgs/gui/gamemode/selected_mode.png"
 
-        hover_sound "assets/audio/gui/sfx/hover.ogg"
+        hover_sound "gui/sfx/hover.ogg"
         #activate_sound "audio/sfx/select_sfx.wav"
         #action [SetVariable("chatmode_num", 1), Jump("gamemode_label")]
-        activate_sound "assets/audio/gui/sfx/select.ogg"
+        activate_sound "gui/sfx/select.ogg"
         action [Show(screen="dialog", message="Currently removed", ok_action=Hide("dialog"))]
     
     image "assets/imgs/gui/gamemode/freechat_title.png" zoom 0.20 ypos 233 xpos 175
@@ -1992,8 +1992,8 @@ screen gamemode_screen():
 
             xpos 20
 
-            hover_sound "assets/audio/gui/sfx/hover.ogg"
-            activate_sound "assets/audio/gui/sfx/select.ogg"
+            hover_sound "gui/sfx/hover.ogg"
+            activate_sound "gui/sfx/select.ogg"
             action [Hide("gamemode_screen"), Show("chatmode_screen")]
 
     imagebutton:
@@ -2004,8 +2004,8 @@ screen gamemode_screen():
         idle "gui/poemgame/m_sticker_1.png"
         hover "gui/poemgame/m_sticker_2.png"
 
-        hover_sound "assets/audio/gui/sfx/hover.ogg"
-        activate_sound "assets/audio/gui/sfx/select.ogg"
+        hover_sound "gui/sfx/hover.ogg"
+        activate_sound "gui/sfx/select.ogg"
         action [SetVariable("character_name", "monika"), Hide("gamemode_screen"), Jump("nameWorld_label")]
 
 
@@ -2018,8 +2018,8 @@ screen gamemode_screen():
         idle "gui/poemgame/s_sticker_1.png"
         hover "gui/poemgame/s_sticker_2.png"
 
-        hover_sound "assets/audio/gui/sfx/hover.ogg"
-        activate_sound "assets/audio/gui/sfx/select.ogg"
+        hover_sound "gui/sfx/hover.ogg"
+        activate_sound "gui/sfx/select.ogg"
         action [SetVariable("character_name", "sayori"), Hide("gamemode_screen"), Jump("nameWorld_label")]
 
 
@@ -2033,8 +2033,8 @@ screen gamemode_screen():
         idle "gui/poemgame/n_sticker_1.png"
         hover "gui/poemgame/n_sticker_2.png"
 
-        hover_sound "assets/audio/gui/sfx/hover.ogg"
-        activate_sound "assets/audio/gui/sfx/select.ogg"
+        hover_sound "gui/sfx/hover.ogg"
+        activate_sound "gui/sfx/select.ogg"
         action [SetVariable("character_name", "natsuki"), Hide("gamemode_screen"), Jump("nameWorld_label")]
 
 
@@ -2048,8 +2048,8 @@ screen gamemode_screen():
         idle "gui/poemgame/y_sticker_1.png"
         hover "gui/poemgame/y_sticker_2.png"
 
-        hover_sound "assets/audio/gui/sfx/hover.ogg"
-        activate_sound "assets/audio/gui/sfx/select.ogg"
+        hover_sound "gui/sfx/hover.ogg"
+        activate_sound "gui/sfx/select.ogg"
         action [SetVariable("character_name", "yuri"), Hide("gamemode_screen"), Jump("nameWorld_label")]
 
 
@@ -2062,8 +2062,8 @@ screen gamemode_screen():
             xpos 640
             ypos 340
             
-            hover_sound "assets/audio/gui/sfx/hover.ogg"
-            activate_sound "assets/audio/gui/sfx/select.ogg"
+            hover_sound "gui/sfx/hover.ogg"
+            activate_sound "gui/sfx/select.ogg"
             action [Show(screen="dialog", message="Not available yet", ok_action=Hide("dialog"))]
 
 

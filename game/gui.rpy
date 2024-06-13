@@ -17,9 +17,9 @@ init python:
 
 
 
-define gui.hover_sound = "audio/gui/sfx/hover.ogg"
-define gui.activate_sound = "audio/gui/sfx/select.ogg"
-define gui.activate_sound_glitch = "audio/gui/sfx/select_glitch.ogg"
+define gui.hover_sound = "gui/sfx/hover.ogg"
+define gui.activate_sound = "gui/sfx/select.ogg"
+define gui.activate_sound_glitch = "gui/sfx/select_glitch.ogg"
 
 
 
