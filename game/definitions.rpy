@@ -103,9 +103,6 @@ define audio.closet_close = "sfx/closet-close.ogg"
 define audio.page_turn = "sfx/pageflip.ogg"
 define audio.fall = "sfx/fall.ogg"
 
-define audio.thunder = "sfx/natural-thunder.mp3"
-define audio.rain = "<loop 0>sfx/rain-in-forest-birds-nature.mp3"
-define audio.thunder = "sfx/natural-thunder.mp3"
 
 
 image credits_cg9_locked:
