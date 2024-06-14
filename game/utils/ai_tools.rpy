@@ -65,7 +65,11 @@ init python:
             try:
                 response.raise_for_status()
                 data = response.json()
-                return data["choices"][0]["message"]["content"] + " [END]"
+                result = data["choices"][0]["message"]["content"] 
+
+                if "[END]" not in result:
+                    return result + " [END]"
+                return  result
 
             except requests.exceptions.RequestException as e:
                 print(f"Error making request: {e}")
