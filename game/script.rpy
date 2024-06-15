@@ -208,7 +208,7 @@ label AICharacter:
         else:
             $ user_msg = renpy.input("Enter a message: ")
 
-            if user_msg  == "(init_end_sim)" and character_name == "monika":
+            if user_msg  == "init_end_sim" and character_name == "monika":
                 $ main_event_loop = False
 
                 $ persistent.purgatory_name = character_name
