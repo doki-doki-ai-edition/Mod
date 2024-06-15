@@ -49,7 +49,7 @@ label custom_chat_model_label:
 label nameWorld_label:
     scene theme
 
-    $ motto = renpy.random.randint(1,300)
+    $ motto = renpy.random.randint(1,315)
     if motto == 15:    
         scene black with dissolve
         play sound "<from 0 to 9>bgm/end-voice.ogg"

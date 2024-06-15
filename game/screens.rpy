@@ -1931,7 +1931,7 @@ screen basic_popup(title, message, ok_action):
 default chatmode_num = None
 
 screen chatmode_screen():
-    
+    tag menu
     image "assets/imgs/gui/gamemode/chatmode_txt.png" ypos 40 xpos 425 zoom 0.65
 
     vbox:
@@ -1986,6 +1986,7 @@ screen chatmode_screen():
 ################################################################ 
 
 screen gamemode_screen():
+    tag menu
     image "assets/imgs/gui/gamemode/gamemode_txt.png" ypos 40 xpos 370
 
     vbox:
