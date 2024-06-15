@@ -1940,7 +1940,7 @@ screen chatmode_screen():
             
             hover_sound "gui/sfx/hover.ogg"
             activate_sound "gui/sfx/select.ogg"
-            action [Hide("chatmode_screen"), MainMenu()]
+            action [MainMenu()]
 
     imagebutton:
         xanchor 0.5
