@@ -595,7 +595,7 @@ screen navigation():
 
             if main_menu:
 
-                if persistent.playthrough == 1:
+                if persistent.playthrough == 1 or persistent.purgatory:
                     textbutton _("ŔŗñĮ¼»ŧþŀÂŻŕěōì«") action If(persistent.playername, true=Start(), false=Show(screen="name_input", message="Please enter your name", ok_action=Function(FinishEnterName)))
                 else:
                     textbutton _("New Game") action If(persistent.playername, true=Start(), false=Show(screen="name_input", message="Please enter your name", ok_action=Function(FinishEnterName)))
@@ -2078,6 +2078,33 @@ screen display_monika_desc:
 screen display_everyone_desc:
     image "assets/imgs/gui/gamemode/everyone_desc.png" ypos 200 xpos 965 zoom 0.3
 
+
+
+
+
+
+
+
+################################################################
+## Home Icon
+################################################################ 
+
+transform home_size:
+    zoom 0.45
+
+screen home_icon_screen():
+    modal False
+    roll_forward True
+    imagebutton:
+        xpos 1200
+        ypos 35
+        idle "assets/imgs/gui/overlay/home_fill.png"
+        hover "assets/imgs/gui/overlay/home_nofill.png"
+
+        hover_sound "gui/sfx/hover.ogg"
+        activate_sound "gui/sfx/select.ogg"
+        at home_size
+        action MainMenu()
 
 
 

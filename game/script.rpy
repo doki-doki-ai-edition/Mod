@@ -57,6 +57,7 @@ label nameWorld_label:
         jump ch0_motto
 
     "..."
+    call screen home_icon_screen
     jump AICharacter
 
     return
@@ -81,6 +82,8 @@ label AICharacter:
     stop music
     $ custom_quick_menu = True
     scene black with dissolve
+
+    
 
     $ resume = None # Used to check if a file has been loaded
     $ zone_type = None
@@ -191,7 +194,7 @@ label AICharacter:
 
 
 
-
+    
     ###########################
     # Main Event Loop
     ###########################
