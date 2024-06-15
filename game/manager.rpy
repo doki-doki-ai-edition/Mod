@@ -128,7 +128,7 @@ init python:
             body = getContent('[BODY]', '[CONTENT]')
             scene = getContent('[SCENE]', '[NARRATION]')
 
-            reply = reply.replace('[END]', '')
+            reply = reply.split('[END]')[0]
             if scene:
                 # Sometimes a model responds w/ text before [SCENE]
                 # This removes any text before and only keeps [SCENE] and
