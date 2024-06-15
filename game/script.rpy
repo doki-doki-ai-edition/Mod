@@ -57,7 +57,6 @@ label nameWorld_label:
         jump ch0_motto
 
     "..."
-    call screen home_icon_screen
     jump AICharacter
 
     return
@@ -193,7 +192,7 @@ label AICharacter:
         $ renpy.say(None, convo)
 
 
-
+    show screen home_icon_screen
     
     ###########################
     # Main Event Loop

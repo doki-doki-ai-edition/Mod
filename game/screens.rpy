@@ -2095,7 +2095,6 @@ transform home_size:
 
 screen home_icon_screen():
     modal False
-    roll_forward True
     imagebutton:
         xpos 1200
         ypos 35
