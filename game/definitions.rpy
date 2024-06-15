@@ -1455,6 +1455,7 @@ default num = None
 default persistent.firstrun = True
 default persistent.first_space = True
 default persistent.first_sayori = True
+default persistent.in_game = False
 define chat_model_dict = {
     "groq": {
         "suggested": ["llama3-70b-8192"],

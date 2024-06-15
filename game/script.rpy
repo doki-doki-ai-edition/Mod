@@ -1,6 +1,5 @@
 
 
-
 label start:
 
     init python:
@@ -77,6 +76,8 @@ default choice = None
 
 label AICharacter:
     $ tokenSetter.set_token()
+    $ persistent.in_game = True
+    $ renpy.save_persistent()
     stop music
     $ custom_quick_menu = True
     scene black with dissolve

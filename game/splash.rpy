@@ -239,7 +239,7 @@ label ai_mod_notice:
     if persistent.firstrun:
         $ persistent.firstrun = False
         $ renpy.save_persistent()
-        "IMPORTANT NOTICE: I made this mod so that other people could have fun interacting with the characters in a more visual way that goes beyond just text."
+        "IMPORTANT NOTICE: This mod was made for the purpose of having fun interactions with the characters in a more visual way that goes beyond just text."
         "But it is important to keep in mind of the following:"
         "The characters are not real. They do not have emotions. They cannot be offended. They cannot be hurt. What you are interacting with in the simplest of terms is an advanced word guesser."
         "I want to ensure that most people playing are at the very least mindful of this and can distinguish reality from fiction."
@@ -296,6 +296,8 @@ label ai_mod_notice:
 
 label before_main_menu:
     $ config.main_menu_music = audio.t1
+    $ persistent.in_game = False
+    $ renpy.save_persistent()
     return
 
 label quit:
