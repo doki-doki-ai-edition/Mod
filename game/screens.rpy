@@ -470,7 +470,7 @@ screen quick_menu():
             textbutton _("Skip") #action Skip()
             textbutton _("Auto") #action Preference("auto-forward", "toggle")
             textbutton _("Save") #action ShowMenu('save')
-            textbutton _("Load") action ShowMenu('load')
+            textbutton _("Load") #action ShowMenu('load')
 
 
             textbutton _("Settings") action ShowMenu('preferences')
