@@ -8,10 +8,19 @@ label space_zone:
     #scene black
     stop music
 
-    show mask_2
-    show mask_3
-    show monika_bg
-    show monika_bg_highlight
+
+    if persistent.first_space == False:
+        show mask_2
+        show mask_3
+        show monika_bg
+        show monika_bg_highlight
+    else:
+        show mask_2 at zm_out
+        show mask_3 at zm_out
+        show monika_bg at zm_out
+        show monika_bg_highlight at zm_out
+
+        
     play music m1
 
     $ persistent.in_game = True
