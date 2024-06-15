@@ -52,7 +52,7 @@ label space_zone:
     $ Configs().delete_egg(f"{config.basedir}/game/assets/audio/sfx/_space-lines.mp3")
 
 
-    call screen home_icon_screen
+    show screen home_icon_screen
     # "num" is a default value set to None. If a number is
     # assigned to it, that means the user is opening an old file
     if num != None:
