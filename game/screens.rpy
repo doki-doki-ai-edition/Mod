@@ -606,7 +606,10 @@ screen navigation():
 
                 textbutton _("Save Game") action [ShowMenu("save"), SensitiveIf(renpy.get_screen("save") == None)]
 
-            textbutton _("Load Game") action [ShowMenu("load"), SensitiveIf(renpy.get_screen("load") == None)]
+            if persistent.in_game == False:
+                textbutton _("Load Game") action [ShowMenu("load"), SensitiveIf(renpy.get_screen("load") == None)]
+            else:
+                textbutton _("Load Game") action Show(screen="basic_popup", title="Info", message="Go to the Main Menu before loading a game.", ok_action=NullAction())
 
             if _in_replay:
 

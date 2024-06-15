@@ -14,6 +14,8 @@ label space_zone:
     show monika_bg_highlight
     play music m1
 
+    $ persistent.in_game = True
+    $ renpy.save_persistent()
 
     $ purg_name = persistent.purgatory_name
     $ purg_name_title = purg_name.title()
