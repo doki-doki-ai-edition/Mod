@@ -1403,6 +1403,10 @@ image monika_bg_highlight:
     function monika_alpha
 
 
+image unseen:
+    truecenter
+    "assets/imgs/cg/unseen.png"
+
 
 
 define narrator = Character(ctc="ctc", ctc_position="fixed")

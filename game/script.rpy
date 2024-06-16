@@ -110,9 +110,9 @@ label AICharacter:
 
         $ renpy.sound.play(f"{space_line}", channel="sound", loop=None)
 
+        show unseen with Dissolve(space_line_time/2)
         $ renpy.pause(delay=space_line_time/2, hard=True)
-        scene credits_cg9_locked with Dissolve(space_line_time/2)
-
+        
         $ Configs().delete_egg(f"{config.basedir}/game/assets/audio/sfx/_space-lines.mp3")
 
 
