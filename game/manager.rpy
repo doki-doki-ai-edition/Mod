@@ -105,6 +105,9 @@ init python:
 
             elif spacezone == "true":
                 clean_response =  "[CONTENT]" + clean_response.split("[CONTENT]")[1].strip()
+
+
+            if "[CONTENT]" in clean_response:
                 clean_response = re.sub(r'\*.*?\*', '', clean_response) # gets rid of anything in asterisks
 
             return clean_response
