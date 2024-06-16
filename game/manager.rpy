@@ -337,6 +337,10 @@ init python:
             # Log AI input
             response = self.safeResponse(response)
 
+
+            if response.startswith("[FACE]") and "[BODY]" not in response:
+                response = Info().getReminder["generic_response"]
+
             self.chathistory.append({"role": "assistant", "content": response})
 
             self.controlMood(face, body)

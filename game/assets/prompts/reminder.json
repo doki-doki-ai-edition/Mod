@@ -1,6 +1,7 @@
 {
     "emotes": " (Remember that the only [FACE] type responses should be: <emotes>. AND the only [BODY] type responses must be <body>. ONLY do this if <char> is speaking)",
     "nc": "*i pull out my rooster*",
+    "generic_response": "[FACE] happy [BODY] relaxed [CONTENT] ... [END]",
     "backup_prompt": [
         {
           "role": "user",
