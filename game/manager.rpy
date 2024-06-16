@@ -239,7 +239,7 @@ init python:
             the list and redo the response
             """
             if current_emotion and current_body:
-                if (reply.startswith("[FACE]")) and (current_emotion not in Configs().characters[self.character_name.title()]["head"]) or ("explain" not in current_body and "relaxed" not in current_body):
+                if (reply.startswith("[FACE]")) and (current_emotion not in Configs().characters[self.character_name.title()]["head"]) or ("explain" not in current_body and "relaxed" not in current_body and "excited" not in current_body):
                     print("<<retrying>>")
                     return True
             return False
