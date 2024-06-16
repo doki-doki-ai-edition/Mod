@@ -604,7 +604,7 @@ screen navigation():
 
                 textbutton _("History") action [ShowMenu("history"), SensitiveIf(renpy.get_screen("history") == None)]
 
-                textbutton _("Save Game") action [ShowMenu("save"), SensitiveIf(renpy.get_screen("save") == None)]
+                #textbutton _("Save Game") action [ShowMenu("save"), SensitiveIf(renpy.get_screen("save") == None)]
 
             if persistent.in_game == False:
                 textbutton _("Load Game") action [ShowMenu("load"), SensitiveIf(renpy.get_screen("load") == None)]
@@ -934,10 +934,8 @@ style about_label_text:
 screen save():
     tag menu
 
-    if persistent.freedom:
-        use custom_save_screen()
-    else:
-        use file_slots(_("Save"))
+    use custom_save_screen()
+
     
 
 
