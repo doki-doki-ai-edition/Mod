@@ -1,68 +1,314 @@
 <html>
 <head>
-<title>Doki Doki AI Edition! Readme</title>
+<title>Doki Doki AI Edition - Readme</title>
 <style>
-BODY {
-  width: 100%;
-	background: #fef;
-	color: #444;
+
+body {
   margin: 0;
-	font-family: 'Lato', sans-serif;
-	line-height: 1.6em;
+  width: 100%;
+  min-width: 320px;
+  min-height: 100vh;
+  line-height: 24px;
+  font-family: 'Arial';
+  font-size: 16px;
+  font-weight: 400;
+  color: white;
+  background-color: #1b1b1f;
+  font-synthesis: style;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
 }
 
-DT {
-	font-weight: bold;
-	margin-top: .33em;
-  margin-left: 2.5em;
+section {
+  padding: 50px;
 }
 
-H2 {
-	color: #000;
-	margin-left: 0em;
+
+.container {
+  display: flex;
+  flex-direction: row;
+  max-width: 1152px;
+  margin: 0 auto;
 }
 
-H3 {
-	color: #000;
-	margin-left: 1em;
+
+.main {
+  display: flex;
+  flex-direction: column;
 }
 
-p {
-  margin-left: 2.5em;
+
+.name {
+  max-width: 392px;
+  letter-spacing: -0.4px;
+  line-height: 40px;
+  font-size: 32px;
+  font-weight: 700;
+  margin-bottom: 10px;
 }
 
-.banner-divider {
+
+.clip {
+  background: -webkit-linear-gradient(120deg, #bd34fe 30%, #41d1ff);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent
+}
+
+
+
+
+.text {
+  margin-top: 0px;
+}
+
+
+.tagline {
+  color: rgba(235, 235, 245, 0.6);
+  line-height: 36px;
+  font-size: 24px;
+  font-weight: 550;
+  margin-top: 0;
+}
+
+
+.actions {
+  display: flex;
+  flex-direction: row;
+}
+
+
+.action {
+  margin-right: 20px;
+}
+
+a{
+
+  display: inline-block;
+  border: 1px solid transparent;
+  text-align: center;
+  font-weight: 600;
+  white-space: nowrap;
+  text-decoration: none;
+  transition: color 0.25s, border-color 0.25s, background-color 0.25s;
+}
+
+.started-btn {
+  background-color: #3e63dd;
+  border-color: #3e63dd;
+  color: white;
+  padding: 0 20px;
+  border-radius: 20px;
+  line-height: 38px;
+  font-size: 14px;
+
+}
+
+
+
+.github-btn {
+  background-color: #32363f;
+  border-color: #32363f;
+  color: white;
+  padding: 0 20px;
+  border-radius: 20px;
+  line-height: 38px;
+  font-size: 14px;
+
+}
+
+
+.image {
+  flex-grow: 1;
+  order: 2;
+  margin: 0;
+  min-height: 100%;
+}
+
+
+.image-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  height: 100%;
+  transform: translate(-32px, -32px);
+
   position: relative;
-  background: #ffbde1;
-  height: 40px;
+  margin: 0 auto;
 }
 
-.content {
-  width: 960px;
-  margin: 0px auto;
-  box-sizing: border-box;
-  background: #fff;
-  box-shadow: 0px 0px 15px rgba(0, 0, 0, .3);
+.image-bg {
+  background-image: linear-gradient(-45deg, #bd34fe 50%, #47caff 50%);
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  border-radius: 50%;
+  width: 192px;
+  height: 192px;
+  filter: blur(68px);
+  transform: translate(-50%, -50%);
 }
 
-.inner-content {
-  padding: 0px 20px 40px 20px;
+
+.image-src {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  max-width: 320px;
+  max-height: 320px;
+  transform: translate(-50%, -50%);
 }
 
-.editsection {
-	display: none;
+
+
+
+
+.main-option {
+  background-color: #202127;
+  height: 150px;
+  border-radius: 20px;
+  width: 240px;
+  padding: 20px;
+  margin-right: 20px;
 }
+
+
+.main-opt-inside {
+  display: flex;
+  flex-direction: column;
+}
+
+
+.icon-img {
+  background-color: rgba(101, 117, 133, 0.16);
+  width: 50px;
+  height: 50px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 20px;
+  border-radius: 6px;
+  font-size: 24px;
+}
+
+.main-opt-inside span{
+  font-weight: 600;
+  margin-bottom: 10px;
+  
+}
+
+
+.main-opt-inside a{
+  font-weight: 200;
+  color: rgba(235, 235, 245, 0.6);
+  text-align: left;
+}
+
+
+@media (min-width: 960px) {
+
+  .container {
+    flex-direction: row;
+    }
+
+  .main {
+      max-width: 592px;
+  }
+
+  .name {
+    line-height: 64px;
+    font-size: 56px;
+  }
+}
+
+
+@media (min-width: 640px) {
+  .name, .text {
+        max-width: 576px;
+        line-height: 56px;
+        font-size: 48px;
+    }
+}
+
+
 </style>
 </head>
 <body>
-<div class="content">
-<div class="banner-divider"></div>
-<div class="inner-content">
-  <h2>Basic Help</h2>
-  <p>
-    Lorem Ipusm Dolor
-  </p>
+  <section>
+    <div class="container">
+      <div class="main">
+        <h1 class="name">
+          <span class="clip">Doki Doki AI Edition</span>
+        </h1>
+        <p class="name text">Experience a unique take on DDLC</p>
+        <p class="tagline">Setup your own version of DDAE with ease!</p>
 
+        <div class="actions">
+          <div class="action"><a class="started-btn" href="#Setup">Get Started</a></div>
+          <div class="action"><a class="github-btn" href="https://github.com/doki-doki-ai-edition" target="_blank">View on GitHub</a></div>
+        </div>
+      </div>
+
+
+      <div class="image">
+        <div class="image-container">
+          <div class="image-bg"></div>
+          <img class="image-src" src="/game/assets/imgs/gui/logo.png">
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <div class="container">
+      <div class="main-option">
+        <div class="main-opt-inside">
+          <div class="icon-img">
+            <img style="width: 100%;" src="/game/assets/imgs/gui/logo.png" alt="DDAE Logo">
+          </div>
+          <span>Mod</span>
+          <a href="#">Getting Started</a>
+        </div>
+      </div>
+
+
+      <div class="main-option">
+        <div class="main-opt-inside">
+          <div class="icon-img">
+            <span>🎲</span>
+          </div>
+          <span>Examples</span>
+          <a href="#">Gameplay</a>
+        </div>
+      </div>
+
+
+      <div class="main-option">
+        <div class="main-opt-inside">
+          <div class="icon-img">
+            <span>❓</span>
+          </div>
+          <span>Frequently Asked Questions</span>
+          <a href="#">FAQ</a>
+        </div>
+      </div>
+
+
+      <div class="main-option">
+        <div class="main-opt-inside">
+          <div class="icon-img">
+            <span>🧰</span>
+          </div>
+          <span>Helpful Resource</span>
+          <a href="https://discord.gg/rDA7ehBSq7">Support Server</a>
+        </div>
+      </div>
+
+    </div>
+
+
+  </section>
  
 </body>
 </html>

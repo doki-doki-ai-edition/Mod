@@ -178,6 +178,11 @@ image warning:
 image tos = "bg/warning.png"
 image tos2 = "bg/warning2.png"
 
+image rlly:
+    truecenter
+    zoom 2.45
+    "assets/imgs/rlly.png"
+
 
 label splashscreen:
     $ quick_menu = False
@@ -187,6 +192,36 @@ label splashscreen:
         "This is a Doki Doki Literature Club mod that is not affiliated with Team Salvato."
         "It is designed to be played only after the official game has been completed."
         "You can download Doki Doki Literature Club at: https://ddlc.moe"
+
+        menu:
+            "Do you understand?"
+
+            "Yes.":
+                "Yes."
+
+            "Whatever.":
+                play sound "assets/audio/sfx/vine-boom.mp3"
+                show rlly
+                hide rlly with Dissolve(3)
+                "Whatever."
+
+        "In order for the mod to work correctly please remember to install ollama by going to \"ollama.com\"."
+        "Simply download the application and run it."
+        "No GUI will popup, it'll simply work once you run it once."
+
+        menu:
+            "Do you understand?"
+
+            "Yes.":
+                "Yes."
+
+            "Whatever.":
+                play sound "assets/audio/sfx/vine-boom.mp3"
+                show rlly
+                hide rlly with Dissolve(3)
+                "Whatever."
+
+        "There is a far more detailed setup guide and examples of how the mod works in the Main Menu of the game, just click \"Help\"."
 
     jump ai_mod_notice
 
