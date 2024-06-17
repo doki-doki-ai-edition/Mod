@@ -207,7 +207,9 @@ label splashscreen:
 
         "In order for the mod to work correctly please remember to install ollama by going to \"ollama.com\"."
         "Simply download the application and run it."
-        "No GUI will popup, it'll simply work once you run it once."
+        "No GUI will popup, it'll simply run on your device with a small icon displayed in your taskbar."
+        "Open up a terminal on your device and type \"ollama run llama3\"."
+        "You should be good to go."
 
         menu:
             "Do you understand?"
