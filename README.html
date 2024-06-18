@@ -24,6 +24,18 @@ section {
 }
 
 
+h1 {
+  font-size: 40px;
+}
+
+footer {
+  text-align: center;
+  color: rgba(235, 235, 245, 0.6);
+  border-top: 1px solid;
+  border-color: black;
+  padding: 50px;
+}
+
 .container {
   display: flex;
   flex-direction: row;
@@ -90,6 +102,7 @@ a{
   font-weight: 600;
   white-space: nowrap;
   text-decoration: none;
+  color: white;
   transition: color 0.25s, border-color 0.25s, background-color 0.25s;
 }
 
@@ -206,6 +219,50 @@ a{
 }
 
 
+.l-break {
+  background-color: #646cff;
+  height: 1px;
+}
+
+
+.note-container {
+  background-color: rgba(100, 108, 255, .08);
+  border-color: #646cff;
+  border: 1px solid;
+  display: flex;
+  flex-direction: column;
+  color: #bcc0ff;
+  border-radius: 25px;
+  width: 65%;
+  padding: 10px;
+  font-family: math;
+}
+
+
+.note-container h1 {
+  font-size: small;
+}
+
+
+.note-container-red {
+  background-color: rgba(255, 100, 100, 0.08);
+  border-color: #ff6464;
+  border: 1px solid;
+  display: flex;
+  flex-direction: column;
+  color: #ffbcbc;
+  border-radius: 25px;
+  width: 65%;
+  padding: 10px;
+  font-family: system-ui;
+}
+
+
+.note-container-red h1 {
+  font-size: small;
+}
+
+
 @media (min-width: 960px) {
 
   .container {
@@ -241,7 +298,7 @@ a{
         <h1 class="name">
           <span class="clip">Doki Doki AI Edition</span>
         </h1>
-        <p class="name text">Experience a unique take on DDLC</p>
+        <p class="name text">Experience a unique playthrough</p>
         <p class="tagline">Setup your own version of DDAE with ease!</p>
 
         <div class="actions">
@@ -276,10 +333,10 @@ a{
       <div class="main-option">
         <div class="main-opt-inside">
           <div class="icon-img">
-            <span>🎲</span>
+            <span style="margin-bottom: 1px;" >🎲</span>
           </div>
-          <span>Examples</span>
-          <a href="#">Gameplay</a>
+          <span>Settings</span>
+          <a href="#">Examples</a>
         </div>
       </div>
 
@@ -287,7 +344,7 @@ a{
       <div class="main-option">
         <div class="main-opt-inside">
           <div class="icon-img">
-            <span>❓</span>
+            <span style="margin-bottom: 1px;">❓</span>
           </div>
           <span>Frequently Asked Questions</span>
           <a href="#">FAQ</a>
@@ -306,9 +363,227 @@ a{
       </div>
 
     </div>
-
-
   </section>
+
+  <section>
+    <div class="container" style="flex-direction: column;">
+      <h1>Setup</h1>
+      <h2>Ollama</h2>
+      <ul>
+        <li>Go to <a href="https://ollama.com/download">https://ollama.com/download</a></li>
+        <li>Select Windows (or whichever operating system you're using)</li>
+        <li>Click on Download</li>
+      </ul>
+
+      <p>
+        Once it's downloaded, run the application.
+        If you're on windows you should see a small icon in your taskbar that looks like this
+      </p>
+
+      <img style="width: 80px;" src="game/assets/imgs/help_page/llama_task.png" alt="llama taskbar">
+
+      <ul>
+        <li>Open up a terminal on your device (eg. cmd+r if you're using windows, then type "cmd" and press enter)</li>
+        <li>In the terminal type "ollama run llama3" (or any model you find in https://ollama.com/library/)</li>
+      </ul>
+
+      <span style="color: #64ff6e">
+        You're Done!
+      </span>
+      <p>
+        This should be roughly 4.7 gigabytes and once it's done installing you can run the mod!
+      </p>
+    </div>
+    
+  </section>
+
+
+  <section>
+    <div class="container" style="flex-direction: column;">
+      <h1>Settings</h1>
+
+      <div>
+        <h2>AI Type</h2>
+      
+        <span>
+          <b>LLM (Local Language Model)</b>
+        </span>
+        <p>
+          Shows the default local models available in the "Model Name" section.
+        </p>
+          
+        
+        <span>
+          <b>API</b>
+        </span>
+        <p>
+          Not usable with the mod itself.
+        </p>
+      </div>
+
+      <div class="l-break"></div>
+
+      <div>
+        <h2>Model Name</h2>
+      
+        <span>
+          <b>Suggested Models</b>
+        </span>
+        <p>
+          Models that have been tested to work properly in accordance to the default prompt given
+        </p>
+          
+        
+        <span>
+          <b>Other Models</b>
+        </span>
+        <p>
+          Models that may not be as high quality or haven't been frequently tested
+        </p>
+      </div>
+
+      <div class="l-break"></div>
+
+      <div>
+        <h2>Model Config</h2>
+      
+        <div>
+          <span>
+            <b>Context Window</b>
+          </span>
+          <p>
+            The maximum amount of tokens (messages) that will be remembered. The few-shot prompts for monika's default prompt already takes up 1,066 tokens
+            (which is over the default limit).
+          </p>
+          
+          <p>
+            Note that the more context you give it, the slower responses may be and the more memory you use on your device.
+          </p>
+  
+          <p>
+            Make sure to check the context window of a model. For example:
+          </p>
+  
+          <p>
+            Go to <a href="https://ollama.com/library/llama3:8b">https://ollama.com/library/llama3:8b</a>
+          </p>
+          
+          <img src="game/assets/imgs/help_page/model_show.png" alt="model display">
+
+          <p>
+            Click on "model" (and wait since it may take a while to load)
+          </p>
+          <p>
+            Look for context_length
+          </p>
+
+          <img src="game/assets/imgs/help_page/model_context_len.png" alt="model context window">
+
+          <p>
+            If you want to use more than a 8192 token limit then you can check out other models such as
+          </p>
+          
+          <a href="https://ollama.com/library/llama3-gradient">https://ollama.com/library/llama3-gradient</a>
+
+          <p>
+            which has a 1M context window.
+            You won't be able to use the full 1M tokens because of the hardware requirement for something like that but depending on your hardware you could use a lot more than 8k.
+          </p>
+        </div>
+
+        
+        <div>
+          <span>
+            <b>Temperature</b>
+          </span>
+          <p>
+            Determines how random/creative the output is.
+          </p>
+
+          <p>
+            Higher = More random and creative but if it's too high, the responses can be nonsensical and may not even follow the system prompt appropriately.
+          </p>
+
+          <p>
+            Lower = Less random and predictable. The model chooses the most likely word to respond with but ends up sounding more robotic.
+          </p>
+
+
+          <p>
+            The typical default temperature is "1" but I've personally found 0.6 to be a good sweet spot, just high enough to be creative but low enough to give good responses.
+          </p>
+        </div>
+
+        <div style="margin-bottom: 15px;" class="note-container-red">
+          <h1><b>WARNING</b></h1>
+          <span>It is highly advisable to leave the temperature on the default settings because it has been shown to follow the prompt far more accurately when testing compared to other numbers.</span>
+        </div>
+
+
+        <div>
+          <span>
+            <b>Seed</b>
+          </span>
+          <p>
+            Deterministic responses. If set to a specific seed, your outputs will be pretty much exactly the same or relatively similar if you feed it the same input.
+          </p>
+
+          <p>
+            Eg. If you have a seed of 22 and your input response goes like this:
+          </p>
+
+          <p>
+            user: "how are you monika?"<br>
+            monika: "I'm not doing too well to be honest..."
+          </p>
+
+          <p>
+            Assuming the system prompt is the same and your response is formatted in the exact same way, you'll always get that same output (or something very similar).
+          </p>
+        </div>
+      </div>
+
+      <div class="note-container">
+        <h1><b>NOTE</b></h1>
+        <span>The difference between temperature and seed is that the temperature controls the creativity of the text itself while the seed controls the uniqueness of the responses</span>
+      </div>
+
+
+
+    </div>
+    
+  </section>
+
+
+
+  <section>
+    <div class="container" style="flex-direction: column;">
+      <h1>Frequently Asked Questions</h1>
+  
+      <div>
+        <h2>Are my chats private?</h2>
+        <p>
+          Yes. Your chats are completely localized on your machine, even if you turn your internet off, it'll still work.
+        </p>
+          
+        
+        <h2>Are the models uncensored</h2>
+        <p>
+          It depends on what model you're using.
+          You can go to <a href="https://ollama.com/library ">https://ollama.com/library</a> to find uncensored models but they may not follow the system prompt as well which would cause the game to not function correctly.
+        </p>
+
+        <p>
+          Secondly, they may not be entirely uncensored. There are certain questions that it may refuse, but since it's a local model you can attempt to jailbreak it as much as you want.
+        </p>
+      </div>
+  
+    </div>
+  </section>
+
+  <footer>
+    <span> <b>Not affiliated with Team Salvato. Please support the official release <a href="https://ddlc.moe">https://ddlc.moe</a></b></span>
+  </footer>
  
 </body>
 </html>
