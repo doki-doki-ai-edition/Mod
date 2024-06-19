@@ -154,10 +154,5 @@ init python:
                 purgatory_lines = json.load(f)
             return purgatory_lines
 
-        @property
-        def getChatModelInfo(self):
-            with open(f'{config.basedir}/game/assets/configs/chat_model_info.json', 'r') as f:
-                chat_model_info = json.load(f)
-            return chat_model_info
 
 

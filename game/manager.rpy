@@ -199,15 +199,8 @@ init python:
                 contains_system_prompt -- Determines if the first index should be deleted or skipped
                                         (which would typically be the system prompt)
             """
-            parent_model = "groq"
-            checkForLLM = True
-            for model in Info().getChatModelInfo["groq"]:
-                if persistent.chatModel == model:
-                    parent_model = model
-                    checkForLLM = False
-                    break
 
-            max_tokens = int(persistent.context_window) if checkForLLM else int(Info().getChatModelInfo[parent_model][persistent.chatModel]["context_win"])
+            max_tokens = int(persistent.context_window)
             delete_pos = 0 if contains_system_prompt == False else 1
             current_tokens = self.count_tokens()
 
@@ -282,12 +275,7 @@ init python:
 
 
         def modelChoices(self, prompt):
-            groq = chat_model_dict["groq"]["suggested"] + chat_model_dict["groq"]["other"]
-
-            if persistent.chatModel in groq:
-                return TextModel().getGroq(prompt=prompt)
-            else:
-                return TextModel().getLLM(prompt=prompt)
+            return TextModel().getLLM(prompt=prompt)
 
 
         def ai_response(self, userInput):

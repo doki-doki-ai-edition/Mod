@@ -4,7 +4,7 @@ The sprites used are decided by the AI based on how you interact with it.
 
 If you have extra questions or want to become apart of the community you can join the discord server here: https://discord.gg/rDA7ehBSq7
 
-If you've been banned from the server you can appeal here: https://forms.gle/E8wyDi9aBzXdWvf99
+If you've been **banned** from the server you can appeal here: https://forms.gle/E8wyDi9aBzXdWvf99
 
 
 # Setup
@@ -140,3 +140,15 @@ Jeffrey Morgan is one of the founders and he has a credible background by previo
 The project is also used by google in firebase https://firebase.google.com/docs/genkit/plugins/ollama
 
 And obviously, the project is open-sourced.
+
+
+# Credits
+
+**Developer:**
+[Zeeblo](https://github.com/zeeblo)
+
+**Logo Design:**
+[Infernog](https://x.com/Infernog05) (& another user who wishes to stay anonymous)
+
+**Voice Acting:**
+[Jayce Parisi](https://jayceparisi.com/)

@@ -1069,9 +1069,6 @@ screen select_model_name_screen():
     $ fav_local_models = chat_model_dict["llms"]["suggested"]
     $ other_local_models = chat_model_dict["llms"]["other"]
 
-    $ fav_api_models = chat_model_dict["groq"]["suggested"]
-    $ other_api_models = chat_model_dict["groq"]["other"]
-
 
     $ important_info = "Type \"ollama run (model name)\" in a console on your computer.\nFor example: ollama run llama3" if llm_mode == True else "Make sure you're using the correct API key for the model name you select."
     use game_menu(_("Models"), scroll="viewport"):
@@ -1100,15 +1097,6 @@ screen select_model_name_screen():
                     label _(f"Other Models")
                     for model in other_local_models:
                         textbutton _(f"{model}") action Show(screen="basic_popup", title="Local Models", message="Sucessfully updated model!", ok_action=Function(FinishUpdateModelName, model))
-                else:
-
-                    label _(f"Suggested Models")
-                    for model in fav_api_models:
-                        textbutton _(f"{model}") action Show(screen="basic_popup", title="API Models", message="Sucessfully updated model!", ok_action=Function(FinishUpdateModelName, model))
-
-                    label _(f"Other Models")
-                    for model in other_api_models:
-                        textbutton _(f"{model}") action Show(screen="basic_popup", title="API Models", message="Sucessfully updated model!", ok_action=Function(FinishUpdateModelName, model))
 
 
                 textbutton _("Custom Model") action Jump("custom_chat_model_label")
@@ -1258,7 +1246,6 @@ screen preferences():
                     style_prefix "radio"
                     label _("AI Type")
                     textbutton _("LLM") action [SetVariable("llm_mode", True)]
-                    textbutton _("API") action [SetVariable("llm_mode", False)]
 
 
 
