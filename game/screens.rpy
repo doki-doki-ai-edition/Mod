@@ -1306,8 +1306,6 @@ screen preferences():
                 vbox:
                     textbutton _("Model Name") action ShowMenu("select_model_name_screen")
                 vbox:
-                    textbutton _("API Key") action Jump("apikey_label")
-                vbox:
                     textbutton _("Model Config") action ShowMenu("llm_model_config_screen")
 
 
