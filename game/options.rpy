@@ -140,7 +140,7 @@ define config.window_icon = "assets/imgs/gui/window_icon.png"
 
 
 
-define config.allow_skipping = True
+define config.allow_skipping = False
 define config.has_autosave = False
 define config.autosave_on_quit = False
 define config.autosave_slots = 0
