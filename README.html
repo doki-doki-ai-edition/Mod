@@ -36,6 +36,11 @@ footer {
   padding: 50px;
 }
 
+p {
+  color: #cfcfcf
+}
+
+
 .container {
   display: flex;
   flex-direction: row;
@@ -481,7 +486,7 @@ a{
           </span>
           <p>
             The maximum amount of tokens (messages) that will be remembered. The few-shot prompts for monika's default prompt already takes up 1,066 tokens
-            (which is over the default limit).
+            (which is over the default limit if you're using a level2 <a href="header_prompt"><u>header prompt</u></a>).
           </p>
           
           <p>
@@ -567,6 +572,35 @@ a{
 
           <p>
             Assuming the system prompt is the same and your response is formatted in the exact same way, you'll always get that same output (or something very similar).
+          </p>
+        </div>
+
+
+
+        <div>
+          <span>
+            <b>Default Prompt</b>
+          </span>
+          <p>
+            In game/assets/prompts there is a prompt_templates.json file that stores all the default prompts for every character.
+          </p>
+
+          <p>
+            "level1" and "level2" are formatted infront of each character name in the json file, I call them "<span id="header_prompt">header prompts</span>".
+            These header prompts can be used to change small differences in the prompt to give varying results or change the prompt entirely.
+          </p>
+
+          <p>
+            By default "level2" is the current header prompt and gives a lengthy few-shot examples of how the ai should respond but they're too lengthy and goes over the max
+            token limit. (You can of course just increase the context window)
+          </p>
+
+          <p>
+            "level1" is far simpler and gives only a couple few-shot example prompts of how the ai should respond but has a higher chance of failing to respond correctly.
+          </p>
+
+          <p>
+            If you want to create your own default prompt without using those 2 levels you can but make sure you account for every character.
           </p>
         </div>
       </div>
