@@ -1429,14 +1429,17 @@ define default_context_window = "1024"
 define default_temp = "6"
 define default_seed = "random"
 define chatModel = "llama3"
+define default_prompt_header = "level2"
 
 default persistent.context_window = default_context_window
 default persistent.temp = default_temp
 default persistent.seed = default_seed
+default persistent.prompt_header = default_prompt_header
 
 default context_window = persistent.context_window
 default temp = persistent.temp
 default seed = persistent.seed
+default prompt_header = persistent.prompt_header 
 
 
 

@@ -82,7 +82,7 @@ label space_zone:
         $ DataSetup = Data(path_to_user_dir=pathSetup)
         $ DataSetup.updateSceneData("zone", "true")
         $ DataSetup.updateSceneData("character", f"{purg_name}")
-        $ convo = chatSetup.chat(path=pathSetup, userInput="umm...", chathistory=Info().getExamplePrompts[f"level2_{purg_name}_purgatory"])
+        $ convo = chatSetup.chat(path=pathSetup, userInput="umm...", chathistory=Info().getExamplePrompts[f"{persistent.prompt_header}_{purg_name}_purgatory"])
 
 
 

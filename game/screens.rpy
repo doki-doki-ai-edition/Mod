@@ -572,6 +572,13 @@ init python:
         renpy.save_persistent()
 
 
+    def FinishEnterPromptHeader():
+        persistent.prompt_header = prompt_header
+        renpy.save_persistent()
+        renpy.hide_screen("prompt_header_input")
+        renpy.show_screen("llm_model_config_screen")
+
+
     def SwitchToModelConfig():
         renpy.hide_screen("preferences")
 
@@ -1158,6 +1165,12 @@ screen llm_model_config_screen():
                         textbutton _("Change") action Show(screen="seed_window_popup", message="Enter a number", ok_action=Function(FinishEnterSeed))
                         textbutton _("Info") action [Show(screen="info_seed_popup", message="Seed", ok_action=Hide("info_seed_popup")), Return(), renpy.hide_screen("preferences"), renpy.hide_screen("llm_model_config_screen")]
 
+                    label _(f"Default Prompt: {prompt_header}")
+
+                    hbox:
+                        textbutton _("Change") action Show(screen="prompt_header_input", message="Enter an existing prompt header (level1 or level2)", ok_action=Function(FinishEnterPromptHeader))
+                        textbutton _("Info") action [Show(screen="info_prompt_popup", message="Prompt", ok_action=Hide("info_prompt_popup")), Return(), renpy.hide_screen("preferences"), renpy.hide_screen("llm_model_config_screen")]
+
 
 
 
@@ -1593,6 +1606,40 @@ screen model_name_input(message, ok_action):
 
 
 
+screen prompt_header_input(message, ok_action):
+
+
+    modal True
+
+    zorder 200
+
+    style_prefix "confirm"
+
+    add "gui/overlay/confirm.png"
+    key "K_RETURN" action [Play("sound", gui.activate_sound), ok_action]
+
+    frame:
+
+        has vbox:
+            xalign .5
+            yalign .5
+            spacing 30
+
+        label _(message):
+            style "confirm_prompt"
+            xalign 0.5
+
+        input default "" value VariableInputValue("prompt_header")
+
+
+        hbox:
+            xalign 0.5
+            spacing 100
+
+            textbutton _("OK") action ok_action
+
+
+
 screen APIKey_name_input(message, ok_action):
 
 
@@ -1825,6 +1872,39 @@ screen info_seed_popup(message, ok_action):
             spacing 100
 
             textbutton _("OK") action ok_action
+
+
+screen info_prompt_popup(message, ok_action):
+    modal True
+    zorder 200
+
+    style_prefix "confirm"
+
+    add "gui/overlay/confirm.png"
+    key "K_RETURN" action [Play("sound", gui.activate_sound), ok_action]
+
+    frame:
+
+        has vbox:
+            xalign .5
+            yalign .5
+            spacing 30
+
+        label _(message):
+            style "confirm_prompt"
+            xalign 0.5
+
+        label _("level1 is the basic prompt that uses far less tokens and level2 is more detailed but uses more tokens. In the main menu click \"Help\" to learn more."):
+            style "confirm_prompt"
+
+
+        hbox:
+            xalign 0.5
+            spacing 100
+
+            textbutton _("OK") action ok_action
+
+
 
 
 
