@@ -264,6 +264,7 @@ init python:
                         self.chathistory = Info().getReminder['backup_prompt']
 
 
+
         def checkForPurgatory(self):
             """This functions as a hotfix for a bug with the LLM. This puts the prompt template into the
             chathistory file instead of having it be empty."""
@@ -271,6 +272,18 @@ init python:
             if spacezone == "true":
                 with open(f"{self.full_path}/chathistory.json", 'w') as f:
                     json.dump(self.chathistory, f, indent=2)
+
+
+        def checkForBadFormat(self, response):
+            """It writes a default narration if the ai generates an incorrectly formatted response 
+            Only runs once when the realm is first loaded."""
+            spacezone = self.dbase.getSceneData("zone")
+            if spacezone == "true": return response
+
+            if self.dbase.getSceneData("character") == "":
+                if "[SCENE]" not in response or "[NARRATION]" not in response:
+                    response = "[SCENE] outside [NARRATION] You wake up in a familiar place. [END]"
+            return response
 
 
 
@@ -301,7 +314,15 @@ init python:
             contextAndUserMsg = examples + self.chathistory if spacezone != "true" else self.chathistory
 
             response = self.modelChoices(contextAndUserMsg) if userInput.lower() != Info().getReminder["nc"] else "[FACE] playful smile [BODY] relaxed [CONTENT] Nice rooster bro."
+            
+            if response.startswith("[FACE]"):
+                self.dbase.updateSceneData("character", self.character_name)
+                if "[BODY]" not in response:
+                    response = Info().getReminder["generic_response"]
 
+            response = self.checkForBadFormat(response)
+
+            
             # If An error happened with the API, return the Error
             check_error = self.checkForError(response)
             if check_error:
@@ -324,6 +345,7 @@ init python:
 
             # Log AI input
             response = self.safeResponse(response)
+            response = response.split('[END]')[0] + " [END]"
 
 
             if response.startswith("[FACE]") and "[BODY]" not in response:
@@ -333,8 +355,6 @@ init python:
 
             self.controlMood(face, body)
             self.controlBackground(scene)
-
-            #self.checkForRepeat()
 
             with open(f"{self.full_path}/chathistory.json", 'w') as f:
                 json.dump(self.chathistory, f, indent=2)

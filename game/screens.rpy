@@ -1320,6 +1320,8 @@ screen preferences():
                     textbutton _("Model Name") action ShowMenu("select_model_name_screen")
                 vbox:
                     textbutton _("Model Config") action ShowMenu("llm_model_config_screen")
+                vbox:
+                    textbutton _("Change Username") action Show(screen="name_input", message="Please enter your name", ok_action=Function(FinishEnterName))
 
 
 

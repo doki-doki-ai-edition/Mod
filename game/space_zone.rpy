@@ -34,7 +34,6 @@ label space_zone:
     $ persistent.purgatory_name = ""
     $ renpy.save_persistent()
 
-    $ tokenSetter.set_token()
     $ resume = None # Used to check if a file has been loaded
     $ chatFolderName = f"{purg_name}_purgatory"
 

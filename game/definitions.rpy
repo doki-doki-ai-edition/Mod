@@ -1429,7 +1429,7 @@ define default_context_window = "1024"
 define default_temp = "6"
 define default_seed = "random"
 define chatModel = "llama3"
-define default_prompt_header = "level2"
+define default_prompt_header = "level1"
 
 default persistent.context_window = default_context_window
 default persistent.temp = default_temp
@@ -1465,7 +1465,7 @@ default persistent.first_sayori = True
 default persistent.in_game = False
 define chat_model_dict = {
     "llms": {
-        "suggested": ["llama3"],
+        "suggested": ["llama3", "qwen2"],
         "other": ["mistral"]
     }
 }

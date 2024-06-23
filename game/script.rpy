@@ -75,7 +75,6 @@ define yuri = Character("Yuri", color="#ffffff", window_style="textbox_yuri", wh
 default choice = None
 
 label AICharacter:
-    $ tokenSetter.set_token()
     $ persistent.in_game = True
     $ renpy.save_persistent()
     stop music

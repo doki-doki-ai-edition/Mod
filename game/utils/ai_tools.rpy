@@ -6,10 +6,6 @@ init python:
 
     class TextModel:
 
-        def __init__(self):
-            self.tokens = Configs().config
-
-
 
         def getLLM(self, prompt):
             if persistent.seed == "random":

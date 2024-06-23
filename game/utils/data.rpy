@@ -90,11 +90,6 @@ init python:
 
     class Configs:
 
-        @property
-        def config(self):
-            with open(f'{config.basedir}/PRIVATE_TOKENS_DO_NOT_SHARE.json', 'r') as f:
-                _config = json.load(f)
-            return _config
 
         @property
         def bg_scenes(self):
