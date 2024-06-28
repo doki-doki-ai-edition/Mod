@@ -114,8 +114,6 @@ monika: "I'm not doing too well to be honest..."
 
 Assuming the system prompt is the same and your response is formatted in the exact same way, you'll always get that same output (or something very similar).
 
-*NOTE:* The main difference between temperature and seed is that the temperature controls the creativity of the text itself while the seed controls the uniqueness of the responses
-
 
 
 # Frequently Asked Questions
