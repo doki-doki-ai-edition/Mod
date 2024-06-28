@@ -174,6 +174,21 @@ and 4GB of VRAM but the speed at which you get a response is going to be slow.
 If you want faster responses you need more VRAM. Regular RAM allows you to run models.
 
 
+
+## I keep getting this error
+
+<img src="game/assets/imgs/help_page/traceback.png" alt="traceback error">
+
+When in doubt, restart.
+
+This typically means the model didn't properly generate a background when you first loaded the game.
+To fix this you can completely close the game and try loading a new one.
+
+You could also edit the chat file for the old world and try loading it again.
+
+
+
+
 # Credits
 
 **Developer:**
