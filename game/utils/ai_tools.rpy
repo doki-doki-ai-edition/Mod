@@ -38,8 +38,8 @@ init python:
                 result = data["choices"][0]["message"]["content"] 
 
                 if "[END]" not in result:
-                    return result + " [END]"
-                return  result
+                    return result.strip() + " [END]"
+                return  result.strip()
 
             except requests.exceptions.RequestException as e:
                 print(f"Error making request: {e}")
