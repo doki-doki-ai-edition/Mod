@@ -63,10 +63,6 @@ This should be roughly 4.7 gigabytes and once it's done installing you can run t
 **LLM (Local Language Model)** <br>
 Shows the default local models available in the "Model Name" section.
 
-**API** <br>
-Shows the default API models available
-
-
 ## Model Name
 
 **Suggested Models**
@@ -149,6 +145,33 @@ Jeffrey Morgan is one of the founders and he has a credible background by previo
 The project is also used by google in firebase https://firebase.google.com/docs/genkit/plugins/ollama
 
 And obviously, the project is open-sourced.
+
+
+## Why do the models sometime return "ERROR"?
+
+This happens when the model doesn't respond with the instructed format. This typically happens on regular models if you say something too provacative. 
+
+There's a few solutions to this.
+
+The first is to use an uncensored model. 
+
+The second thing you could try is continuing the chat by ignoring the error message and try to force the ai back into a roleplay state
+
+And the 3rd thing you could try is just jailbreaking the ai model by editing the
+system prompt to make the ai say anything.
+
+
+## Why does the game freeze?
+
+This means that the ai is generating the output. You should wait for it to be done.
+
+
+## What hardware do I need?
+
+You should be able to run the mod on low-end devices like a laptop with 4GB of RAM
+and 4GB of VRAM but the speed at which you get a response is going to be slow.
+
+If you want faster responses you need more VRAM. Regular RAM allows you to run models.
 
 
 # Credits
