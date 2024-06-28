@@ -9,6 +9,17 @@ If you've been **banned** from the server you can appeal here: https://forms.gle
 
 # Setup
 
+- Make sure you have a fresh install of DDLC https://ddlc.moe/
+- Download the latest version of the DDAE mod on this github page https://github.com/doki-doki-ai-edition/Mod/releases
+
+To setup the mod just drag the contents into the main ddlc folder:
+
+
+<video controls>
+  <source src="game/assets/imgs/help_page/ddae setup.mp4" type="video/mp4" />
+</video>
+
+
 
 **IMPORTANT NOTE:** You only need to read the Ollama section to set everything up. Everything else is just extra info.
 
