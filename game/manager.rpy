@@ -183,7 +183,7 @@ init python:
 
 
 
-        def checkForContextLimit(self, range=1620, contains_system_prompt=False):
+        def checkForContextLimit(self, range=120, contains_system_prompt=False):
             """Estimates the amount of tokens in the chathistory.
             If the max context window for an LLM is set to (for eg.) 1024 then if the tokens
             exceed that amount, the start of the chathistory will be deleted.
