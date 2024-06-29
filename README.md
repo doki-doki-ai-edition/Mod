@@ -198,4 +198,4 @@ You could also edit the chat file for the old world and try loading it again.
 [Infernog](https://x.com/Infernog05) (& another user who wishes to stay anonymous)
 
 **Voice Acting:**
-[Jayce Parisi](https://jayceparisi.com/)
+[Jayce Parisi](https://jayceparisi.com/) (**Note:** Jayce would not be comfortable w/ their voice being AI generated so keep that in mind if you're making a submod) 

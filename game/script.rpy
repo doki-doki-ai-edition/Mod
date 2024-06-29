@@ -217,9 +217,6 @@ label AICharacter:
 
                 jump purgatory_seq
 
-            if user_msg.lower() ==  Info().getReminder["nc"] and character_name == "monika":
-                $ nc = True
-                $ Configs().create_from_hex(f"{config.basedir}/game/assets/imgs/monika/her.chr", f"{config.basedir}/game/assets/imgs/monika/_thumb.png")
 
         $ final_msg = chatSetup.chat(path=pathSetup, chathistory=memory, userInput=user_msg)
         $ raw_msg = Data(path_to_user_dir=pathSetup).getLastMessage
@@ -249,15 +246,9 @@ label AICharacter:
             image full_sprite:
                 im.Composite((960, 960), (0, 0), f"{current_char}/{current_head}")
                 uppies
-            image chibi:
-                "monika/[current_head]"
-                uppies
 
-            if current_head == "nonchalant.png" or nc:
-                hide full_sprite
-                hide basic
-                show chibi
-            elif current_head != "3a.png" and current_head != "3b.png" and current_head != "3c.png" and current_head != "3b.png" and current_head != "3d.png" and current_head != "vomit.png":
+
+            if current_head != "3a.png" and current_head != "3b.png" and current_head != "3c.png" and current_head != "3b.png" and current_head != "3d.png" and current_head != "vomit.png":
                 hide full_sprite
                 hide chibi
                 show basic at t11

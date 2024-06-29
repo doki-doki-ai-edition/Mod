@@ -56,11 +56,6 @@ init python:
 
             self.dbase.updateSceneData("character", self.character_name)
 
-            if self.character_name == "monika" and face == "nonchalant":
-                Configs().create_from_hex(f"{config.basedir}/game/assets/imgs/monika/nonchalant.chr", f"{config.basedir}/game/assets/imgs/monika/nonchalant.png")
-            else:
-                Configs().delete_egg(f"{config.basedir}/game/assets/imgs/monika/nonchalant.png")
-
             for h in head_sprite:
                 if h == face.lower():
                     self.dbase.updateSceneData("head_sprite", head_sprite[h])
@@ -313,7 +308,7 @@ init python:
             examples = self.removePlaceholders()
             contextAndUserMsg = examples + self.chathistory if spacezone != "true" else self.chathistory
 
-            response = self.modelChoices(contextAndUserMsg) if userInput.lower() != Info().getReminder["nc"] else "[FACE] playful smile [BODY] relaxed [CONTENT] Nice rooster bro."
+            response = self.modelChoices(contextAndUserMsg)
             
             if response.startswith("[FACE]"):
                 self.dbase.updateSceneData("character", self.character_name)
