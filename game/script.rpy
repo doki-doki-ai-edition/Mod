@@ -230,7 +230,7 @@ label AICharacter:
         # Wait for AI to finish generating text
         while chatSetup.is_generating == True:
             $ wait_msg = wait_msg + "." if len(wait_msg) < 3 else "."
-            "[wait_msg] {w=0.7}{nw}"
+            "Loading[wait_msg] {fast} {w=0.7}{nw}"
 
         $ _history = True
 
