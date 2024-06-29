@@ -8,6 +8,8 @@ init python:
 
     class SetupChat:
         def __init__(self, chat_name, character_name):
+            self.is_generating = False
+            self.generated_text = ""
             self.chat_name = chat_name
             self.character_name = character_name
             self.path_to_user_dir = f"{config.basedir}/chats/"
@@ -48,7 +50,8 @@ init python:
                 chathistory=chathistory
                 ).ai_response(userInput)
 
-
+            self.generated_text = msg
+            self.is_generating = False
             return msg
 
 
