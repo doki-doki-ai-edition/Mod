@@ -3,6 +3,7 @@
 label start:
 
     init python:
+        import threading
         config.has_autosave = False
         config.has_quicksave = False
         config.autosave_on_quit = False
@@ -218,7 +219,22 @@ label AICharacter:
                 jump purgatory_seq
 
 
-        $ final_msg = chatSetup.chat(path=pathSetup, chathistory=memory, userInput=user_msg)
+        # Start generating text in a separate thread
+        $ chatSetup.is_generating = True
+        $ threading.Thread(target=chatSetup.chat, args=(pathSetup, memory, user_msg)).start()
+
+        $ _history = False
+        # Initialize the wait message
+        $ wait_msg = ""
+
+        # Wait for AI to finish generating text
+        while chatSetup.is_generating == True:
+            $ wait_msg = wait_msg + "." if len(wait_msg) < 3 else "."
+            "[wait_msg] {w=0.7}{nw}"
+
+        $ _history = True
+
+        $ final_msg = chatSetup.generated_text
         $ raw_msg = Data(path_to_user_dir=pathSetup).getLastMessage
 
         $ current_char = Data(path_to_user_dir=pathSetup).getSceneData("character")
