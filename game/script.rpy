@@ -136,8 +136,23 @@ label AICharacter:
         $ chatSetup = SetupChat(chat_name=chatFolderName, character_name=character_name)
         $ pathSetup = chatSetup.setup(purgatory=False)
 
-        $ convo = chatSetup.chat(path=pathSetup)
+        # Start generating text in a separate thread
+        $ chatSetup.is_generating = True
+        $ threading.Thread(target=chatSetup.chat, args=(pathSetup, [], "{RST}")).start()
+
+        $ _history = False
+        $ wait_msg = ""
+
+        # Wait for AI to finish generating text
+        while chatSetup.is_generating == True:
+            # If you want to add a popup menu or some sort of animation, you can do so here
+            $ wait_msg = wait_msg + "." if len(wait_msg) < 3 else "."
+            "Loading[wait_msg] {fast} {w=0.7}{nw}"
+
+        $ _history = True
+
         $ renpy.log(">>> starting new ")
+        $ convo = chatSetup.generated_text
 
 
 
@@ -158,7 +173,6 @@ label AICharacter:
     # Player loaded a space realm
     if zone_type == "true":
         jump space_zone
-    
 
 
 
@@ -224,7 +238,6 @@ label AICharacter:
         $ threading.Thread(target=chatSetup.chat, args=(pathSetup, memory, user_msg)).start()
 
         $ _history = False
-        # Initialize the wait message
         $ wait_msg = ""
 
         # Wait for AI to finish generating text
