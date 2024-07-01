@@ -167,7 +167,7 @@ label AICharacter:
     $ current_right = Data(path_to_user_dir=pathSetup).getSceneData("right_sprite")
     $ current_background = Data(path_to_user_dir=pathSetup).getSceneData("background")
     $ zone_type = Data(path_to_user_dir=pathSetup).getSceneData("zone")
-    
+
 
 
     # Player loaded a space realm
@@ -213,6 +213,7 @@ label AICharacter:
     ###########################
     $ main_event_loop = True
     while main_event_loop == True:
+        $ user_msg = ""
         $ rnd_continue = renpy.random.randint(1, 6)
         $ current_char = Data(path_to_user_dir=pathSetup).getSceneData("character")
 
@@ -220,7 +221,8 @@ label AICharacter:
             # Randomly continue the chat to have variety so it's not a constant back and forth
             $ user_msg = "continue"
         else:
-            $ user_msg = renpy.input("Enter a message: ")
+            while user_msg.strip() == "":
+                $ user_msg = renpy.input("Enter a message: ")
 
             if user_msg  == "init_end_sim" and character_name == "monika":
                 $ main_event_loop = False
