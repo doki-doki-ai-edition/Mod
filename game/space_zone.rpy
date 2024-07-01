@@ -43,7 +43,7 @@ label space_zone:
     $ Configs().create_from_hex(f"{config.basedir}/game/assets/audio/sfx/space.mp3", f"{config.basedir}/game/assets/audio/sfx/_space-lines.mp3")
     $ space_line = Info().getSpaceLines[1]["file"]
     $ space_line_time = Info().getSpaceLines[1]["time"]
-    $ rnd_line = renpy.random.randint(0, 5)
+    $ rnd_line = renpy.random.randint(0, 4)
 
     if persistent.first_space == True:
         $ renpy.sound.play(f"{space_line}", channel="sound", loop=None)
