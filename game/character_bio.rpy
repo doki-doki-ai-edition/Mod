@@ -3,10 +3,9 @@
 
 init -10 python:
     class BioCharacter:
-        def __init__(self, name, bio, appear, image, logo, chibi=None, chibi_hover=None):
+        def __init__(self, name, bio, image, logo, chibi=None, chibi_hover=None):
             self.name = name
             self.bio = bio
-            self.appear = appear
             self.image = image
             self.logo = logo
             self.chibi = chibi
@@ -14,10 +13,10 @@ init -10 python:
 
 # Example character data
 define characters = [
-    BioCharacter("Monika", "President of the Literature Club, Monika is best known for her stellar looks, superb athleticism, and being at the top of her class. Much like a book, though, there's a lot more to her than what's on the surface...\n\nHeight: 5'1'' / 160.02cm\nWeight: 125lbs / 56.7kg\nEye Color: Green\nEthnicity: Unknown", "Doki Doki Literature Club!  (2017)\nMonika After Story               (2017)\nDDLC Plus!                             (2021)", "gui/menu_art_m.png", "assets/imgs/gui/logo.png", "gui/poemgame/m_sticker_1.png", "gui/poemgame/m_sticker_2.png"),
-    BioCharacter("Natsuki", "An aficionado at all things baking and unhesitant to put you in your place, Natsuki brings equal amounts of sweet and sour to the table...not specifically for you, or anything. No calling her cute!\n\nHeight: 4'11'' / 149.86cm\nWeight: 92.5lbs / 42kg\nEye Color: Magenta\nEthnicity: Japan", "Doki Doki Literature Club!  (2017)\nExit Music                               (2018)\nDDLC Plus!                              (2021)", "gui/menu_art_n.png", "assets/imgs/gui/logo.png", "gui/poemgame/n_sticker_1.png", "gui/poemgame/n_sticker_2.png"),
-    BioCharacter("Sayori", "A best friend to the very end! Sayori's trademark smiles and clumsy attitude never fail to lift the spirits of nearly anyone she meets. Don't be too fooled by it, though, for those who smile the widest tend to cry the hardest...\n\nHeight: 5'2'' / 157.48cm\nWeight: 119lbs / 54kg\nEye Color: Blue\nEthnicity: Japan", "Doki Doki Literature Club!  (2017)\nSalvation                                 (2018)\nDDLC Plus!                              (2021)", "gui/menu_art_s.png", "assets/imgs/gui/logo.png", "gui/poemgame/s_sticker_1.png", "gui/poemgame/s_sticker_2.png"),
-    BioCharacter("Yuri", "When she's not buried in the world of books, Yuri shyly brings an air of serenity to wherever she goes, sometimes accompanied by a hot cup of tea. Trust in her eyes goes a long way, so be sure to never break hers.\n\nHeight: 5'5'' / 165.1cm\nWeight: 130lbs / 59kg\nEye Color: Purple\nEthnicity: Japan", "Doki Doki Literature Club!  (2017)\nFallen Angel                           (2019)\nDDLC Plus!                              (2021)", "gui/menu_art_y.png", "assets/imgs/gui/logo.png", "gui/poemgame/y_sticker_1.png", "gui/poemgame/y_sticker_2.png")
+    BioCharacter("Monika", "President of the Literature Club, Monika is best known for her stellar looks, superb athleticism, and being at the top of her class. Much like a book, though, there's a lot more to her than what's on the surface...\n\nHeight: 5'1'' / 160.02cm\nWeight: 125lbs / 56.7kg\nEye Color: Green\nEthnicity: Unknown", "gui/menu_art_m.png", "assets/imgs/gui/logo.png", "gui/poemgame/m_sticker_1.png", "gui/poemgame/m_sticker_2.png"),
+    BioCharacter("Natsuki", "An aficionado at all things baking and unhesitant to put you in your place, Natsuki brings equal amounts of sweet and sour to the table...not specifically for you, or anything. No calling her cute!\n\nHeight: 4'11'' / 149.86cm\nWeight: 92.5lbs / 42kg\nEye Color: Magenta\nEthnicity: Japan", "gui/menu_art_n.png", "assets/imgs/gui/logo.png", "gui/poemgame/n_sticker_1.png", "gui/poemgame/n_sticker_2.png"),
+    BioCharacter("Sayori", "A best friend to the very end! Sayori's trademark smiles and clumsy attitude never fail to lift the spirits of nearly anyone she meets. Don't be too fooled by it, though, for those who smile the widest tend to cry the hardest...\n\nHeight: 5'2'' / 157.48cm\nWeight: 119lbs / 54kg\nEye Color: Blue\nEthnicity: Japan", "gui/menu_art_s.png", "assets/imgs/gui/logo.png", "gui/poemgame/s_sticker_1.png", "gui/poemgame/s_sticker_2.png"),
+    BioCharacter("Yuri", "When she's not buried in the world of books, Yuri shyly brings an air of serenity to wherever she goes, sometimes accompanied by a hot cup of tea. Trust in her eyes goes a long way, so be sure to never break hers.\n\nHeight: 5'5'' / 165.1cm\nWeight: 130lbs / 59kg\nEye Color: Purple\nEthnicity: Japan", "gui/menu_art_y.png", "assets/imgs/gui/logo.png", "gui/poemgame/y_sticker_1.png", "gui/poemgame/y_sticker_2.png")
 ]
 
 default index = 0
@@ -119,15 +118,16 @@ screen bio_screen:
                 draggable True
                 text "[current_character.bio]" size 22 justify True
 
+
     frame: # Previous apperances
         background None
-        xalign 1
-        yalign 0.4
+        xalign 1.5
+        yalign 0.6
         padding (790, 455, 160, 10)
         vbox:
             xfill True
             box_wrap True
-            text "[current_character.appear]" size 20 justify True
+            textbutton "Begin" action [SetVariable("character_name", current_character.name.lower()), Hide("bio_screen"), Jump("nameWorld_label")] style "return_button"
 
 
     textbutton _("Return"):
