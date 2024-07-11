@@ -121,13 +121,13 @@ screen bio_screen:
 
     frame: # Previous apperances
         background None
-        xalign 1.5
+        xalign 5
         yalign 0.6
         padding (790, 455, 160, 10)
         vbox:
             xfill True
             box_wrap True
-            textbutton "Begin" action [SetVariable("character_name", current_character.name.lower()), Hide("bio_screen"), Jump("nameWorld_label")] style "return_button"
+            textbutton "     Begin" action [SetVariable("character_name", current_character.name.lower()), Hide("bio_screen"), Jump("nameWorld_label")] style "return_button"
 
 
     textbutton _("Return"):
