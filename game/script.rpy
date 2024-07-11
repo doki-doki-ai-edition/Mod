@@ -24,11 +24,6 @@ label start:
 
 
 
-label gamemode_label:
-    scene theme
-    call screen gamemode_screen
-    return
-
 label apikey_label:
     $ apikey = renpy.input("Enter API Key", f"{persistent.chatToken}").strip()
     $ persistent.chatToken = apikey
