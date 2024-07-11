@@ -9,6 +9,8 @@ If you've been **banned** from the server you can appeal here: https://forms.gle
 
 # Setup
 
+**video tutorial:** https://www.youtube.com/watch?v=VXvidFabia8
+
 - Make sure you have a fresh install of DDLC https://ddlc.moe/
 - Download the latest version of the DDAE mod on this github page https://github.com/doki-doki-ai-edition/Mod/releases
 
@@ -20,8 +22,6 @@ To setup the mod just drag the contents into the main ddlc folder:
 </video>
 
 
-
-**IMPORTANT NOTE:** You only need to read the Ollama section to set everything up. Everything else is just extra info.
 
 ## Ollama
 
@@ -51,75 +51,9 @@ If you're on windows you should see a small icon in your taskbar that looks like
 <img src="game/assets/imgs/help_page/llama_task.png">
 
 - Open up a terminal on your device (eg. cmd+r if you're using windows, then type "cmd" and press enter)
-- In the terminal type "ollama run llama3" (or any model you find in https://ollama.com/library/)
+- In the terminal type "ollama pull llama3" (or any model you find in https://ollama.com/library/)
 
 This should be roughly 4.7 gigabytes and once it's done installing you can run the mod!
-
-
-# Settings
-
-## AI Type
-
-**LLM (Local Language Model)** <br>
-Shows the default local models available in the "Model Name" section.
-
-## Model Name
-
-**Suggested Models**
-Models that have been tested to work properly in accordance to the default prompt given
-
-**Other Models**
-Models that aren't as high quality and haven't been frequently tested
-
-
-## Model Config
-
-**Context Window**
-The maximum amount of tokens (messages) that will be remembered. The few-shot prompts for monika's default prompt already takes up 1,066 tokens (which is over the default limit)
-
-Note that the more context you give it, the slower responses may be and the more memory you use on your device.
-
-Make sure to check the context window of a model. For example:
-
-Go to https://ollama.com/library/llama3:8b
-
-<img src="game/assets/imgs/help_page/model_show.png" alt="model display">
-
-Click on "model" (and wait since it may take a while to load)
-
-Look for context_length
-
-<img src="game/assets/imgs/help_page/model_context_len.png" alt="model context window">
-
-If you want to use more than a 8192 token limit then you can check out other models such as
-
-https://ollama.com/library/llama3-gradient
-
-which has a 1M context window. You won't be able to use the full 1M tokens because of the hardware requirement for something like that but depending on your hardware you could use a lot more than 8k.
-
----
-**Temperature**
-Determines how random/creative the output is.
-
-Higher = More random and creative but if it's too high, the responses can be nonsensical and may not even follow the system prompt appropriately.
-
-Lower = Less random and predictable. The model chooses the most likely word to respond with but ends up sounding more robotic.
-
-The typical default temperature is "1" but I've personally found 0.6 to be a good sweet spot, just high enough to be creative but low enough to give good responses.
-
-
-*NOTE:* It is highly advisable to leave the temperature on the default settings because it has been shown to follow the prompt far more accurately when testing compared to other numbers.
-
----
-**Seed**
-Deterministic responses. If set to a specific seed, your outputs will be pretty much exactly the same or relatively similar if you feed it the same input.
-
-Eg. If you have a seed of 22 and your input response goes like this:
-
-user: "how are you monika?" <br>
-monika: "I'm not doing too well to be honest..."
-
-Assuming the system prompt is the same and your response is formatted in the exact same way, you'll always get that same output (or something very similar).
 
 
 
@@ -160,10 +94,6 @@ The second thing you could try is continuing the chat by ignoring the error mess
 And the 3rd thing you could try is just jailbreaking the ai model by editing the
 system prompt to make the ai say anything.
 
-
-## Why does the game freeze?
-
-This means that the ai is generating the output. You should wait for it to be done.
 
 
 ## What hardware do I need?
