@@ -3,9 +3,6 @@ define persistent.steam = ("steamapps" in config.basedir.lower())
 define config.developer = False
 default custom_quick_menu = False
 
-python early:
-    import singleton
-    me = singleton.SingleInstance()
 
 init python:
     config.keymap['game_menu'].remove('mouseup_3')

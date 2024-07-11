@@ -129,3 +129,8 @@ You could also edit the chat file for the old world and try loading it again.
 
 **Voice Acting:**
 [Jayce Parisi](https://jayceparisi.com/) (**Note:** Jayce would not be comfortable w/ their voice being AI generated so keep that in mind if you're making a submod) 
+
+
+## Special thanks
+
+Thanks to Retronika & iiTzWolfyy for the Character template gui & script used when a user first creates a realm

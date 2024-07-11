@@ -16,20 +16,13 @@ label start:
     if persistent.purgatory == True:
         jump space_zone
     else:
-        scene theme with dissolve
-
-        call screen chatmode_screen
+        call screen bio_screen
         
 
     return
 
 
 
-
-label gamemode_label:
-    scene theme
-    call screen gamemode_screen
-    return
 
 label apikey_label:
     $ apikey = renpy.input("Enter API Key", f"{persistent.chatToken}").strip()
