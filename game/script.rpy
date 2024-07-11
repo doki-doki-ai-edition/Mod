@@ -16,9 +16,7 @@ label start:
     if persistent.purgatory == True:
         jump space_zone
     else:
-        scene theme with dissolve
-
-        call screen chatmode_screen
+        call screen bio_screen
         
 
     return
