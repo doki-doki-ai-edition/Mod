@@ -1,4 +1,7 @@
 label space_zone:
+    init python:
+        import threading
+
     scene white
     play music "bgm/monika-start.ogg" noloop
     $ renpy.pause(0.5, hard=True)
@@ -81,8 +84,25 @@ label space_zone:
         $ DataSetup = Data(path_to_user_dir=pathSetup)
         $ DataSetup.updateSceneData("zone", "true")
         $ DataSetup.updateSceneData("character", f"{purg_name}")
-        $ convo = chatSetup.chat(path=pathSetup, userInput="umm...", chathistory=Info().getExamplePrompts[f"{persistent.prompt_header}_{purg_name}_purgatory"])
+        $ default_history = Info().getExamplePrompts[f"{persistent.prompt_header}_{purg_name}_purgatory"]
 
+        # Start generating text in a separate thread
+        $ chatSetup.is_generating = True
+        $ threading.Thread(target=chatSetup.chat, args=[pathSetup, default_history, "umm..."]).start()
+
+        $ _history = False
+        $ wait_msg = ""
+
+        # Wait for AI to finish generating text
+        while chatSetup.is_generating == True:
+            # If you want to add a popup menu or some sort of animation, you can do so here
+            $ wait_msg = wait_msg + "." if len(wait_msg) < 3 else "."
+            "Loading[wait_msg] {fast} {w=0.7}{nw}"
+
+        $ _history = True
+
+        $ renpy.log(">>> starting new ")
+        $ convo = chatSetup.generated_text
 
 
     $ memory = Data(path_to_user_dir=pathSetup).getChathistory
@@ -104,6 +124,7 @@ label space_zone:
     # Main Event Loop
     ###########################
     while True:
+        $ user_msg = ""
         $ rnd_continue = renpy.random.randint(1, 6)
         $ current_char = Data(path_to_user_dir=pathSetup).getSceneData("character")
 
@@ -112,7 +133,9 @@ label space_zone:
             $ user_msg = "continue"
 
         else:
-            $ user_msg = renpy.input("Enter a message: ")
+            while user_msg.strip() == "":
+                $ user_msg = renpy.input("Enter a message: ")
+
             $ counter += 1
 
 
@@ -127,7 +150,22 @@ label space_zone:
             $ special_check = True
             $ user_msg = user_msg + " *I also suddenly scream really loudly because you just scared me*"
 
-        $ final_msg = chatSetup.chat(path=pathSetup, chathistory=memory, userInput=user_msg)
+
+        # Start generating text in a separate thread
+        $ chatSetup.is_generating = True
+        $ threading.Thread(target=chatSetup.chat, args=[pathSetup, memory, user_msg]).start()
+
+        $ _history = False
+        $ wait_msg = ""
+
+        # Wait for AI to finish generating text
+        while chatSetup.is_generating == True:
+            $ wait_msg = wait_msg + "." if len(wait_msg) < 3 else "."
+            "Loading[wait_msg] {fast} {w=0.7}{nw}"
+
+        $ _history = True
+
+        $ final_msg = chatSetup.generated_text
         $ raw_msg = Data(path_to_user_dir=pathSetup).getLastMessage
 
 
