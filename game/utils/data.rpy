@@ -140,10 +140,6 @@ init python:
             return reminder
 
         @property
-        def getMaleChicken(self):
-            return "cock"
-
-        @property
         def getSpaceLines(self):
             with open(f'{config.basedir}/game/assets/configs/purgatory_lines.json', 'r') as f:
                 purgatory_lines = json.load(f)

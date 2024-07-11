@@ -12,7 +12,7 @@ define gui.show_name = False
 
 
 
-define config.version = "0.2.3-demo"
+define config.version = "0.2.5-demo"
 
 
 

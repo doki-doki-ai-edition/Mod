@@ -289,7 +289,6 @@ label AICharacter:
                 show full_sprite at t11
 
 
-            $ final_msg = final_msg if nc == False else final_msg.replace("rooster", Info().getMaleChicken)
             $ renpy.say("[current_char_title]", final_msg)
 
             if nc:
