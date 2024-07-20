@@ -160,18 +160,26 @@ init python:
             renpy.log(f">>> rmvPlace func (PERSISTENT): spacezone is {spacezone}")
             raw_examples = level_normal if spacezone != "true" else  level_zone
 
+            
+            bg_scenes = [s for s in Configs().bg_scenes["default"]]
+            emotions = ', '.join([e for e in Configs().characters[self.character_name.title()]['sprite']]) if spacezone != "true" else ""
+            backgrounds = ', '.join(bg_scenes)
+
             if spacezone != "true":
-                bg_scenes = [s for s in Configs().bg_scenes["default"]] + [s for s in Configs().bg_scenes["checks"]]
-                emotions = ', '.join([e for e in Configs().characters[self.character_name.title()]['head']])
-                backgrounds = ', '.join(bg_scenes)
+                string = raw_examples[0]['content'].replace("{{format}}", Info().format["roleplay"])
+            else:
+                string = raw_examples[0]['content'].replace("{{format}}", Info().format["purgatory"])
 
-                string = raw_examples[0]['content'].replace("<name>", persistent.playername)
-                string = string.replace("<char>", self.character_name)
-                string = string.replace("<emotions>", emotions)
-                string = string.replace("<backgrounds>", backgrounds)
+            string = string.replace("{{char}}", self.character_name)
+            string = string.replace("{{emotes}}", emotions)
+            string = string.replace("{{scenes}}", backgrounds)
+            string = string.replace("{{user}}", persistent.playername)
 
-                string = raw_examples[0]['content'] = string
-                raw_examples[0]['content'] = string
+            string = raw_examples[0]['content'] = string
+            raw_examples[0]['content'] = string
+
+            with open(self.full_path + f"/full_history.json", 'w') as f:
+                json.dump(raw_examples + self.chathistory, f, indent=2)
 
             return raw_examples
 
@@ -294,9 +302,8 @@ init python:
 
             renpy.log(f">>> ai response func: spacezone is {spacezone}")
             if spacezone != "true":
-                emotions = ', '.join([e for e in Configs().characters[self.character_name.title()]['head']])
-                parts = ', '.join([e for e in Configs().characters[self.character_name.title()]['left']]) # "explain" and "relaxed"
-                reminder = "" if self.retrying == False else Info().getReminder["emotes"].replace("<emotes>", emotions).replace("<body>", parts).replace("<char>", self.character_name)
+                emotions = ', '.join([e for e in Configs().characters[self.character_name.title()]['sprite']])
+                reminder = "" if self.retrying == False else Info().getReminder["emotes"].replace("{{emotes}}", emotions).replace("<body>", parts).replace("{{char}}", self.character_name)
 
             self.checkForPurgatory()
 

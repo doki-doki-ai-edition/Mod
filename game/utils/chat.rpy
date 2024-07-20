@@ -19,9 +19,7 @@ init python:
                                 "music": "none",
                                 "background": "",
                                 "character": "",
-                                "head_sprite": "",
-                                "left_sprite": "",
-                                "right_sprite": "",
+                                "sprite": "",
                                 "zone": ""
                             }
 
@@ -43,7 +41,7 @@ init python:
             return full_path
 
 
-        def chat(self, path, chathistory=[], userInput="{RST}"):
+        def chat(self, path, chathistory=[], userInput="hello"):
             msg = AIManager(
                 character_name=self.character_name,
                 full_path=path,

@@ -131,7 +131,7 @@ label AICharacter:
 
         # Start generating text in a separate thread
         $ chatSetup.is_generating = True
-        $ threading.Thread(target=chatSetup.chat, args=(pathSetup, [], "{RST}")).start()
+        $ threading.Thread(target=chatSetup.chat, args=(pathSetup, [], "hello")).start()
 
         $ _history = False
         $ wait_msg = ""

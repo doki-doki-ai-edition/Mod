@@ -145,5 +145,9 @@ init python:
                 purgatory_lines = json.load(f)
             return purgatory_lines
 
-
+        @property
+        def format(self):
+            with open(config.basedir + "/game/assets/prompts/prompt_format.json", "r") as f:
+                format = json.load(f)
+            return format
 
