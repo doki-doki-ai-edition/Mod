@@ -86,7 +86,6 @@ label AICharacter:
     $ current_right = None
     $ current_background = None
     $ zone_type = None
-    $ nc = False
 
 
 
@@ -278,15 +277,11 @@ label AICharacter:
                 show basic at t11
             else:
                 hide basic
-                hide chibi
                 show full_sprite at t11
 
 
             $ renpy.say("[current_char_title]", final_msg)
 
-            if nc:
-                $ nc = False
-                $ Configs().delete_egg(f"{config.basedir}/game/assets/imgs/monika/_thumb.png")
     return
 
 

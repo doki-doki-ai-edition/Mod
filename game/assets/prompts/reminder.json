@@ -1,6 +1,5 @@
 {
     "emotes": " (Remember that the only [FACE] type responses should be: {{emotes}}. ONLY do this if {{char}} is speaking)",
-    "nc": "*i pull out my rooster*",
     "generic_response": "[SCENE] clubroom [FACE] happy [CONTENT] ... [END]",
     "backup_prompt": [
         {
