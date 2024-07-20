@@ -235,7 +235,7 @@ init python:
             the list and redo the response
             """
             if current_emotion and current_body:
-                if (reply.startswith("[FACE]")) and (current_emotion not in Configs().characters[self.character_name.title()]["sprite"]) or ("explain" not in current_body and "relaxed" not in current_body and "excited" not in current_body):
+                if (reply.startswith("[FACE]")) and (current_emotion not in Configs().characters[self.character_name.title()]["head"]) or ("explain" not in current_body and "relaxed" not in current_body and "excited" not in current_body):
                     print("<<retrying>>")
                     return True
             return False
@@ -302,7 +302,7 @@ init python:
 
             renpy.log(f">>> ai response func: spacezone is {spacezone}")
             if spacezone != "true":
-                emotions = ', '.join([e for e in Configs().characters[self.character_name.title()]['sprite']])
+                emotions = ', '.join([e for e in Configs().characters[self.character_name.title()]['head']])
                 reminder = "" if self.retrying == False else Info().getReminder["emotes"].replace("{{emotes}}", emotions).replace("<body>", parts).replace("{{char}}", self.character_name)
 
             self.checkForPurgatory()

@@ -19,7 +19,9 @@ init python:
                                 "music": "none",
                                 "background": "",
                                 "character": "",
-                                "sprite": "",
+                                "head_sprite": "",
+                                "left_sprite": "",
+                                "right_sprite": "",
                                 "zone": ""
                             }
 
