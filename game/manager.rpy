@@ -162,7 +162,7 @@ init python:
 
             
             bg_scenes = [s for s in Configs().bg_scenes["default"]]
-            emotions = ', '.join([e for e in Configs().characters[self.character_name.title()]['sprite']]) if spacezone != "true" else ""
+            emotions = ', '.join([e for e in Configs().characters[self.character_name.title()]['head']]) if spacezone != "true" else ""
             backgrounds = ', '.join(bg_scenes)
 
             if spacezone != "true":
@@ -174,6 +174,7 @@ init python:
             string = string.replace("{{emotes}}", emotions)
             string = string.replace("{{scenes}}", backgrounds)
             string = string.replace("{{user}}", persistent.playername)
+            string = string.replace("{{body}}", Configs().characters[self.character_name.title()]['left'])
 
             string = raw_examples[0]['content'] = string
             raw_examples[0]['content'] = string
