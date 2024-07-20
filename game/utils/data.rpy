@@ -103,6 +103,16 @@ init python:
                 chars = json.load(f)
             return chars
 
+        def body_types(self, name):
+            raw_bodies = [b for b in self.characters[name]["left"]] + [b for b in self.characters[name]["right"]]
+            bodies = []
+            for part in raw_bodies:
+                if part not in raw_bodies:
+                    bodies.append(part)
+
+            string = " and ".join(bodies)
+            return string
+
 
         def listCharEmotes(self, name):
             emotions = ', '.join([e for e in self.characters[name]['head']])

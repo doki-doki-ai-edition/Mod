@@ -174,7 +174,7 @@ init python:
             string = string.replace("{{emotes}}", emotions)
             string = string.replace("{{scenes}}", backgrounds)
             string = string.replace("{{user}}", persistent.playername)
-            string = string.replace("{{body}}", Configs().characters[self.character_name.title()]['left'])
+            string = string.replace("{{body}}", Configs().body_types(self.character_name.title()))
 
             string = raw_examples[0]['content'] = string
             raw_examples[0]['content'] = string
@@ -284,9 +284,8 @@ init python:
             spacezone = self.dbase.getSceneData("zone")
             if spacezone == "true": return response
 
-            if self.dbase.getSceneData("character") == "":
-                if "[SCENE]" not in response or "[NARRATION]" not in response:
-                    response = "[SCENE] outside [NARRATION] You wake up in a familiar place. [END]"
+            if "[SCENE]" not in response or "[FACE]" not in response or "[CONTENT]" not in response:
+                response = "[SCENE] clubroom [FACE] happy [CONTENT] Hey [END]"
             return response
 
 
@@ -304,7 +303,8 @@ init python:
             renpy.log(f">>> ai response func: spacezone is {spacezone}")
             if spacezone != "true":
                 emotions = ', '.join([e for e in Configs().characters[self.character_name.title()]['head']])
-                reminder = "" if self.retrying == False else Info().getReminder["emotes"].replace("{{emotes}}", emotions).replace("<body>", parts).replace("{{char}}", self.character_name)
+                parts =  Configs().body_types(self.character_name.title())
+                reminder = "" if self.retrying == False else Info().getReminder["emotes"].replace("{{emotes}}", emotions).replace("{{body}}", parts).replace("{{char}}", self.character_name)
 
             self.checkForPurgatory()
 
@@ -317,12 +317,6 @@ init python:
             contextAndUserMsg = examples + self.chathistory if spacezone != "true" else self.chathistory
 
             response = self.modelChoices(contextAndUserMsg)
-            
-            if response.startswith("[FACE]"):
-                self.dbase.updateSceneData("character", self.character_name)
-                if "[BODY]" not in response:
-                    response = Info().getReminder["generic_response"]
-
             response = self.checkForBadFormat(response)
 
             
