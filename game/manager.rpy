@@ -124,7 +124,7 @@ init python:
             char = getContent('[CHAR]', '[CONTENT]')
             face = getContent('[FACE]', '[BODY]')
             body = getContent('[BODY]', '[CONTENT]')
-            scene = getContent('[SCENE]', '[NARRATION]')
+            scene = getContent('[SCENE]', '[FACE]')
 
             reply = reply.split('[END]')[0]
             if scene:
