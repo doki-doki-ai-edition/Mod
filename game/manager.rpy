@@ -284,8 +284,20 @@ init python:
             spacezone = self.dbase.getSceneData("zone")
             if spacezone == "true": return response
 
-            if "[SCENE]" not in response or "[FACE]" not in response or "[CONTENT]" not in response:
-                response = "[SCENE] clubroom [FACE] happy [CONTENT] Hey [END]"
+            if "[SCENE]" not in response or "[FACE]" not in response or "[BODY]" not in response or "[CONTENT]" not in response:
+                response = "[SCENE] clubroom [FACE] happy [BODY] relaxed [CONTENT] ... [END]"
+
+            if "[BODY]" in response:
+                body = response.split("[BODY]")[1].split("[CONTENT]")[0].strip()
+
+                if body not in Configs().body_types(self.character_name):
+                    response = response.replace(body, "relaxed")
+
+            if "[FACE]" in response:
+                face = response.split("[FACE]")[1].split("[BODY]")[0].strip()
+
+                if face not in Configs().body_types(self.character_name):
+                    response = response.replace(face, "happy")
             return response
 
 

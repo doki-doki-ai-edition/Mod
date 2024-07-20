@@ -1,6 +1,6 @@
 {
-    "emotes": " (Remember that the only [FACE] type responses should be: {{emotes}}. ONLY do this if {{char}} is speaking)",
-    "generic_response": "[SCENE] clubroom [FACE] happy [CONTENT] ... [END]",
+    "emotes": " (Remember that the only [FACE] type responses should be: {{emotes}}. And must only have {{body}} as [BODY] responses. ONLY do this if {{char}} is speaking)",
+    "generic_response": "[SCENE] clubroom [FACE] happy [BODY] relaxed [CONTENT] ... [END]",
     "backup_prompt": [
         {
           "role": "user",
@@ -8,7 +8,7 @@
         },
         {
           "role": "assistant",
-          "content": "[SCENE] clubroom [FACE] happy [CONTENT] Hey [END]"
+          "content": "[SCENE] clubroom [FACE] happy [BODY] relaxed [CONTENT] Hey [END]"
         }
     ],
     "backup_prompt_space": [

@@ -104,6 +104,7 @@ init python:
             return chars
 
         def body_types(self, name):
+            name = name.title()
             raw_bodies = [b for b in self.characters[name]["left"]] + [b for b in self.characters[name]["right"]]
             bodies = []
             for part in raw_bodies:

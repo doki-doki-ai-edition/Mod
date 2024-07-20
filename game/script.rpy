@@ -173,29 +173,26 @@ label AICharacter:
         "bg/[current_background]"
     scene _bg
 
+
+    image basic:
+        im.Composite((960, 960), (0, 0), f"{current_char}/{current_left}", (0, 0), f"{current_char}/{current_right}", (0, 0), f"{current_char}/{current_head}")
+        uppies
+    image full_sprite:
+        im.Composite((960, 960), (0, 0), f"{current_char}/{current_head}")
+        uppies
+
+    if current_head != "3a.png" and current_head != "3b.png" and current_head != "3c.png" and current_head != "3b.png" and current_head != "3d.png" and current_head != "vomit.png":
+        hide full_sprite
+        show basic at t11
+    else:
+        hide basic
+        show full_sprite at t11
+
     if resume:
         $ last_msg = Data(path_to_user_dir=pathSetup).getLastMessageClean
-
-        image basic:
-            im.Composite((960, 960), (0, 0), f"{current_char}/{current_left}", (0, 0), f"{current_char}/{current_right}", (0, 0), f"{current_char}/{current_head}")
-            uppies
-        image full_sprite:
-            im.Composite((960, 960), (0, 0), f"{current_char}/{current_head}")
-            uppies
-
-        if current_head != "3a.png" and current_head != "3b.png" and current_head != "3c.png" and current_head != "3b.png" and current_head != "3d.png" and current_head != "vomit.png":
-            hide full_sprite
-            show basic at t11
-        else:
-            hide basic
-            show full_sprite at t11
-
-        if current_char_title != "":
-            $ renpy.say("[current_char_title]", last_msg)
-
-
+        $ renpy.say("[current_char_title]", last_msg)
     else:
-        $ renpy.say(None, convo)
+        $ renpy.say("[current_char_title]", convo)
 
 
     show screen home_icon_screen
@@ -251,18 +248,15 @@ label AICharacter:
         $ current_right = Data(path_to_user_dir=pathSetup).getSceneData("right_sprite")
         $ current_background = Data(path_to_user_dir=pathSetup).getSceneData("background")
 
-        if raw_msg.startswith("[SCENE]"):
-            # Narrator is speaking 
+
+        if final_msg.startswith("<Error>"):
+            show screen error_popup(message=final_msg)
+        else:
 
             image _bg:
                 "bg/[current_background]"
             scene _bg
 
-
-            "[final_msg]"
-        elif final_msg.startswith("<Error>"):
-            show screen error_popup(message=final_msg)
-        else:
             image basic:
                 im.Composite((960, 960), (0, 0), f"{current_char}/{current_left}", (0, 0), f"{current_char}/{current_right}", (0, 0), f"{current_char}/{current_head}")
                 uppies
