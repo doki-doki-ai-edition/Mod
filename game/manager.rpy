@@ -252,8 +252,7 @@ init python:
 
 
         def checkForBadFormat(self, response):
-            """It writes a default narration if the ai generates an incorrectly formatted response 
-            Only runs once when the realm is first loaded."""
+            """attempts to fix incorrectly formatted responses"""
             spacezone = self.dbase.getSceneData("zone")
             if spacezone == "true": return response
 
@@ -268,9 +267,11 @@ init python:
 
             if "[FACE]" in response:
                 face = response.split("[FACE]")[1].split("[BODY]")[0].strip()
+                emotions = ', '.join([e for e in Configs().characters[self.character_name.title()]['head']])
 
-                if face not in Configs().body_types(self.character_name):
-                    response = response.replace(face, "happy")
+                if face not in emotions:
+                    random_face = random.choice([e for e in Configs().characters[self.character_name.title()]['head']])
+                    response = response.replace(face, random_face)
             return response
 
 
