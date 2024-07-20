@@ -241,7 +241,7 @@ init python:
 
 
         def checkForPurgatory(self):
-            """This functions as a hotfix for a bug with the LLM. This puts the prompt template into the
+            """This puts the prompt template into the
             chathistory file instead of having it be empty."""
             spacezone = self.dbase.getSceneData("zone")
             if spacezone == "true":
@@ -252,7 +252,10 @@ init python:
         def checkForBadFormat(self, response):
             """attempts to fix incorrectly formatted responses"""
             spacezone = self.dbase.getSceneData("zone")
-            if spacezone == "true": return response
+            if spacezone == "true":
+                if not response.startswith("[CONTENT]"):
+                    return "[CONTENT] Hmm..."
+
 
             if "[SCENE]" not in response or "[FACE]" not in response or "[BODY]" not in response or "[CONTENT]" not in response:
                 response = "[SCENE] clubroom [FACE] happy [BODY] relaxed [CONTENT] ... [END]"
