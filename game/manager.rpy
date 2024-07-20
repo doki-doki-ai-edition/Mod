@@ -13,7 +13,6 @@ init python:
     with open(config.basedir + "/game/assets/prompts/prompt_templates.json", "r") as f:
         prompt = json.load(f)
 
-    retrycount = 3
 
     class AIManager():
         def __init__(self, character_name, chathistory, full_path, resume=False):
@@ -230,19 +229,6 @@ init python:
 
 
 
-        def retryPrompt(self, reply, current_emotion, current_body):
-            """If the generated response doesnt use the emotions specified in the characters.json list
-            eg. '[FACE] super shy' then remind the ai to only use what's in
-            the list and redo the response
-            """
-            if current_emotion and current_body:
-                if (reply.startswith("[FACE]")) and (current_emotion not in Configs().characters[self.character_name.title()]["head"]) or ("explain" not in current_body and "relaxed" not in current_body and "excited" not in current_body):
-                    print("<<retrying>>")
-                    return True
-            return False
-
-
-
         def checkForError(self, reply):
             """If An error happened with the API, return the Error"""
             try:
@@ -253,19 +239,6 @@ init python:
             except TypeError:
                 return False
 
-        def checkForRepeat(self):
-            """Checks if {RST} is sent more than once and falls back on a
-            default prompt"""
-            spacezone = self.dbase.getSceneData("zone")
-            if  spacezone != "true":
-                if len(self.chathistory) >=4 and len(self.chathistory) <= 8:
-                    amnt = 0
-                    for rst in self.chathistory:
-                        if "{RST}" in rst['content']:
-                            amnt += 1
-
-                    if amnt >= 2:
-                        self.chathistory = Info().getReminder['backup_prompt']
 
 
 
@@ -339,18 +312,6 @@ init python:
 
             reply, _, face, body, scene = self.removeKeywords(response)
 
-            # If the AI responds w/ an emotion/body not listed, redo the response
-            if spacezone != "true":
-                global retrycount
-                self.retrying = self.retryPrompt(response, face, body)
-                if self.retrying:
-                    retrycount -= 1
-                    if retrycount <= 0:
-                        self.retrying = False
-                        retrycount = 3
-                    else:
-                        self.chathistory.pop()
-                        return self.ai_response(userInput)
 
             # Log AI input
             response = self.safeResponse(response)
