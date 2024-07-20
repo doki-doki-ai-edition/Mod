@@ -121,12 +121,12 @@ init python:
                 except AttributeError:
                     return None
 
-            char = getContent('[CHAR]', '[CONTENT]')
+            char = getContent('[CHAR]', '[CONTENT]') # Currently unused, just a placeholder once the usage of multiple chars is implemented
             face = getContent('[FACE]', '[BODY]')
             body = getContent('[BODY]', '[CONTENT]')
             scene = getContent('[SCENE]', '[FACE]')
 
-            reply = reply.split('[END]')[0]
+            reply = reply.split('[END]')[0] # remove anything after [END]
             if scene:
                 # Sometimes a model responds w/ text before [SCENE]
                 # This removes any text before and only keeps [SCENE] and
@@ -139,8 +139,6 @@ init python:
                 # If the character replies with smthing like *giggles* remove it.
                 # (and yes im using regex here)
                 reply = re.sub(r'\*.*?\*', '', reply)
-            elif "[NARRATION]" in reply:
-                reply = reply.split("[NARRATION]")[1].strip()
             else:
                 # Typically this means that the model didnt return a proper content field
                 reply = "ERROR"
