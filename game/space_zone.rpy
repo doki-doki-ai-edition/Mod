@@ -84,7 +84,7 @@ label space_zone:
         $ DataSetup = Data(path_to_user_dir=pathSetup)
         $ DataSetup.updateSceneData("zone", "true")
         $ DataSetup.updateSceneData("character", f"{purg_name}")
-        $ default_history = Info().getExamplePrompts[f"{persistent.prompt_header}_{purg_name}_purgatory"]
+        $ default_history = Info().getExamplePrompts[f"{purg_name}_purgatory"]
 
         # Start generating text in a separate thread
         $ chatSetup.is_generating = True

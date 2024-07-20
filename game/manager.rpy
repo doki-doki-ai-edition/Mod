@@ -152,8 +152,8 @@ init python:
 
         def removePlaceholders(self):
             """remove placeholders in json files"""
-            level_normal = Info().getExamplePrompts[f"{persistent.prompt_header}_{self.character_name}"]
-            level_zone = Info().getExamplePrompts[f"{persistent.prompt_header}_{self.character_name}_purgatory"]
+            level_normal = Info().getExamplePrompts[f"{self.character_name}"]
+            level_zone = Info().getExamplePrompts[f"{self.character_name}_purgatory"]
             spacezone = self.dbase.getSceneData("zone")
 
             renpy.log(f">>> rmvPlace func: spacezone is {spacezone}")
@@ -235,7 +235,7 @@ init python:
             the list and redo the response
             """
             if current_emotion and current_body:
-                if (reply.startswith("[FACE]")) and (current_emotion not in Configs().characters[self.character_name.title()]["head"]) or ("explain" not in current_body and "relaxed" not in current_body and "excited" not in current_body):
+                if (reply.startswith("[FACE]")) and (current_emotion not in Configs().characters[self.character_name.title()]["sprite"]) or ("explain" not in current_body and "relaxed" not in current_body and "excited" not in current_body):
                     print("<<retrying>>")
                     return True
             return False
