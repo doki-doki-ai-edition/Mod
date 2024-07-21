@@ -143,5 +143,42 @@
             "explain": "2r.png",
             "relaxed": "1r.png"
         }
+    },
+
+    "Sam":{
+        "full_sprites": [
+            "angry",
+            "determined",
+            "glad",
+            "happy",
+            "laugh",
+            "nervous",
+            "neutral",
+            "really angry",
+            "really happy",
+            "sad",
+            "surprised"
+        ],
+        "head": {
+            "angry": "angry.png",
+            "determined": "determined.png",
+            "glad": "glad.png",
+            "happy": "happy.png",
+            "laugh": "laugh.png",
+            "nervous": "nervous.png",
+            "neutral": "neutral.png",
+            "really angry": "really angry.png",
+            "really happy": "really happy.png",
+            "sad": "sad.png",
+            "surprised": "surprised.png"
+        },
+        "left": {
+            "explain": "",
+            "relaxed": ""
+        },
+        "right": {
+            "explain": "",
+            "relaxed": ""
+        }
     }
 }
