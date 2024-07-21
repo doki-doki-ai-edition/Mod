@@ -150,7 +150,11 @@ init python:
         def removePlaceholders(self):
             """remove placeholders in json files"""
             level_normal = Info().getExamplePrompts[f"{self.character_name}"]
-            level_zone = Info().getExamplePrompts[f"{self.character_name}_purgatory"]
+            level_zone = ""
+            
+            if self.character_name in Info().whitelist_purgatory:
+                level_zone = Info().getExamplePrompts[f"{self.character_name}_purgatory"]
+
             spacezone = self.dbase.getSceneData("zone")
 
             renpy.log(f">>> rmvPlace func: spacezone is {spacezone}")

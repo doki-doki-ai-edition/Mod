@@ -162,3 +162,8 @@ init python:
                 format = json.load(f)
             return format
 
+        @property
+        def whitelist_purgatory(self):
+            names = ["monika"]
+            return names
+
