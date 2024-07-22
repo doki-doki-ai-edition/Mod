@@ -180,8 +180,9 @@ init python:
             string = raw_examples[0]['content'] = string
             raw_examples[0]['content'] = string
 
-            with open(self.full_path + f"/full_history.json", 'w') as f:
-                json.dump(raw_examples + self.chathistory, f, indent=2)
+            if spacezone != "true":
+                with open(self.full_path + f"/full_history.json", 'w') as f:
+                    json.dump(raw_examples + self.chathistory, f, indent=2)
 
             return raw_examples
 
