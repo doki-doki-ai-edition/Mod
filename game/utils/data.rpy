@@ -2,7 +2,7 @@ init python:
     import os
     import json
     import binascii
-    import os
+
 
     class Data:
 
@@ -166,4 +166,5 @@ init python:
         def whitelist_purgatory(self):
             names = ["monika"]
             return names
+
 

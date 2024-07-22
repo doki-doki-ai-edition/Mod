@@ -174,19 +174,42 @@ label AICharacter:
     scene _bg
 
 
-    image basic:
-        im.Composite((960, 960), (0, 0), f"{current_char}/{current_left}", (0, 0), f"{current_char}/{current_right}", (0, 0), f"{current_char}/{current_head}")
-        uppies
-    image full_sprite:
-        im.Composite((960, 960), (0, 0), f"{current_char}/{current_head}")
-        uppies
-
-    if current_head != "3a.png" and current_head != "3b.png" and current_head != "3c.png" and current_head != "3b.png" and current_head != "3d.png" and current_head != "vomit.png":
-        hide full_sprite
-        show basic at t11
+    if current_char in ["monika", "sayori", "natsuki", "yuri"]:
+        image basic:
+            im.Composite((960, 960), (0, 0), f"{current_char}/{current_left}", (0, 0), f"{current_char}/{current_right}", (0, 0), f"{current_char}/{current_head}")
+            uppies
+        image full_sprite:
+            im.Composite((960, 960), (0, 0), f"{current_char}/{current_head}")
+            uppies
+            
     else:
-        hide basic
-        show full_sprite at t11
+        image custom_basic:
+            im.Composite((960, 960), (0, 0), f"assets/imgs/characters/{current_char_title}/{current_left}", (0, 0), f"assets/imgs/characters/{current_char_title}/{current_right}", (0, 0), f"assets/imgs/characters/{current_char_title}/{current_head}")
+            uppies
+        image custom_full_sprite:
+            im.Composite((960, 960), (0, 0), f"assets/imgs/characters/{current_char_title}/{current_head}")
+            uppies
+
+
+
+
+
+    if current_char in ["monika", "sayori", "natsuki", "yuri"]:
+        if current_head not in Configs().characters[current_char_title]["full_sprites"]:
+            hide full_sprite
+            show basic at t11
+        else:
+            hide basic
+            show full_sprite at t11
+    else:
+        if current_head not in Configs().characters[current_char_title]["full_sprites"]:
+            hide custom_full_sprite
+            show custom_basic at t11
+        else:
+            hide custom_basic
+            show custom_full_sprite at t11
+        
+
 
     if resume:
         $ last_msg = Data(path_to_user_dir=pathSetup).getLastMessageClean
@@ -257,21 +280,40 @@ label AICharacter:
                 "bg/[current_background]"
             scene _bg
 
-            image basic:
-                im.Composite((960, 960), (0, 0), f"{current_char}/{current_left}", (0, 0), f"{current_char}/{current_right}", (0, 0), f"{current_char}/{current_head}")
-                uppies
-            image full_sprite:
-                im.Composite((960, 960), (0, 0), f"{current_char}/{current_head}")
-                uppies
+            
 
+            if current_char in ["monika", "sayori", "natsuki", "yuri"]:
+                image basic:
+                    im.Composite((960, 960), (0, 0), f"{current_char}/{current_left}", (0, 0), f"{current_char}/{current_right}", (0, 0), f"{current_char}/{current_head}")
+                    uppies
+                image full_sprite:
+                    im.Composite((960, 960), (0, 0), f"{current_char}/{current_head}")
+                    uppies
 
-            if current_head != "3a.png" and current_head != "3b.png" and current_head != "3c.png" and current_head != "3b.png" and current_head != "3d.png" and current_head != "vomit.png":
-                hide full_sprite
-                hide chibi
-                show basic at t11
             else:
-                hide basic
-                show full_sprite at t11
+                image custom_basic:
+                    im.Composite((960, 960), (0, 0), f"assets/imgs/characters/{current_char_title}/{current_left}", (0, 0), f"assets/imgs/characters/{current_char_title}/{current_right}", (0, 0), f"assets/imgs/characters/{current_char_title}/{current_head}")
+                    uppies
+                image custom_full_sprite:
+                    im.Composite((960, 960), (0, 0), f"assets/imgs/characters/{current_char_title}/{current_head}")
+                    uppies
+
+
+
+            if current_char in ["monika", "sayori", "natsuki", "yuri"]:
+                if current_head not in Configs().characters[current_char_title]["full_sprites"]:
+                    hide full_sprite
+                    show basic at t11
+                else:
+                    hide basic
+                    show full_sprite at t11
+            else:
+                if current_head not in Configs().characters[current_char_title]["full_sprites"]:
+                    hide custom_full_sprite
+                    show custom_basic at t11
+                else:
+                    hide custom_basic
+                    show custom_full_sprite at t11
 
 
             $ renpy.say("[current_char_title]", final_msg)

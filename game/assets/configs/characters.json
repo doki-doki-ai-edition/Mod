@@ -35,7 +35,12 @@
         "right": {
             "explain": "2r.png",
             "relaxed": "1r.png"
-        }
+        },
+        "bio": "President of the Literature Club, Monika is best known for her stellar looks, superb athleticism, and being at the top of her class. Much like a book, though, there's a lot more to her than what's on the surface...",
+        "image": "gui/menu_art_m.png",
+        "logo": "assets/imgs/gui/logo.png",
+        "chibi": "gui/poemgame/m_sticker_1.png",
+        "chibi_hover": "gui/poemgame/m_sticker_2.png"
     },
 
     "Sayori":{
@@ -74,7 +79,12 @@
         "right": {
             "relaxed": "1r.png",
             "excited": "2r.png"
-        }
+        },
+        "bio": "A best friend to the very end! Sayori's trademark smiles and clumsy attitude never fail to lift the spirits of nearly anyone she meets. Don't be too fooled by it, though, for those who smile the widest tend to cry the hardest...\n\nHeight: 5'2'' / 157.48cm\nWeight: 119lbs / 54kg\nEye Color: Blue\nEthnicity: Japan",
+        "image": "gui/menu_art_s.png",
+        "logo": "assets/imgs/gui/logo.png",
+        "chibi": "gui/poemgame/s_sticker_1.png",
+        "chibi_hover": "gui/poemgame/s_sticker_2.png"
     },
 
     "Natsuki":{
@@ -110,7 +120,12 @@
         "right": {
             "explain": "1r.png",
             "relaxed": "2r.png"
-        }
+        },
+        "bio": "An aficionado at all things baking and unhesitant to put you in your place, Natsuki brings equal amounts of sweet and sour to the table...not specifically for you, or anything. No calling her cute!\n\nHeight: 4'11'' / 149.86cm\nWeight: 92.5lbs / 42kg\nEye Color: Magenta\nEthnicity: Japan",
+        "image": "gui/menu_art_n.png",
+        "logo": "assets/imgs/gui/logo.png",
+        "chibi": "gui/poemgame/n_sticker_1.png",
+        "chibi_hover": "gui/poemgame/n_sticker_2.png"
     },
 
     "Yuri":{
@@ -142,7 +157,12 @@
         "right": {
             "explain": "2r.png",
             "relaxed": "1r.png"
-        }
+        },
+        "bio": "When she's not buried in the world of books, Yuri shyly brings an air of serenity to wherever she goes, sometimes accompanied by a hot cup of tea. Trust in her eyes goes a long way, so be sure to never break hers.\n\nHeight: 5'5'' / 165.1cm\nWeight: 130lbs / 59kg\nEye Color: Purple\nEthnicity: Japan",
+        "image": "gui/menu_art_y.png",
+        "logo": "assets/imgs/gui/logo.png",
+        "chibi": "gui/poemgame/y_sticker_1.png",
+        "chibi_hover": "gui/poemgame/y_sticker_2.png"
     },
 
     "Sam":{
@@ -173,12 +193,17 @@
             "surprised": "surprised.png"
         },
         "left": {
-            "explain": "",
-            "relaxed": ""
+            "explain": "surprised.png",
+            "relaxed": "surprised.png"
         },
         "right": {
-            "explain": "",
-            "relaxed": ""
-        }
+            "explain": "surprised.png",
+            "relaxed": "surprised.png"
+        },
+        "bio": "Sam is a college student that majors in art. He's a charismatic guy but his biggest secret is that he wishes he was a dolphin.",
+        "image": "assets/imgs/characters/Sam/happy.png",
+        "logo": "assets/imgs/gui/logo.png",
+        "chibi": null,
+        "chibi_hover": null
     }
 }

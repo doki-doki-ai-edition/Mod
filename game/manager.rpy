@@ -161,7 +161,7 @@ init python:
             renpy.log(f">>> rmvPlace func (PERSISTENT): spacezone is {spacezone}")
             raw_examples = level_normal if spacezone != "true" else  level_zone
 
-            
+
             bg_scenes = [s for s in Configs().bg_scenes["default"]]
             emotions = ', '.join([e for e in Configs().characters[self.character_name.title()]['head']]) if spacezone != "true" else ""
             backgrounds = ', '.join(bg_scenes)
