@@ -167,13 +167,18 @@ label AICharacter:
         jump space_zone
 
 
+    # If the background is a default DDLC image then use images.rpa, otherwise use the custom path
+    if current_background in ["bedroom.png", "club.png", "class.png", "closet.png", "corridor.png", "house.png", "kitchen.png", "sayori_bedroom.png", "residential.png"]:
+        image _bg:
+            im.Composite((1280, 720), (0, 0), f"bg/{current_background}")
+        scene _bg
+    else:
+        image custom_bg:
+            im.Composite((1280, 720), (0, 0), f"assets/imgs/bg/{current_background}")
+        scene custom_bg
 
-    
-    image _bg:
-        "bg/[current_background]"
-    scene _bg
 
-
+    # If the character is a default DDLC sprite then use images.rpa, otherwise use the custom path
     if current_char in ["monika", "sayori", "natsuki", "yuri"]:
         image basic:
             im.Composite((960, 960), (0, 0), f"{current_char}/{current_left}", (0, 0), f"{current_char}/{current_right}", (0, 0), f"{current_char}/{current_head}")
@@ -181,7 +186,7 @@ label AICharacter:
         image full_sprite:
             im.Composite((960, 960), (0, 0), f"{current_char}/{current_head}")
             uppies
-            
+
     else:
         image custom_basic:
             im.Composite((960, 960), (0, 0), f"assets/imgs/characters/{current_char_title}/{current_left}", (0, 0), f"assets/imgs/characters/{current_char_title}/{current_right}", (0, 0), f"assets/imgs/characters/{current_char_title}/{current_head}")
@@ -276,12 +281,19 @@ label AICharacter:
             show screen error_popup(message=final_msg)
         else:
 
-            image _bg:
-                "bg/[current_background]"
-            scene _bg
 
-            
+            # If the background is a default DDLC image then use images.rpa, otherwise use the custom path
+            if current_background in ["bedroom.png", "club.png", "class.png", "closet.png", "corridor.png", "house.png", "kitchen.png", "sayori_bedroom.png", "residential.png"]:
+                image _bg:
+                    im.Composite((1280, 720), (0, 0), f"bg/{current_background}")
+                scene _bg
+            else:
+                image custom_bg:
+                    im.Composite((1280, 720), (0, 0), f"assets/imgs/bg/{current_background}")
+                scene custom_bg
 
+
+            # If the character is a default DDLC sprite then use images.rpa, otherwise use the custom path
             if current_char in ["monika", "sayori", "natsuki", "yuri"]:
                 image basic:
                     im.Composite((960, 960), (0, 0), f"{current_char}/{current_left}", (0, 0), f"{current_char}/{current_right}", (0, 0), f"{current_char}/{current_head}")
@@ -289,7 +301,7 @@ label AICharacter:
                 image full_sprite:
                     im.Composite((960, 960), (0, 0), f"{current_char}/{current_head}")
                     uppies
-
+                
             else:
                 image custom_basic:
                     im.Composite((960, 960), (0, 0), f"assets/imgs/characters/{current_char_title}/{current_left}", (0, 0), f"assets/imgs/characters/{current_char_title}/{current_right}", (0, 0), f"assets/imgs/characters/{current_char_title}/{current_head}")
