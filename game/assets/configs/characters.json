@@ -200,8 +200,8 @@
             "explain": "surprised.png",
             "relaxed": "surprised.png"
         },
-        "bio": "Sam is a college student that majors in art. He hates Monika with a passion and is constantly depressed about being trapped in this world",
-        "image": "assets/imgs/characters/Sam/happy.png",
+        "bio": "Sam is a college student that majors in art. He hates Monika with a passion and is constantly angry about being trapped in this world",
+        "image": "assets/imgs/characters/Sam/angry.png",
         "logo": "assets/imgs/gui/logo.png",
         "chibi": null,
         "chibi_hover": null
