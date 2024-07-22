@@ -27,17 +27,6 @@ To setup the mod just drag the contents into the main ddlc folder:
 
 **Overview:** Ollama is an open-source project that allows people to setup local language models on their machine in a far more user friendly way. They have both uncensored and censored models and the models are quantized (compressed) to run on low-end devices.
 
-**Pros**
-- Run models locally on your machine
-- Easy to setup
-- Privacy: Even if your internet is off, it'll still work
-- Uncensored: Freedom to say whatever
-
-
-**Cons**
-- Very Slow (depending on your hardware)
-- Quality isn't that great especially compared to what some APIs offer
-
 
 **Let's Start!**
 - Go to https://ollama.com/download
