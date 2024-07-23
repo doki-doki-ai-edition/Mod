@@ -208,7 +208,7 @@ You should be done with this section now! The whole file should look like this n
 ```
 
 
-### prompt_template.json
+### Custom Prompts
 
 - go to `game\assets\prompts\custom_prompts`
 - Add the name of the character you want
