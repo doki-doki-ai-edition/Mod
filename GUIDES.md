@@ -1,4 +1,4 @@
-# Change character sprite
+# Add character sprite
 
 **When adding a new character do the following**
 
@@ -234,7 +234,7 @@ You should be done with this section now! The whole file should look like this n
 
 
 
-# Default Backgrounds
+# Add Default Backgrounds
 
 **When adding a new background do the following**
 
