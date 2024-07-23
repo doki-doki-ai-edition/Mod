@@ -99,9 +99,21 @@ init python:
 
         @property
         def characters(self):
+
+            dir_path = config.basedir + "/game/assets/configs/custom_characters"
+            combined_characters = {}
+
+            for filename in os.listdir(dir_path):
+                if filename.endswith('.json'):
+                    with open(os.path.join(dir_path, filename), 'r') as f:
+                        data = json.load(f)
+                        combined_characters.update(data)
+
             with open(f'{config.basedir}/game/assets/configs/characters.json', 'r') as f:
                 chars = json.load(f)
-            return chars
+                combined_characters.update(chars)
+            return combined_characters
+
 
         def body_types(self, name):
             name = name.title()
@@ -146,7 +158,7 @@ init python:
 
         @property
         def getCustomPrompts(self):
-            dir_path = config.basedir + "/game/assets/prompts/custom prompts"
+            dir_path = config.basedir + "/game/assets/prompts/custom_prompts"
             combined_prompts = {}
 
             for filename in os.listdir(dir_path):

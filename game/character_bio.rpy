@@ -15,8 +15,18 @@ init -10 python:
 
 
     def selection_list():
+        dir_path = config.basedir + "/game/assets/configs/custom_characters"
+        chars = {}
+
+        for filename in os.listdir(dir_path):
+            if filename.endswith('.json'):
+                with open(os.path.join(dir_path, filename), 'r') as f:
+                    data = json.load(f)
+                    chars.update(data)
+
         with open(f'{config.basedir}/game/assets/configs/characters.json', 'r') as f:
-            chars = json.load(f)
+            default_chars = json.load(f)
+            chars.update(default_chars)
 
         bio_list = []
         for name in chars:
