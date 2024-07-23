@@ -263,6 +263,7 @@ init python:
             if spacezone == "true":
                 if not response.startswith("[CONTENT]"):
                     return "[CONTENT] Hmm..."
+                return response
 
 
             if "[SCENE]" not in response or "[FACE]" not in response or "[BODY]" not in response or "[CONTENT]" not in response:
