@@ -53,6 +53,14 @@ This should be roughly 4.7 gigabytes and once it's done installing you can run t
 Yes. Your chats are completely localized on your machine, even if you turn your internet off, it'll still work.
 
 
+## Does this use chatgpt?
+
+No. No paid APIs are used in the mod.
+
+## Will it delete my files
+
+No. The fangame in the video is different from the mod and it doesn't have the ability to execute code on your machine. I also don't plan on doing this, since that's basically just malware.
+
 ## Are the models uncensored
 
 It depends on what model you're using. You can go to https://ollama.com/library to find uncensored models but they may not follow the system prompt as well which would cause the game to not function correctly.
