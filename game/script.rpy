@@ -86,7 +86,6 @@ label AICharacter:
     $ current_right = None
     $ current_background = None
     $ zone_type = None
-    $ nc = False
 
 
 
@@ -131,7 +130,7 @@ label AICharacter:
 
         # Start generating text in a separate thread
         $ chatSetup.is_generating = True
-        $ threading.Thread(target=chatSetup.chat, args=(pathSetup, [], "{RST}")).start()
+        $ threading.Thread(target=chatSetup.chat, args=(pathSetup, [], "hello")).start()
 
         $ _history = False
         $ wait_msg = ""
@@ -168,15 +167,19 @@ label AICharacter:
         jump space_zone
 
 
+    # If the background is a default DDLC image then use images.rpa, otherwise use the custom path
+    if current_background in ["bedroom.png", "club.png", "class.png", "closet.png", "corridor.png", "house.png", "kitchen.png", "sayori_bedroom.png", "residential.png"]:
+        image _bg:
+            im.Composite((1280, 720), (0, 0), f"bg/{current_background}")
+        scene _bg
+    else:
+        image custom_bg:
+            im.Composite((1280, 720), (0, 0), f"assets/imgs/bg/{current_background}")
+        scene custom_bg
 
-    
-    image _bg:
-        "bg/[current_background]"
-    scene _bg
 
-    if resume:
-        $ last_msg = Data(path_to_user_dir=pathSetup).getLastMessageClean
-
+    # If the character is a default DDLC sprite then use images.rpa, otherwise use the custom path
+    if current_char in ["monika", "sayori", "natsuki", "yuri"]:
         image basic:
             im.Composite((960, 960), (0, 0), f"{current_char}/{current_left}", (0, 0), f"{current_char}/{current_right}", (0, 0), f"{current_char}/{current_head}")
             uppies
@@ -184,19 +187,40 @@ label AICharacter:
             im.Composite((960, 960), (0, 0), f"{current_char}/{current_head}")
             uppies
 
-        if current_head != "3a.png" and current_head != "3b.png" and current_head != "3c.png" and current_head != "3b.png" and current_head != "3d.png" and current_head != "vomit.png":
+    else:
+        image custom_basic:
+            im.Composite((960, 960), (0, 0), f"assets/imgs/characters/{current_char_title}/{current_left}", (0, 0), f"assets/imgs/characters/{current_char_title}/{current_right}", (0, 0), f"assets/imgs/characters/{current_char_title}/{current_head}")
+            uppies
+        image custom_full_sprite:
+            im.Composite((960, 960), (0, 0), f"assets/imgs/characters/{current_char_title}/{current_head}")
+            uppies
+
+
+
+
+
+    if current_char in ["monika", "sayori", "natsuki", "yuri"]:
+        if current_head not in Configs().characters[current_char_title]["full_sprites"]:
             hide full_sprite
             show basic at t11
         else:
             hide basic
             show full_sprite at t11
-
-        if current_char_title != "":
-            $ renpy.say("[current_char_title]", last_msg)
-
-
     else:
-        $ renpy.say(None, convo)
+        if current_head not in Configs().characters[current_char_title]["full_sprites"]:
+            hide custom_full_sprite
+            show custom_basic at t11
+        else:
+            hide custom_basic
+            show custom_full_sprite at t11
+        
+
+
+    if resume:
+        $ last_msg = Data(path_to_user_dir=pathSetup).getLastMessageClean
+        $ renpy.say("[current_char_title]", last_msg)
+    else:
+        $ renpy.say("[current_char_title]", convo)
 
 
     show screen home_icon_screen
@@ -252,41 +276,60 @@ label AICharacter:
         $ current_right = Data(path_to_user_dir=pathSetup).getSceneData("right_sprite")
         $ current_background = Data(path_to_user_dir=pathSetup).getSceneData("background")
 
-        if raw_msg.startswith("[SCENE]"):
-            # Narrator is speaking 
 
-            image _bg:
-                "bg/[current_background]"
-            scene _bg
-
-
-            "[final_msg]"
-        elif final_msg.startswith("<Error>"):
+        if final_msg.startswith("<Error>"):
             show screen error_popup(message=final_msg)
         else:
-            image basic:
-                im.Composite((960, 960), (0, 0), f"{current_char}/{current_left}", (0, 0), f"{current_char}/{current_right}", (0, 0), f"{current_char}/{current_head}")
-                uppies
-            image full_sprite:
-                im.Composite((960, 960), (0, 0), f"{current_char}/{current_head}")
-                uppies
 
 
-            if current_head != "3a.png" and current_head != "3b.png" and current_head != "3c.png" and current_head != "3b.png" and current_head != "3d.png" and current_head != "vomit.png":
-                hide full_sprite
-                hide chibi
-                show basic at t11
+            # If the background is a default DDLC image then use images.rpa, otherwise use the custom path
+            if current_background in ["bedroom.png", "club.png", "class.png", "closet.png", "corridor.png", "house.png", "kitchen.png", "sayori_bedroom.png", "residential.png"]:
+                image _bg:
+                    im.Composite((1280, 720), (0, 0), f"bg/{current_background}")
+                scene _bg
             else:
-                hide basic
-                hide chibi
-                show full_sprite at t11
+                image custom_bg:
+                    im.Composite((1280, 720), (0, 0), f"assets/imgs/bg/{current_background}")
+                scene custom_bg
+
+
+            # If the character is a default DDLC sprite then use images.rpa, otherwise use the custom path
+            if current_char in ["monika", "sayori", "natsuki", "yuri"]:
+                image basic:
+                    im.Composite((960, 960), (0, 0), f"{current_char}/{current_left}", (0, 0), f"{current_char}/{current_right}", (0, 0), f"{current_char}/{current_head}")
+                    uppies
+                image full_sprite:
+                    im.Composite((960, 960), (0, 0), f"{current_char}/{current_head}")
+                    uppies
+                
+            else:
+                image custom_basic:
+                    im.Composite((960, 960), (0, 0), f"assets/imgs/characters/{current_char_title}/{current_left}", (0, 0), f"assets/imgs/characters/{current_char_title}/{current_right}", (0, 0), f"assets/imgs/characters/{current_char_title}/{current_head}")
+                    uppies
+                image custom_full_sprite:
+                    im.Composite((960, 960), (0, 0), f"assets/imgs/characters/{current_char_title}/{current_head}")
+                    uppies
+
+
+
+            if current_char in ["monika", "sayori", "natsuki", "yuri"]:
+                if current_head not in Configs().characters[current_char_title]["full_sprites"]:
+                    hide full_sprite
+                    show basic at t11
+                else:
+                    hide basic
+                    show full_sprite at t11
+            else:
+                if current_head not in Configs().characters[current_char_title]["full_sprites"]:
+                    hide custom_full_sprite
+                    show custom_basic at t11
+                else:
+                    hide custom_basic
+                    show custom_full_sprite at t11
 
 
             $ renpy.say("[current_char_title]", final_msg)
 
-            if nc:
-                $ nc = False
-                $ Configs().delete_egg(f"{config.basedir}/game/assets/imgs/monika/_thumb.png")
     return
 
 

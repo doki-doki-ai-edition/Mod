@@ -12,7 +12,7 @@ define gui.show_name = False
 
 
 
-define config.version = "0.3.0-demo"
+define config.version = "1.0.0-demo"
 
 
 
@@ -196,7 +196,7 @@ init python:
     #build.classify("game/**.png", "images")
 
     build.classify("game/**.rpyc", "scripts")
-    build.classify("game/**.txt", "scripts")
+    #build.classify("game/**.txt", "scripts")
     #build.classify("game/**.chr", "scripts")
     #build.classify("game/**.wav", "audio")
     #build.classify("game/**.mp3", "audio")

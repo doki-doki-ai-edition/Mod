@@ -43,7 +43,7 @@ init python:
             return full_path
 
 
-        def chat(self, path, chathistory=[], userInput="{RST}"):
+        def chat(self, path, chathistory=[], userInput="hello"):
             msg = AIManager(
                 character_name=self.character_name,
                 full_path=path,

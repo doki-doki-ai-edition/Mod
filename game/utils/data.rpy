@@ -2,7 +2,7 @@ init python:
     import os
     import json
     import binascii
-    import os
+
 
     class Data:
 
@@ -99,9 +99,32 @@ init python:
 
         @property
         def characters(self):
+
+            dir_path = config.basedir + "/game/assets/configs/custom_characters"
+            combined_characters = {}
+
+            for filename in os.listdir(dir_path):
+                if filename.endswith('.json'):
+                    with open(os.path.join(dir_path, filename), 'r') as f:
+                        data = json.load(f)
+                        combined_characters.update(data)
+
             with open(f'{config.basedir}/game/assets/configs/characters.json', 'r') as f:
                 chars = json.load(f)
-            return chars
+                combined_characters.update(chars)
+            return combined_characters
+
+
+        def body_types(self, name):
+            name = name.title()
+            raw_bodies = [b for b in self.characters[name]["left"]] + [b for b in self.characters[name]["right"]]
+            bodies = []
+            for part in raw_bodies:
+                if part not in raw_bodies:
+                    bodies.append(part)
+
+            string = " and ".join(bodies)
+            return string
 
 
         def listCharEmotes(self, name):
@@ -134,6 +157,19 @@ init python:
             return example
 
         @property
+        def getCustomPrompts(self):
+            dir_path = config.basedir + "/game/assets/prompts/custom_prompts"
+            combined_prompts = {}
+
+            for filename in os.listdir(dir_path):
+                if filename.endswith('.json'):
+                    with open(os.path.join(dir_path, filename), 'r') as f:
+                        data = json.load(f)
+                        combined_prompts.update(data)
+
+            return combined_prompts
+
+        @property
         def getReminder(self):
             with open(config.basedir + "/game/assets/prompts/reminder.json", "r") as f:
                 reminder = json.load(f)
@@ -145,5 +181,15 @@ init python:
                 purgatory_lines = json.load(f)
             return purgatory_lines
 
+        @property
+        def format(self):
+            with open(config.basedir + "/game/assets/prompts/prompt_format.json", "r") as f:
+                format = json.load(f)
+            return format
+
+        @property
+        def whitelist_purgatory(self):
+            names = ["monika"]
+            return names
 
 

@@ -1165,12 +1165,6 @@ screen llm_model_config_screen():
                         textbutton _("Change") action Show(screen="seed_window_popup", message="Enter a number", ok_action=Function(FinishEnterSeed))
                         textbutton _("Info") action [Show(screen="info_seed_popup", message="Seed", ok_action=Hide("info_seed_popup")), Return(), renpy.hide_screen("preferences"), renpy.hide_screen("llm_model_config_screen")]
 
-                    label _(f"Default Prompt: {prompt_header}")
-
-                    hbox:
-                        textbutton _("Change") action Show(screen="prompt_header_input", message="Enter an existing prompt header (level1 or level2)", ok_action=Function(FinishEnterPromptHeader))
-                        textbutton _("Info") action [Show(screen="info_prompt_popup", message="Prompt", ok_action=Hide("info_prompt_popup")), Return(), renpy.hide_screen("preferences"), renpy.hide_screen("llm_model_config_screen")]
-
 
 
 
@@ -1608,37 +1602,6 @@ screen model_name_input(message, ok_action):
 
 
 
-screen prompt_header_input(message, ok_action):
-
-
-    modal True
-
-    zorder 200
-
-    style_prefix "confirm"
-
-    add "gui/overlay/confirm.png"
-    key "K_RETURN" action [Play("sound", gui.activate_sound), ok_action]
-
-    frame:
-
-        has vbox:
-            xalign .5
-            yalign .5
-            spacing 30
-
-        label _(message):
-            style "confirm_prompt"
-            xalign 0.5
-
-        input default "" value VariableInputValue("prompt_header")
-
-
-        hbox:
-            xalign 0.5
-            spacing 100
-
-            textbutton _("OK") action ok_action
 
 
 

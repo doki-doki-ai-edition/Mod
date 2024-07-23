@@ -1,15 +1,14 @@
 {
-    "emotes": " (Remember that the only [FACE] type responses should be: <emotes>. AND the only [BODY] type responses must be <body>. ONLY do this if <char> is speaking)",
-    "nc": "*i pull out my rooster*",
-    "generic_response": "[FACE] happy [BODY] relaxed [CONTENT] ... [END]",
+    "emotes": " (Remember that the only [FACE] type responses should be: {{emotes}}. And must only have {{body}} as [BODY] responses. ONLY do this if {{char}} is speaking)",
+    "generic_response": "[SCENE] clubroom [FACE] happy [BODY] relaxed [CONTENT] ... [END]",
     "backup_prompt": [
         {
           "role": "user",
-          "content": "{RST}"
+          "content": "continue"
         },
         {
           "role": "assistant",
-          "content": "[SCENE] outside [NARRATION] You wake up in a familiar place.  [END]"
+          "content": "[SCENE] clubroom [FACE] happy [BODY] relaxed [CONTENT] Hey [END]"
         }
     ],
     "backup_prompt_space": [

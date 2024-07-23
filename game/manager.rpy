@@ -13,7 +13,6 @@ init python:
     with open(config.basedir + "/game/assets/prompts/prompt_templates.json", "r") as f:
         prompt = json.load(f)
 
-    retrycount = 3
 
     class AIManager():
         def __init__(self, character_name, chathistory, full_path, resume=False):
@@ -122,12 +121,12 @@ init python:
                 except AttributeError:
                     return None
 
-            char = getContent('[CHAR]', '[CONTENT]')
+            char = getContent('[CHAR]', '[CONTENT]') # Currently unused, just a placeholder once the usage of multiple chars is implemented
             face = getContent('[FACE]', '[BODY]')
             body = getContent('[BODY]', '[CONTENT]')
-            scene = getContent('[SCENE]', '[NARRATION]')
+            scene = getContent('[SCENE]', '[FACE]')
 
-            reply = reply.split('[END]')[0]
+            reply = reply.split('[END]')[0] # remove anything after [END]
             if scene:
                 # Sometimes a model responds w/ text before [SCENE]
                 # This removes any text before and only keeps [SCENE] and
@@ -140,8 +139,6 @@ init python:
                 # If the character replies with smthing like *giggles* remove it.
                 # (and yes im using regex here)
                 reply = re.sub(r'\*.*?\*', '', reply)
-            elif "[NARRATION]" in reply:
-                reply = reply.split("[NARRATION]")[1].strip()
             else:
                 # Typically this means that the model didnt return a proper content field
                 reply = "ERROR"
@@ -152,26 +149,43 @@ init python:
 
         def removePlaceholders(self):
             """remove placeholders in json files"""
-            level_normal = Info().getExamplePrompts[f"{persistent.prompt_header}_{self.character_name}"]
-            level_zone = Info().getExamplePrompts[f"{persistent.prompt_header}_{self.character_name}_purgatory"]
+            level_zone = ""
+            
+            try: level_normal = Info().getExamplePrompts[f"{self.character_name}"]
+            except KeyError: level_normal = Info().getCustomPrompts[f"{self.character_name}"]
+
+
+            if self.character_name in Info().whitelist_purgatory:
+                level_zone = Info().getExamplePrompts[f"{self.character_name}_purgatory"]
+
             spacezone = self.dbase.getSceneData("zone")
 
             renpy.log(f">>> rmvPlace func: spacezone is {spacezone}")
             renpy.log(f">>> rmvPlace func (PERSISTENT): spacezone is {spacezone}")
             raw_examples = level_normal if spacezone != "true" else  level_zone
 
+
+            bg_scenes = [s for s in Configs().bg_scenes["default"]]
+            emotions = ', '.join([e for e in Configs().characters[self.character_name.title()]['head']]) if spacezone != "true" else ""
+            backgrounds = ', '.join(bg_scenes)
+
             if spacezone != "true":
-                bg_scenes = [s for s in Configs().bg_scenes["default"]] + [s for s in Configs().bg_scenes["checks"]]
-                emotions = ', '.join([e for e in Configs().characters[self.character_name.title()]['head']])
-                backgrounds = ', '.join(bg_scenes)
+                string = raw_examples[0]['content'].replace("{{format}}", Info().format["roleplay"])
+            else:
+                string = raw_examples[0]['content'].replace("{{format}}", Info().format["purgatory"])
 
-                string = raw_examples[0]['content'].replace("<name>", persistent.playername)
-                string = string.replace("<char>", self.character_name)
-                string = string.replace("<emotions>", emotions)
-                string = string.replace("<backgrounds>", backgrounds)
+            string = string.replace("{{char}}", self.character_name)
+            string = string.replace("{{emotes}}", emotions)
+            string = string.replace("{{scenes}}", backgrounds)
+            string = string.replace("{{user}}", persistent.playername)
+            string = string.replace("{{body}}", Configs().body_types(self.character_name.title()))
 
-                string = raw_examples[0]['content'] = string
-                raw_examples[0]['content'] = string
+            string = raw_examples[0]['content'] = string
+            raw_examples[0]['content'] = string
+
+            if spacezone != "true":
+                with open(self.full_path + f"/full_history.json", 'w') as f:
+                    json.dump(raw_examples + self.chathistory, f, indent=2)
 
             return raw_examples
 
@@ -221,19 +235,6 @@ init python:
 
 
 
-        def retryPrompt(self, reply, current_emotion, current_body):
-            """If the generated response doesnt use the emotions specified in the characters.json list
-            eg. '[FACE] super shy' then remind the ai to only use what's in
-            the list and redo the response
-            """
-            if current_emotion and current_body:
-                if (reply.startswith("[FACE]")) and (current_emotion not in Configs().characters[self.character_name.title()]["head"]) or ("explain" not in current_body and "relaxed" not in current_body and "excited" not in current_body):
-                    print("<<retrying>>")
-                    return True
-            return False
-
-
-
         def checkForError(self, reply):
             """If An error happened with the API, return the Error"""
             try:
@@ -244,24 +245,11 @@ init python:
             except TypeError:
                 return False
 
-        def checkForRepeat(self):
-            """Checks if {RST} is sent more than once and falls back on a
-            default prompt"""
-            spacezone = self.dbase.getSceneData("zone")
-            if  spacezone != "true":
-                if len(self.chathistory) >=4 and len(self.chathistory) <= 8:
-                    amnt = 0
-                    for rst in self.chathistory:
-                        if "{RST}" in rst['content']:
-                            amnt += 1
-
-                    if amnt >= 2:
-                        self.chathistory = Info().getReminder['backup_prompt']
 
 
 
         def checkForPurgatory(self):
-            """This functions as a hotfix for a bug with the LLM. This puts the prompt template into the
+            """This puts the prompt template into the
             chathistory file instead of having it be empty."""
             spacezone = self.dbase.getSceneData("zone")
             if spacezone == "true":
@@ -270,14 +258,29 @@ init python:
 
 
         def checkForBadFormat(self, response):
-            """It writes a default narration if the ai generates an incorrectly formatted response 
-            Only runs once when the realm is first loaded."""
+            """attempts to fix incorrectly formatted responses"""
             spacezone = self.dbase.getSceneData("zone")
-            if spacezone == "true": return response
+            if spacezone == "true":
+                if not response.startswith("[CONTENT]"):
+                    return "[CONTENT] Hmm..."
 
-            if self.dbase.getSceneData("character") == "":
-                if "[SCENE]" not in response or "[NARRATION]" not in response:
-                    response = "[SCENE] outside [NARRATION] You wake up in a familiar place. [END]"
+
+            if "[SCENE]" not in response or "[FACE]" not in response or "[BODY]" not in response or "[CONTENT]" not in response:
+                response = "[SCENE] clubroom [FACE] happy [BODY] relaxed [CONTENT] ... [END]"
+
+            if "[BODY]" in response:
+                body = response.split("[BODY]")[1].split("[CONTENT]")[0].strip()
+
+                if body not in Configs().body_types(self.character_name):
+                    response = response.replace(body, "relaxed")
+
+            if "[FACE]" in response:
+                face = response.split("[FACE]")[1].split("[BODY]")[0].strip()
+                emotions = ', '.join([e for e in Configs().characters[self.character_name.title()]['head']])
+
+                if face not in emotions:
+                    random_face = random.choice([e for e in Configs().characters[self.character_name.title()]['head']])
+                    response = response.replace(face, random_face)
             return response
 
 
@@ -295,8 +298,8 @@ init python:
             renpy.log(f">>> ai response func: spacezone is {spacezone}")
             if spacezone != "true":
                 emotions = ', '.join([e for e in Configs().characters[self.character_name.title()]['head']])
-                parts = ', '.join([e for e in Configs().characters[self.character_name.title()]['left']]) # "explain" and "relaxed"
-                reminder = "" if self.retrying == False else Info().getReminder["emotes"].replace("<emotes>", emotions).replace("<body>", parts).replace("<char>", self.character_name)
+                parts =  Configs().body_types(self.character_name.title())
+                reminder = "" if self.retrying == False else Info().getReminder["emotes"].replace("{{emotes}}", emotions).replace("{{body}}", parts).replace("{{char}}", self.character_name)
 
             self.checkForPurgatory()
 
@@ -309,12 +312,6 @@ init python:
             contextAndUserMsg = examples + self.chathistory if spacezone != "true" else self.chathistory
 
             response = self.modelChoices(contextAndUserMsg)
-            
-            if response.startswith("[FACE]"):
-                self.dbase.updateSceneData("character", self.character_name)
-                if "[BODY]" not in response:
-                    response = Info().getReminder["generic_response"]
-
             response = self.checkForBadFormat(response)
 
             
@@ -325,18 +322,6 @@ init python:
 
             reply, _, face, body, scene = self.removeKeywords(response)
 
-            # If the AI responds w/ an emotion/body not listed, redo the response
-            if spacezone != "true":
-                global retrycount
-                self.retrying = self.retryPrompt(response, face, body)
-                if self.retrying:
-                    retrycount -= 1
-                    if retrycount <= 0:
-                        self.retrying = False
-                        retrycount = 3
-                    else:
-                        self.chathistory.pop()
-                        return self.ai_response(userInput)
 
             # Log AI input
             response = self.safeResponse(response)
