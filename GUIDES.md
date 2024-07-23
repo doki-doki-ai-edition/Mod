@@ -5,7 +5,7 @@
 
 - add new folder w/ sprites
 - add new name to characters.json
-- add new name to `game\assets\prompts\custom prompts`
+- add new name to `game\assets\prompts\custom_prompts`
 
 
 
@@ -23,21 +23,13 @@
 
 ### character.json
 
-- go to `game\assets\configs\characters.json`
-- Copy Yuri's template (the last thing in the file) and paste it in a separate line
-- Rename it to the character you want
+- Go to `game\assets\configs\custom_characters`
+- Make a `.json` file with the title of your character. In my case it's "sam"
 
-<img src="game/assets/imgs/help_page/char json.png">
+<img src="game/assets/imgs/help_page/sam folder json.png">
 
-Make sure you add a COMMA after the bracket above the character u just added
+- Copy this template (replace "Sam" with your own character name)
 
-<img src="game/assets/imgs/help_page/char json comma.png">
-
-
-Now replace the default emotions in the "head" section with the ones you actually want your character to display.
-
-The emotions that don't end in `.png` is what the AI will see.
-Just add the .png sprites you have in your characters folder.
 
 ```json
 
@@ -57,20 +49,29 @@ Just add the .png sprites you have in your characters folder.
             "surprised": "surprised.png"
         },
         "left": {
-            "explain": "2l.png",
-            "relaxed": "1l.png"
+            "explain": "",
+            "relaxed": ""
         },
         "right": {
-            "explain": "2r.png",
-            "relaxed": "1r.png"
+            "explain": "",
+            "relaxed": ""
         },
-        "bio": "When she's not buried in the world of books, Yuri shyly brings an air of serenity to wherever she goes, sometimes accompanied by a hot cup of tea. Trust in her eyes goes a long way, so be sure to never break hers.\n\nHeight: 5'5'' / 165.1cm\nWeight: 130lbs / 59kg\nEye Color: Purple\nEthnicity: Japan",
-        "image": "gui/menu_art_y.png",
+        "bio": "",
+        "image": "",
         "logo": "assets/imgs/gui/logo.png",
-        "chibi": "gui/poemgame/y_sticker_1.png",
-        "chibi_hover": "gui/poemgame/y_sticker_2.png"
+        "chibi": null,
+        "chibi_hover": null
     }
 ```
+
+Make sure the name is capitalized. For example, notice how it's "Sam" and not "sam".
+
+Now replace the default emotions in the "head" section with the ones you actually want your character to display.
+
+The emotions that you see ending with `.png` is the character sprites we added in 
+`game\assets\imgs\characters\Sam`
+
+
 
 If your sprites are just 1 image combined together then add all of the emotions in "head" into `full_sprites` as well.
 
@@ -103,23 +104,23 @@ If your sprites are just 1 image combined together then add all of the emotions 
             "surprised": "surprised.png"
         },
         "left": {
-            "explain": "2l.png",
-            "relaxed": "1l.png"
+            "explain": "",
+            "relaxed": ""
         },
         "right": {
-            "explain": "2r.png",
-            "relaxed": "1r.png"
+            "explain": "",
+            "relaxed": ""
         },
-        "bio": "When she's not buried in the world of books, Yuri shyly brings an air of serenity to wherever she goes, sometimes accompanied by a hot cup of tea. Trust in her eyes goes a long way, so be sure to never break hers.\n\nHeight: 5'5'' / 165.1cm\nWeight: 130lbs / 59kg\nEye Color: Purple\nEthnicity: Japan",
-        "image": "gui/menu_art_y.png",
+        "bio": "",
+        "image": "",
         "logo": "assets/imgs/gui/logo.png",
-        "chibi": "gui/poemgame/y_sticker_1.png",
-        "chibi_hover": "gui/poemgame/y_sticker_2.png"
+        "chibi": null,
+        "chibi_hover": null
     }
 ```
 
 
-In the "left" and "right" section just change the `.png` to any `.png` in your character sprite folder, it doesn't matter.
+In the "left" and "right" section just add any `.png` in your character sprite folder, it doesn't matter.
 
 
 ```json
@@ -159,7 +160,7 @@ The "chibi" and "chibi_hover" should be set as `null` unless you have a chibi ve
     "chibi_hover": null
 ```
 
-You should be done with this section now! The whole thing should look like this now.
+You should be done with this section now! The whole file should look like this now.
 
 ```json
 
@@ -209,7 +210,7 @@ You should be done with this section now! The whole thing should look like this 
 
 ### prompt_template.json
 
-- go to `game\assets\prompts\custom prompts`
+- go to `game\assets\prompts\custom_prompts`
 - Add the name of the character you want
 
 <img src="game/assets/imgs/help_page/folder char name.png">
