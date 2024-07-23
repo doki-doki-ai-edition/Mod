@@ -196,7 +196,7 @@ init python:
     #build.classify("game/**.png", "images")
 
     build.classify("game/**.rpyc", "scripts")
-    build.classify("game/**.txt", "scripts")
+    #build.classify("game/**.txt", "scripts")
     #build.classify("game/**.chr", "scripts")
     #build.classify("game/**.wav", "audio")
     #build.classify("game/**.mp3", "audio")
