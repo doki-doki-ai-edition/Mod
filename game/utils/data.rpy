@@ -145,6 +145,19 @@ init python:
             return example
 
         @property
+        def getCustomPrompts(self):
+            dir_path = config.basedir + "/game/assets/prompts/custom prompts"
+            combined_prompts = {}
+
+            for filename in os.listdir(dir_path):
+                if filename.endswith('.json'):
+                    with open(os.path.join(dir_path, filename), 'r') as f:
+                        data = json.load(f)
+                        combined_prompts.update(data)
+
+            return combined_prompts
+
+        @property
         def getReminder(self):
             with open(config.basedir + "/game/assets/prompts/reminder.json", "r") as f:
                 reminder = json.load(f)

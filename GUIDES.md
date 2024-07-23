@@ -5,7 +5,7 @@
 
 - add new folder w/ sprites
 - add new name to characters.json
-- add new name to prompt_templates.json
+- add new name to `game\assets\prompts\custom prompts`
 
 
 
@@ -209,11 +209,27 @@ You should be done with this section now! The whole thing should look like this 
 
 ### prompt_template.json
 
-- go to `game\assets\prompts\prompt_templates.json`
+- go to `game\assets\prompts\custom prompts`
 - Add the name of the character you want
-- Reference the structure you see in the file.
-- Add background information about your character
-- Make sure at the end of your message, you have "{{format}}" just like the other things in the file.
+
+<img src="game/assets/imgs/help_page/folder char name.png">
+
+- Create a format that looks like this (with your own backstory)
+
+```json
+
+{
+    "sam": [
+        {
+            "role": "system",
+            "content": "BACKSTORY \nSam is a college student that majors in art. He hates Monika with a passion and is constantly angry about being trapped in this world. {{format}}"
+        }
+    ]
+}
+```
+
+- Make sure the name of your character is all **lowercased.** And make sure that at the end of your BACKSTORY you have `{{format}}`
+
 
 
 
@@ -221,10 +237,10 @@ You should be done with this section now! The whole thing should look like this 
 
 **When adding a new background do the following**
 
-- add new background image in `game\images\bg`
+- add new background image in `game\assets\imgs\bg`
 - add new background name in `game\assets\configs`
 
-Once you've added the images you want in `game\images\bg`
+Once you've added the images you want in `game\assets\imgs\bg`
 
 - go to `game\assets\configs`
 - remove the default background images (if you want, you don't have to)

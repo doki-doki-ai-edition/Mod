@@ -149,9 +149,12 @@ init python:
 
         def removePlaceholders(self):
             """remove placeholders in json files"""
-            level_normal = Info().getExamplePrompts[f"{self.character_name}"]
             level_zone = ""
             
+            try: level_normal = Info().getExamplePrompts[f"{self.character_name}"]
+            except KeyError: level_normal = Info().getCustomPrompts[f"{self.character_name}"]
+
+
             if self.character_name in Info().whitelist_purgatory:
                 level_zone = Info().getExamplePrompts[f"{self.character_name}_purgatory"]
 
