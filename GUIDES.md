@@ -3,8 +3,8 @@
 **When adding a new character do the following**
 
 
-- add new folder w/ sprites
-- add new name to characters.json
+- add new folder w/ sprites at `game\assets\imgs\characters`
+- add new name to `game\assets\configs\custom_characters`
 - add new name to `game\assets\prompts\custom_prompts`
 
 
@@ -229,7 +229,7 @@ You should be done with this section now! The whole file should look like this n
 }
 ```
 
-- Make sure the name of your character is all **lowercased.** And make sure that at the end of your BACKSTORY you have `{{format}}`
+- Make sure the **name** of your character is all **lowercased.** And make sure that at the end of your BACKSTORY you have `{{format}}`
 
 
 
