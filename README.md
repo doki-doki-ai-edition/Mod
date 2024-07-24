@@ -61,6 +61,12 @@ No. No paid APIs are used in the mod.
 
 No. The fangame in the video is different from the mod and it doesn't have the ability to execute code on your machine. I also don't plan on doing this, since that's basically just malware.
 
+## Why does it take forever to load?
+
+2 Main reasons for this.
+1. An error happened and you should check your `log.txt` file in the main folder and send it in #support
+2. Hardware limitation. If you don't have a good enough device then it's going to take a while to respond.
+
 ## Are the models uncensored
 
 It depends on what model you're using. You can go to https://ollama.com/library to find uncensored models but they may not follow the system prompt as well which would cause the game to not function correctly.
