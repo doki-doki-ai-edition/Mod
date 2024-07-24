@@ -179,6 +179,13 @@ label space_zone:
             hide monika_scare
             show monika_bg
             show monika_bg_highlight
-            $ renpy.say("[purg_name_title]", final_msg)
+
+            $ messages = string_splitter(final_msg, 255)
+
+            while messages:
+                $ message = messages.pop()
+                if len(messages) > 0:
+                    $ message += '...'
+                $ renpy.say("[purg_name_title]", message)
 
     return

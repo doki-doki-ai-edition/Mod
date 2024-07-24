@@ -9,6 +9,20 @@ label start:
         config.autosave_on_quit = False
         config.autosave_on_choice = False
 
+        def string_splitter(str, length):
+            split_sentence = str.split()
+            line = ''
+            wrapped_sentence = []
+            for word in split_sentence:
+                if len(line+word) < length:
+                    line += word + ' '
+                else:
+                    wrapped_sentence.append(line.strip())
+                    line = word + ' '
+            wrapped_sentence.append(line.strip())
+            wrapped_sentence.reverse()
+            return wrapped_sentence
+
     $ input_popup_gui = True
 
     stop music fadeout 0.5
@@ -327,8 +341,13 @@ label AICharacter:
                     hide custom_basic
                     show custom_full_sprite at t11
 
+            $ messages = string_splitter(final_msg, 255)
 
-            $ renpy.say("[current_char_title]", final_msg)
+            while messages:
+                $ message = messages.pop()
+                if len(messages) > 0:
+                    $ message += '...'
+                $ renpy.say("[current_char_title]", message)
 
     return
 
