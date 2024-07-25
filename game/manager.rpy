@@ -313,6 +313,7 @@ init python:
             contextAndUserMsg = examples + self.chathistory if spacezone != "true" else self.chathistory
 
             response = self.modelChoices(contextAndUserMsg)
+            response = ' '.join(response.split())   # Get rid of any extra spaces
             response = self.checkForBadFormat(response)
 
             
