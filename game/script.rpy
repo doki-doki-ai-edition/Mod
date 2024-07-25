@@ -214,14 +214,14 @@ label AICharacter:
 
 
     if current_char in ["monika", "sayori", "natsuki", "yuri"]:
-        if current_head not in Configs().characters[current_char_title]["full_sprites"]:
+        if Info().full_sprites_check(current_char_title, current_head) != True:
             hide full_sprite
             show basic at t11
         else:
             hide basic
             show full_sprite at t11
     else:
-        if current_head not in Configs().characters[current_char_title]["full_sprites"]:
+        if Info().full_sprites_check(current_char_title, current_head) != True:
             hide custom_full_sprite
             show custom_basic at t11
         else:
@@ -327,14 +327,14 @@ label AICharacter:
 
 
             if current_char in ["monika", "sayori", "natsuki", "yuri"]:
-                if current_head not in Configs().characters[current_char_title]["full_sprites"]:
+                if Info().full_sprites_check(current_char_title, current_head) != True:
                     hide full_sprite
                     show basic at t11
                 else:
                     hide basic
                     show full_sprite at t11
             else:
-                if current_head not in Configs().characters[current_char_title]["full_sprites"]:
+                if Info().full_sprites_check(current_char_title, current_head) != True:
                     hide custom_full_sprite
                     show custom_basic at t11
                 else:

@@ -96,7 +96,7 @@ init python:
             with open(f'{config.basedir}/game/assets/configs/bg_scenes.json', 'r') as f:
                 bg_scenes = json.load(f)
             return bg_scenes
-
+        
         @property
         def characters(self):
 
@@ -191,5 +191,16 @@ init python:
         def whitelist_purgatory(self):
             names = ["monika"]
             return names
+
+
+        def full_sprites_check(self, name, current_head_sprite):
+            full_sprites = []
+
+            for sprite in Configs().characters[name]["full_sprites"]:
+                full_sprites.append(Configs().characters[name]["head"][sprite])
+
+            if current_head_sprite in full_sprites:
+                return True
+            return False
 
 
