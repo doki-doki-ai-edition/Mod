@@ -244,7 +244,13 @@ label AICharacter:
 
     if resume:
         $ last_msg = Data(path_to_user_dir=pathSetup).getLastMessageClean
-        $ renpy.say("[current_char_title]", last_msg)
+        $ messages = string_splitter(last_msg, 255)
+
+        while messages:
+            $ message = messages.pop()
+            if len(messages) > 0:
+                $ message += '...'
+            $ renpy.say("[current_char_title]", message)
     else:
         $ renpy.say("[current_char_title]", convo)
 
