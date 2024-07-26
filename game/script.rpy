@@ -10,18 +10,30 @@ label start:
         config.autosave_on_choice = False
 
         def string_splitter(str, length):
-            split_sentence = str.split()
-            line = ''
-            wrapped_sentence = []
-            for word in split_sentence:
-                if len(line+word) < length:
-                    line += word + ' '
+            # A simple regex pattern to split text into sentences
+            sentence_endings = re.compile(r'(?<=[.!?]) +')
+            sentences = sentence_endings.split(str)
+
+            wrapped_sentences = []
+            current_part = ''
+
+            for sentence in sentences:
+                # Check if adding the current sentence would exceed the length
+                if len(current_part) + len(sentence) < length:
+                    current_part += sentence + ' '
                 else:
-                    wrapped_sentence.append(line.strip())
-                    line = word + ' '
-            wrapped_sentence.append(line.strip())
-            wrapped_sentence.reverse()
-            return wrapped_sentence
+                    # If current part is not empty, add it to wrapped sentences
+                    if current_part:
+                        wrapped_sentences.append(current_part.strip())
+                    # Start a new part
+                    current_part = sentence + ' '
+
+            # Add any remaining text to the wrapped sentences
+            if current_part.strip():
+                wrapped_sentences.append(current_part.strip())
+
+            wrapped_sentences.reverse()
+            return wrapped_sentences
 
     $ input_popup_gui = True
 
