@@ -115,6 +115,8 @@ init python:
             def getContent(start, end, reply=reply):
                 try:
                     content = reply.split(start)[1].split(end)[0].strip()
+                    # If the character replies with smthing like [silence] remove it.
+                    content = re.sub(r'\[.*?\]', '', content)
                     return content
                 except IndexError:
                     return None
@@ -139,6 +141,8 @@ init python:
                 # If the character replies with smthing like *giggles* remove it.
                 # (and yes im using regex here)
                 reply = re.sub(r'\*.*?\*', '', reply)
+                # If the character replies with smthing like [silence] remove it.
+                reply = re.sub(r'\[.*?\]', '', reply)
             else:
                 # Typically this means that the model didnt return a proper content field
                 reply = "ERROR"
