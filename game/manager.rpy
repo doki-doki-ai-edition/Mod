@@ -115,8 +115,6 @@ init python:
             def getContent(start, end, reply=reply):
                 try:
                     content = reply.split(start)[1].split(end)[0].strip()
-                    # If the character replies with smthing like [silence] remove it.
-                    content = re.sub(r'\[.*?\]', '', content)
                     return content
                 except IndexError:
                     return None
