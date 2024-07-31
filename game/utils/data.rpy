@@ -31,29 +31,8 @@ init python:
             with open(self.path_to_user_dir + "/chathistory.json", 'r') as f:
                 reply = json.load(f)[-1]["content"]
 
-            def getContent(start, end, reply=reply):
-                try:
-                    content = reply.split(start)[1].split(end)[0].strip()
-                    return content
-                except IndexError:
-                    return None
-                except AttributeError:
-                    return None
-
-            char = getContent('[CHAR]', '[CONTENT]')
-            face = getContent('[FACE]', '[BODY]')
-            body = getContent('[BODY]', '[CONTENT]')
-            scene = getContent('[SCENE]', '[NARRATION]')
-
             reply = reply.replace('[END]', '')
-
-            if "[CONTENT]" in reply:
-                reply = reply.split("[CONTENT]")[1].strip()
-            elif "[NARRATION]" in reply:
-                reply = reply.split("[NARRATION]")[1].strip()
-            else:
-                # Typically this means that the model didnt return a proper content field
-                reply = "ERROR"
+            reply = reply.split("[CONTENT]")[1].strip()
 
             return reply
 
