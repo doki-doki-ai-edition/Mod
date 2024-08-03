@@ -35,7 +35,9 @@ init python:
             try:
                 response.raise_for_status()
                 data = response.json()
-                result = data["choices"][0]["message"]["content"] 
+                result = data["choices"][0]["message"]["content"]
+
+                renpy.log(f"RAW RESPONSE: {result}")
 
                 if "[END]" not in result:
                     return result.strip() + " [END]"

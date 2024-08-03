@@ -332,8 +332,16 @@ screen input(prompt):
             xsize 774
             ypos 55
 
-            text prompt style "input_prompt"
-            input id "input"
+            if persistent.in_edit_prompt:
+                viewport:
+                    scrollbars "vertical"
+                    mousewheel True
+                    draggable True
+                    text prompt style "input_prompt"
+                    input id "input"
+            else:
+                text prompt style "input_prompt"
+                input id "input"
 
     # window:
 

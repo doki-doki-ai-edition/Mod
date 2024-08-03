@@ -124,6 +124,28 @@ init python:
             try: os.remove(path)
             except: pass
 
+        def update_character_backstory(self, character, backstory):
+            dir_path = config.basedir + "/game/assets/configs/custom_characters"
+            data = ""
+
+            for filename in os.listdir(dir_path):
+                if filename.endswith('.json'):
+                    with open(os.path.join(dir_path, filename), 'r') as f:
+                        data = json.load(f)
+
+            path = "/game/assets/prompts/prompt_templates.json" if character not in data else f"/game/assets/configs/custom_characters/{character}.json"
+
+            with open(config.basedir + path, "r") as f:
+                template = json.load(f)
+
+            renpy.log(f"edited path is: {path}")    
+
+            # This changes the content section of the template dictionary to the "backstory" var
+            template[character][0]["content"] = f"BACKSTORY {backstory}"
+
+            with open(config.basedir + path, "w") as f:
+                json.dump(template, f, indent=2)
+
 
 
 

@@ -33,6 +33,10 @@ init -10 python:
             bio_list.append(BioCharacter(name, chars[name]["bio"], chars[name]["image"], chars[name]["logo"], chars[name]["chibi"], chars[name]["chibi_hover"]))
         return bio_list
 
+
+    def change_backstory():
+        renpy.call_in_new_context("custom_backstory_label")
+
 # Example character data
 define characters = selection_list()
 
@@ -141,10 +145,11 @@ screen bio_screen:
         xalign 5
         yalign 0.6
         padding (790, 455, 160, 10)
-        vbox:
+        hbox:
             xfill True
             box_wrap True
-            textbutton "     Begin" action [SetVariable("character_name", current_character.name.lower()), Hide("bio_screen"), Jump("nameWorld_label")] style "return_button"
+            textbutton "Begin" action [SetVariable("character_name", current_character.name.lower()), Hide("bio_screen"), Jump("nameWorld_label")] style "return_button"
+            textbutton "Edit" action [SetVariable("character_name", current_character.name.lower()), SetVariable("in_edit_prompt", True), Function(change_backstory)] style "return_button"
 
 
     textbutton _("Return"):
@@ -158,7 +163,7 @@ style character_name_style:
     outlines [(4, "#000", 0, 0), (2, "#000", 2, 2)]
 
 style character_name_title is character_name_style:
-    size 45 
+    size 45
     xalign 0.5
 
 style arrows_button is gui_button

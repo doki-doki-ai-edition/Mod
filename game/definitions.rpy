@@ -1471,6 +1471,9 @@ default spacezone = None
 default persistent.purgatory = None
 default persistent.purgatory_name = None
 default persistent.first_scare = False
+default persistent.in_edit_prompt = False
+
+
 
 define _dismiss_pause = config.developer
 
