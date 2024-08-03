@@ -98,11 +98,14 @@ init python:
             name = name.title()
             raw_bodies = [b for b in self.characters[name]["left"]] + [b for b in self.characters[name]["right"]]
             bodies = []
+            body_examples = []
             for part in raw_bodies:
                 if part not in bodies:
+                    example = Info().getReminder["bodies"][part].replace("{{char}}", name)
                     bodies.append(part)
+                    body_examples.append(part + example)
 
-            string = " and ".join(bodies)
+            string = " and ".join(body_examples)
             return string
 
 

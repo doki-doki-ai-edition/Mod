@@ -20,5 +20,10 @@
         "role": "assistant",
         "content": "[CONTENT] We're alone now.  [END]"
       }
-  ]
+  ],
+  "bodies": {
+    "explain": " (used when {{char}} is explaining something)",
+    "relaxed": " ({{char}}'s default body position)",
+    "excited": " (used when {{char}} is excited)"
+  }
 }
