@@ -1,5 +1,5 @@
 label apikey_label:
-    $ apikey = renpy.input("Enter API Key", f"{persistent.chatToken}").strip()
+    $ apikey = renpy.input("Enter API Key\n", f"{persistent.chatToken}").strip()
     $ persistent.chatToken = apikey
     $ renpy.save_persistent()
     return
@@ -8,7 +8,7 @@ label apikey_label:
 label custom_chat_model_label:
     "Enter a model from your ollama list"
     "You can check what models you have available by typing \"ollama list\" in a command line on your device."
-    $ model = renpy.input("Enter a model", f"{persistent.chatModel}").strip()
+    $ model = renpy.input("Enter a model\n", f"{persistent.chatModel}").strip()
     $ persistent.chatModel = model 
     $ renpy.save_persistent()
     return
@@ -168,7 +168,7 @@ label AICharacter:
             $ renpy.log(">>> in saved game")
 
     else:
-        $ chatFolderName = renpy.input("Name This Realm: ", "realm", allow=" ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789_").strip()
+        $ chatFolderName = renpy.input("Name This Realm:\n ", "realm", allow=" ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789_").strip()
         $ chatSetup = SetupChat(chat_name=chatFolderName, character_name=character_name)
         $ pathSetup = chatSetup.setup(purgatory=False)
 
@@ -289,7 +289,7 @@ label AICharacter:
             $ user_msg = "continue"
         else:
             while user_msg.strip() == "":
-                $ user_msg = renpy.input("Enter a message: ")
+                $ user_msg = renpy.input("Enter a message:\n")
 
             if user_msg  == "init_end_sim" and character_name == "monika":
                 $ main_event_loop = False
