@@ -144,7 +144,7 @@ init python:
             renpy.log(f"edited path is: {path}")    
 
             # This changes the content section of the template dictionary to the "backstory" var
-            template[character][0]["content"] = f"BACKSTORY {backstory}"
+            template[character][0]["content"] = f"BACKSTORY {backstory}\n" + "{{format}}"
 
             with open(config.basedir + path, "w") as f:
                 json.dump(template, f, indent=2)
