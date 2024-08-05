@@ -16,17 +16,11 @@ label custom_chat_model_label:
 
 
 label custom_backstory_label:
-    $ persistent.in_edit_prompt = True
-    $ renpy.save_persistent()
-
     "Enter your own backstory for this character. You can also navigate to \"game/assets/prompts/prompt_templates.json\" and edit the \"content\" section manually."
     $ raw_prompt = Info().getExamplePrompts[character_name][0]["content"].split("{{format}}")[0].replace("BACKSTORY", "")
-    $ player_prompt = renpy.input("Edit the backstory\n", f"{raw_prompt}", exclude="}{").strip()
+    $ player_prompt = renpy.input(prompt=" ", default=f"{raw_prompt}", exclude="}{", screen="input_long").strip()
     
     $ Configs().update_character_backstory(character=character_name, backstory=player_prompt)
-
-    $ persistent.in_edit_prompt = False
-    $ renpy.save_persistent()
     "Successfully changed backstory!"
     return
 
@@ -34,10 +28,6 @@ label custom_backstory_label:
 
 
 label start:
-
-    # Gets rid of scrolling for input
-    $ persistent.in_edit_prompt = False
-    $ renpy.save_persistent()
 
     init python:
         import threading
