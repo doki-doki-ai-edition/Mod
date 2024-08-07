@@ -114,7 +114,7 @@ label space_zone:
             monika "[last_msg]"
 
     else:
-        $ renpy.say("[purg_name_title]", convo)
+        $ speak("[purg_name_title]", convo)
 
 
 
@@ -186,6 +186,6 @@ label space_zone:
                 $ message = messages.pop()
                 if len(messages) > 0:
                     $ message += '...'
-                $ renpy.say("[purg_name_title]", message)
+                $ speak("[purg_name_title]", message)
 
     return

@@ -62,6 +62,28 @@ label start:
             wrapped_sentences.reverse()
             return wrapped_sentences
 
+        def speak(current_char_title, message):
+            global cur_speaker
+            """
+            Specific formatting and customization for each character.
+            Should be used in place of renpy.say()
+            """
+            if current_char_title == "Monika":
+                cur_speaker = "m"
+                monika(message)
+            elif current_char_title == "Sayori":
+                cur_speaker = "s"
+                sayori(message)
+            elif current_char_title == "Natsuki":
+                cur_speaker = "n"
+                natsuki(message)
+            elif current_char_title == "Yuri":
+                cur_speaker = "y"
+                yuri(message)
+            else:
+                renpy.say("[current_char_title]", message)
+            renpy.log(cur_speaker)
+
     $ input_popup_gui = True
 
     stop music fadeout 0.5
@@ -70,7 +92,7 @@ label start:
         jump space_zone
     else:
         call screen bio_screen
-        
+
 
     return
 
@@ -82,7 +104,7 @@ label nameWorld_label:
     scene theme
 
     $ motto = renpy.random.randint(1,315)
-    if motto == 15:    
+    if motto == 15:
         scene black with dissolve
         play sound "<from 0 to 9>bgm/end-voice.ogg"
         $ renpy.pause(11, hard=True)
@@ -262,9 +284,9 @@ label AICharacter:
             $ message = messages.pop()
             if len(messages) > 0:
                 $ message += '...'
-            $ renpy.say("[current_char_title]", message)
+            $ speak("[current_char_title]", message)
     else:
-        $ renpy.say("[current_char_title]", convo)
+        $ speak("[current_char_title]", convo)
 
 
     show screen home_icon_screen
@@ -377,7 +399,7 @@ label AICharacter:
                 $ message = messages.pop()
                 if len(messages) > 0:
                     $ message += '...'
-                $ renpy.say("[current_char_title]", message)
+                $ speak("[current_char_title]", message)
 
     return
 
