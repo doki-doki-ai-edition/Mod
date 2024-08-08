@@ -284,9 +284,9 @@ label AICharacter:
             $ message = messages.pop()
             if len(messages) > 0:
                 $ message += '...'
-            $ speak("[current_char_title]", message)
+            $ speak(current_char_title, message)
     else:
-        $ speak("[current_char_title]", convo)
+        $ speak(current_char_title, convo)
 
 
     show screen home_icon_screen
@@ -399,7 +399,7 @@ label AICharacter:
                 $ message = messages.pop()
                 if len(messages) > 0:
                     $ message += '...'
-                $ speak("[current_char_title]", message)
+                $ speak(current_char_title, message)
 
     return
 
