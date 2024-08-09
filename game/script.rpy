@@ -81,6 +81,7 @@ label start:
                 cur_speaker = "y"
                 yuri(message)
             else:
+                cur_speaker = "n_default"
                 renpy.say("[current_char_title]", message)
             renpy.log(cur_speaker)
 
