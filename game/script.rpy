@@ -17,7 +17,11 @@ label custom_chat_model_label:
 
 label custom_backstory_label:
     "Enter your own backstory for this character. You can also navigate to \"game/assets/prompts/prompt_templates.json\" and edit the \"content\" section manually."
-    $ raw_prompt = Info().getExamplePrompts[character_name][0]["content"].split("{{format}}")[0].replace("BACKSTORY", "")
+    if character_name in Info().getExamplePrompts:
+        $ raw_prompt = Info().getExamplePrompts[character_name][0]["content"].split("{{format}}")[0].replace("BACKSTORY", "")
+    else:
+        $ raw_prompt = Info().getCustomPrompts[character_name][0]["content"].split("{{format}}")[0].replace("BACKSTORY", "")
+
     $ player_prompt = renpy.input(prompt=" ", default=f"{raw_prompt}", exclude="}{", screen="input_long").strip()
     
     $ Configs().update_character_backstory(character=character_name, backstory=player_prompt)
