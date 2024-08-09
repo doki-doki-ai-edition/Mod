@@ -1082,7 +1082,7 @@ screen select_model_name_screen():
     $ other_local_models = chat_model_dict["llms"]["other"]
 
 
-    $ important_info = "Type \"ollama run (model name)\" in a console on your computer.\nFor example: ollama run llama3" if llm_mode == True else "Make sure you're using the correct API key for the model name you select."
+    $ important_info = "Type \"ollama run (model name)\" in a console on your computer.\nFor example: ollama run llama3.1" if llm_mode == True else "Make sure you're using the correct API key for the model name you select."
     use game_menu(_("Models"), scroll="viewport"):
 
         vbox:

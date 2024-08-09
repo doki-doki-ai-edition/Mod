@@ -14,12 +14,8 @@ If you've been **banned** from the server you can appeal here: https://forms.gle
 - Make sure you have a fresh install of DDLC https://ddlc.moe/
 - Download the latest version of the DDAE mod on this github page https://github.com/doki-doki-ai-edition/Mod/releases
 
-To setup the mod just drag the contents into the main ddlc folder:
+To setup the mod just drag the contents into the main ddlc folder.
 
-
-<video controls>
-  <source src="game/assets/imgs/help_page/ddae setup.mp4" type="video/mp4" />
-</video>
 
 
 
@@ -40,7 +36,7 @@ If you're on windows you should see a small icon in your taskbar that looks like
 <img src="game/assets/imgs/help_page/llama_task.png">
 
 - Open up a terminal on your device (eg. cmd+r if you're using windows, then type "cmd" and press enter)
-- In the terminal type "ollama pull llama3" (or any model you find in https://ollama.com/library/)
+- In the terminal type "ollama pull llama3.1" (or any model you find in https://ollama.com/library/)
 
 This should be roughly 4.7 gigabytes and once it's done installing you can run the mod!
 

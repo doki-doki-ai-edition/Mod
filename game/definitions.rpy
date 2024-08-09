@@ -1425,7 +1425,7 @@ define mc_default = DynamicCharacter('player', what_prefix='"', what_suffix='"',
 define default_context_window = "1024"
 define default_temp = "6"
 define default_seed = "random"
-define chatModel = "llama3"
+define chatModel = "llama3.1"
 
 default persistent.context_window = default_context_window
 default persistent.temp = default_temp
@@ -1460,8 +1460,8 @@ default persistent.first_sayori = True
 default persistent.in_game = False
 define chat_model_dict = {
     "llms": {
-        "suggested": ["llama3", "qwen2"],
-        "other": ["mistral"]
+        "suggested": ["llama3.1", "qwen2"],
+        "other": ["llama3", "mistral"]
     }
 }
 
