@@ -149,7 +149,7 @@ screen bio_screen:
             xfill True
             box_wrap True
             textbutton "Begin" action [SetVariable("character_name", current_character.name.lower()), Hide("bio_screen"), Jump("nameWorld_label")] style "return_button"
-            textbutton "Edit" action [SetVariable("character_name", current_character.name.lower()), SetVariable("in_edit_prompt", True), Function(change_backstory)] style "return_button"
+            textbutton "Edit" action [SetVariable("character_name", current_character.name.lower()), Function(change_backstory)] style "return_button"
 
 
     textbutton _("Return"):
