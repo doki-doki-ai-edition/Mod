@@ -315,15 +315,16 @@ init python:
             contextAndUserMsg = examples + self.chathistory if spacezone != "true" else self.chathistory
 
             response = self.modelChoices(contextAndUserMsg)
-            response = ' '.join(response.split())   # Get rid of any extra spaces
-            response = self.checkForBadFormat(response)
 
-            
             # If An error happened with the API, return the Error
             check_error = self.checkForError(response)
             if check_error:
                 return check_error[1]
 
+            response = ' '.join(response.split())   # Get rid of any extra spaces
+            response = self.checkForBadFormat(response)
+
+        
             reply, _, face, body, scene = self.removeKeywords(response)
 
 

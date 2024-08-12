@@ -213,6 +213,14 @@ label AICharacter:
 
 
 
+    # An Error happened, so stop the current session and return to lobby
+    if convo.startswith("<|Error|>"):
+        $ convo = convo.replace("<|Error|>", "")
+        show screen error_popup(message=convo)
+        "Returning to main menu..."
+        return
+
+
     ###########################
     # Setup old/new data
     ###########################
@@ -348,7 +356,8 @@ label AICharacter:
         $ current_background = Data(path_to_user_dir=pathSetup).getSceneData("background")
 
 
-        if final_msg.startswith("<Error>"):
+        if final_msg.startswith("<|Error|>"):
+            $ final_msg = final_msg.replace("<|Error|>", "")
             show screen error_popup(message=final_msg)
         else:
 
@@ -372,7 +381,7 @@ label AICharacter:
                 image full_sprite:
                     im.Composite((960, 960), (0, 0), f"{current_char}/{current_head}")
                     uppies
-                
+
             else:
                 image custom_basic:
                     im.Composite((960, 960), (0, 0), f"assets/imgs/characters/{current_char_title}/{current_left}", (0, 0), f"assets/imgs/characters/{current_char_title}/{current_right}", (0, 0), f"assets/imgs/characters/{current_char_title}/{current_head}")
