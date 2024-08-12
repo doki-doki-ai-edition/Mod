@@ -330,6 +330,9 @@ label AICharacter:
 
                 jump purgatory_seq
 
+            # Add user message to history
+            "You" "[user_msg] {fast} {nw}"
+
 
         # Start generating text in a separate thread
         $ chatSetup.is_generating = True

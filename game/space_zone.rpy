@@ -147,6 +147,9 @@ label space_zone:
 
             $ counter += 1
 
+            # Add user message to history
+            "You" "[user_msg] {fast} {nw}"
+
 
 
         if counter >= 6 and persistent.first_scare == False:

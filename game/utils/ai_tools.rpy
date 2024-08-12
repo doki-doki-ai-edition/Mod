@@ -13,7 +13,7 @@ init python:
             seed = random.random() if persistent.seed == "random" else persistent.seed 
 
             options = ollama.Options(temperature=float(f".{persistent.temp}"), stop=["[INST", "[/INST", "[END]"],
-            num_ctx=int(persistent.context_window), seed=seed)
+            num_ctx=int(persistent.context_window), seed=seed, num_predict=200)
 
             try:
                 response = ollama.chat(model=persistent.chatModel, messages=prompt, options=options)
