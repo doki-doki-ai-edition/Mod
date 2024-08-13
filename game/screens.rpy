@@ -1087,7 +1087,7 @@ screen select_model_name_screen():
     $ other_local_models = chat_model_dict["llms"]["other"]
 
 
-    $ important_info = "Type \"ollama run (model name)\" in a console on your computer.\nFor example: ollama run llama3.1" if llm_mode == True else "Make sure you're using the correct API key for the model name you select."
+    $ important_info = "Type \"ollama pull (model name)\" in a console on your computer.\nFor example: ollama pull llama3.1" if llm_mode == True else "Make sure you're using the correct API key for the model name you select."
     use game_menu(_("Models"), scroll="viewport"):
 
         vbox:
@@ -1111,11 +1111,7 @@ screen select_model_name_screen():
                     for model in fav_local_models:
                         textbutton _(f"{model}") action Show(screen="basic_popup", title="Local Models", message="Sucessfully updated model!", ok_action=Function(FinishUpdateModelName, model))
 
-                    label _(f"Other Models")
-                    for model in other_local_models:
-                        textbutton _(f"{model}") action Show(screen="basic_popup", title="Local Models", message="Sucessfully updated model!", ok_action=Function(FinishUpdateModelName, model))
-
-
+                label _(f"Other Models")
                 textbutton _("Custom Model") action Jump("custom_chat_model_label")
 
 
@@ -1321,7 +1317,7 @@ screen preferences():
                             style "mute_all_button"
 
                 vbox:
-                    textbutton _("Model Name") action ShowMenu("select_model_name_screen")
+                    textbutton _("AI Models") action ShowMenu("select_model_name_screen")
                 vbox:
                     textbutton _("Model Config") action ShowMenu("llm_model_config_screen")
                 vbox:

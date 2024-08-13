@@ -1460,8 +1460,8 @@ default persistent.first_sayori = True
 default persistent.in_game = False
 define chat_model_dict = {
     "llms": {
-        "suggested": ["llama3.1", "qwen2"],
-        "other": ["llama3", "mistral"]
+        "suggested": ["llama3.1", "llama3", "qwen2"],
+        "other": ["mistral"]
     }
 }
 
