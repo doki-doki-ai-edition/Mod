@@ -577,12 +577,6 @@ init python:
         renpy.save_persistent()
 
 
-    def FinishEnterPromptHeader():
-        persistent.prompt_header = prompt_header
-        renpy.save_persistent()
-        renpy.hide_screen("prompt_header_input")
-        renpy.show_screen("llm_model_config_screen")
-
 
     def SwitchToModelConfig():
         renpy.hide_screen("preferences")
@@ -1045,16 +1039,27 @@ screen custom_save_screen():
             style_prefix "slider"
             box_wrap True
 
-            vbox:
+            hbox:
                 null height 50
                 textbutton "Back":
                     style_prefix "navigation_button_text"
 
                     xpos 20
-                    
+
                     hover_sound "gui/sfx/hover.ogg"
                     activate_sound "gui/sfx/select.ogg"
                     action Hide("custom_save_screen")
+
+                null height 50
+                textbutton "Refresh":
+                    style_prefix "navigation_button_text"
+
+                    xpos 120
+
+                    hover_sound "gui/sfx/hover.ogg"
+                    activate_sound "gui/sfx/select.ogg"
+                    action renpy.restart_interaction
+                    #action renpy.full_restart
 
 
             vbox:
