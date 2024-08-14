@@ -581,6 +581,22 @@ init python:
         renpy.jump_out_of_context("download_model_label")
 
 
+    def DeleteModel(model):
+        import ollama
+        import httpx
+
+        message = f"Sucessfully deleted {model}!"
+
+        try: ollama.delete(model)
+        except httpx.ConnectError:
+            message = "You don't have ollama running."
+        except ollama.ResponseError as e:
+            message = f"{e.error}"
+
+        renpy.show_screen("basic_popup", title="Delete Model",
+        message=message, ok_action=renpy.hide_screen("basic_popup"))
+
+
     def SwitchToModelConfig():
         renpy.hide_screen("preferences")
 
@@ -1116,11 +1132,8 @@ screen select_model_name_screen():
             style_prefix "slider"
             box_wrap True
 
-            vbox:
+            hbox:
                 label _(f"Current Model: {persistent.chatModel}")
-                textbutton _("Important Info") action Show(screen="basic_popup", title="Info", message=important_info, ok_action=NullAction())
-
-
 
             vbox:
                 if llm_mode == True:
@@ -1129,7 +1142,9 @@ screen select_model_name_screen():
                         textbutton _("None") action NullAction()
                     else:
                         for model in ai_list:
-                            textbutton _(f"{model}") action Show(screen="basic_popup", title="Local Models", message="Sucessfully updated model!", ok_action=Function(FinishUpdateModelName, model))
+                            hbox:
+                                textbutton _(f"{model}") action Show(screen="basic_popup", title="Local Models", message="Sucessfully updated model!", ok_action=Function(FinishUpdateModelName, model))
+                                textbutton _("| delete") action Function(DeleteModel, model)
 
                     label _(f"Other Models")
                     textbutton _("Download Model") action Function(FinishDownload)
