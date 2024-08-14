@@ -577,6 +577,9 @@ init python:
         renpy.save_persistent()
 
 
+    def FinishDownload():
+        renpy.jump_out_of_context("download_model_label")
+
 
     def SwitchToModelConfig():
         renpy.hide_screen("preferences")
@@ -960,17 +963,23 @@ init python:
 init python:
     import os
     import ollama
+    import httpx
 
     chats = ""
     try: chats = os.listdir(f"{config.basedir}/chats")
     except FileNotFoundError: pass
 
     ai_list = []
-    for i in ollama.list()["models"]:
-        ai_list.append(i["name"])
+    try:
+        lst = ollama.list()
+
+        for i in lst["models"]:
+            ai_list.append(i["name"])
+    except httpx.ConnectError:
+        renpy.log("You dont have ollama running.")
 
 
-    
+
 
 screen file_slots(title):
     default page_name_value = FilePageNameInputValue()
@@ -1123,7 +1132,7 @@ screen select_model_name_screen():
                             textbutton _(f"{model}") action Show(screen="basic_popup", title="Local Models", message="Sucessfully updated model!", ok_action=Function(FinishUpdateModelName, model))
 
                     label _(f"Other Models")
-                    textbutton _("Download Model") action Jump("custom_chat_model_label")
+                    textbutton _("Download Model") action Function(FinishDownload)
 
                     label _(f"Suggested Models")
                     for model in fav_local_models:

@@ -1472,6 +1472,9 @@ default persistent.purgatory = None
 default persistent.purgatory_name = None
 default persistent.first_scare = False
 default cur_speaker = ""
+default is_downloading = False
+default download_progress = ""
+default download_text = ""
 
 
 define _dismiss_pause = config.developer

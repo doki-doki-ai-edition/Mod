@@ -1,33 +1,3 @@
-label apikey_label:
-    $ apikey = renpy.input("Enter API Key", f"{persistent.chatToken}").strip()
-    $ persistent.chatToken = apikey
-    $ renpy.save_persistent()
-    return
-
-
-label custom_chat_model_label:
-    "Enter a model from your ollama list"
-    "You can check what models you have available by typing \"ollama list\" in a command line on your device."
-    $ model = renpy.input("Enter a model", f"{persistent.chatModel}").strip()
-    $ persistent.chatModel = model 
-    $ renpy.save_persistent()
-    return
-
-
-
-label custom_backstory_label:
-    "Enter your own backstory for this character. You can also navigate to \"game/assets/prompts/prompt_templates.json\" and edit the \"content\" section manually."
-    if character_name in Info().getExamplePrompts:
-        $ raw_prompt = Info().getExamplePrompts[character_name][0]["content"].split("{{format}}")[0].replace("BACKSTORY", "")
-    else:
-        $ raw_prompt = Info().getCustomPrompts[character_name][0]["content"].split("{{format}}")[0].replace("BACKSTORY", "")
-
-    $ player_prompt = renpy.input(prompt=" ", default=f"{raw_prompt}", exclude="}{", screen="input_long").strip()
-    
-    $ Configs().update_character_backstory(character=character_name, backstory=player_prompt)
-    "Successfully changed backstory!"
-    return
-
 
 
 
