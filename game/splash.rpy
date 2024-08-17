@@ -205,25 +205,9 @@ label splashscreen:
                 hide rlly with Dissolve(3)
                 "Whatever."
 
-        "In order for the mod to work correctly please remember to install ollama by going to \"ollama.com\"."
-        "Simply download the application and run it."
-        "No GUI will popup, it'll simply run on your device with a small icon displayed in your taskbar."
-        "Open up a terminal on your device and type \"ollama pull llama3.1\"."
-        "You should be good to go."
+        "Once the game loads go to the settings tab and click \"AI Models\" to begin setting up the mod completely."
 
-        menu:
-            "Do you understand?"
 
-            "Yes.":
-                "Yes."
-
-            "Whatever.":
-                play sound "assets/audio/sfx/vine-boom.mp3"
-                show rlly
-                hide rlly with Dissolve(3)
-                "Whatever."
-
-        "There is a far more detailed setup guide and examples of how the mod works in the Main Menu of the game, just click \"Help\"."
 
     jump ai_mod_notice
 

@@ -31,6 +31,26 @@ label custom_backstory_label:
 
 
 
+label setup_model_label:
+    menu:
+        "Would you like a tutorial on how to download a model? Or simply download a model now?"
+
+        "Tutorial":
+            jump tutorial_label
+
+        "Download Model":
+            jump download_model_label
+
+
+
+label tutorial_label:
+    call screen tutorial_screen
+    return
+
+
+
+
+
 init python:
     from tqdm import tqdm
     import ollama

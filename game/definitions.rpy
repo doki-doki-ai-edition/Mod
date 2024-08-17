@@ -1425,7 +1425,7 @@ define mc_default = DynamicCharacter('player', what_prefix='"', what_suffix='"',
 define default_context_window = "1024"
 define default_temp = "6"
 define default_seed = "random"
-define chatModel = "llama3.1"
+define chatModel = "None"
 
 default persistent.context_window = default_context_window
 default persistent.temp = default_temp

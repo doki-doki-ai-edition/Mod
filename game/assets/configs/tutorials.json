@@ -1,0 +1,64 @@
+{
+    "ollama": [
+        {
+            "image": "assets/imgs/help_page/ollama/download_screen.png",
+            "desc": "Go to \"ollama.com/download\" and click on the download that's meant for your operating system."
+        },
+        {
+            "image": "assets/imgs/help_page/ollama/setup exe.png",
+            "desc": "Locate the exe file and click on it."
+        },
+        {
+            "image": "assets/imgs/help_page/ollama/ollama popup.png",
+            "desc": "If you're on windows, a popup like this should appear. Go through the installation process."
+        },
+        {
+            "image": "assets/imgs/help_page/ollama/window search.png",
+            "desc": "Once the install is done, locate the actual app and click it."
+        },
+        {
+            "image": "assets/imgs/help_page/ollama/small icon.png",
+            "desc": "When Ollama is running you should see a small icon in your taskbar. No GUI or popup will showup, this is what indicates that you have ollama running."
+        },
+        {
+            "image": "assets/imgs/help_page/ollama/models.png",
+            "desc": "Go to \"ollama.com/library\". This is where you can browse through all the ai models available with ollama. "
+        },
+        {
+            "image": "assets/imgs/help_page/ollama/model llama31.png",
+            "desc": "In this example we're going to be downloading llama3.1 but you can download any model you want."
+        },
+        {
+            "image": "assets/imgs/help_page/ollama/llama3 model.png",
+            "desc": "You'll be taken to this page where you can view the details about the model."
+        },
+        {
+            "image": "assets/imgs/help_page/ollama/llama3 model p2.png",
+            "desc": "This is the name of the model that you need to type in later."
+        },
+        {
+            "image": "assets/imgs/help_page/ollama/llama3 model p3.png",
+            "desc": "You can also specifiy which \"parameter\" model you want to use. To keep things simple, generally the bigger the parameter, the better the quality of the responses will be. But this also means you'd need better hardware."
+        },
+        {
+            "image": "assets/imgs/help_page/ollama/context length p1.png",
+            "desc": "You can view even more details about a model by clicking on this section"
+        },
+        {
+            "image": "assets/imgs/help_page/ollama/context length p2.png",
+            "desc": "This will tell you the context window of a model. Which is basically how much text the ai will remember in your whole history of conversation."
+        },
+        {
+            "image": "assets/imgs/help_page/ollama/llama3 model p2.png",
+            "desc": "Now go back and copy the underlined name here."
+        },
+        {
+            "image": "assets/imgs/help_page/ollama/settings.png",
+            "desc": "Now in the game go to the settings."
+        },
+        {
+            "image": "assets/imgs/help_page/ollama/settings model.png",
+            "desc": "Finally, click on download model and paste in the model name you copied earlier."
+        }
+    ]
+}

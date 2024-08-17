@@ -34,7 +34,7 @@ define build.name = "DDAE"
 
 define config.has_sound = True
 define config.has_music = True
-define config.has_voice = False
+define config.has_voice = True
 define config.debug_sound = True
 
 
@@ -111,7 +111,7 @@ default preferences.text_cps = 50
 default preferences.afm_time = 15
 
 default preferences.music_volume = 0.75
-default preferences.sfx_volume = 1
+default preferences.sfx_volume = 0.6
 
 
 
@@ -147,7 +147,7 @@ define config.autosave_slots = 0
 define config.layers = [ 'master', 'transient', 'screens', 'overlay', 'front' ]
 define config.image_cache_size = 64
 define config.predict_statements = 50
-#define config.rollback_enabled = config.developer
+define config.rollback_enabled = config.developer
 define config.menu_clear_layers = ["front"]
 define config.gl_test_image = "white"
 define config.developer = False

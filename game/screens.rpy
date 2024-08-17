@@ -580,6 +580,10 @@ init python:
     def FinishDownload():
         renpy.jump_out_of_context("download_model_label")
 
+    def FinishSetup():
+        renpy.jump_out_of_context("setup_model_label")
+
+
 
     def DeleteModel(model):
         import ollama
@@ -992,7 +996,8 @@ init python:
         for i in lst["models"]:
             ai_list.append(i["name"])
     except httpx.ConnectError:
-        renpy.log("You dont have ollama running.")
+        ai_list = "off"
+
 
 
 
@@ -1141,17 +1146,17 @@ screen select_model_name_screen():
                     if ai_list == []:
                         textbutton _("None") action NullAction()
                     else:
-                        for model in ai_list:
-                            hbox:
-                                textbutton _(f"{model}") action Show(screen="basic_popup", title="Local Models", message="Sucessfully updated model!", ok_action=Function(FinishUpdateModelName, model))
-                                textbutton _("| delete") action Function(DeleteModel, model)
+                        if ai_list == "off":
+                            textbutton _("You don't have ollama running.") action NullAction()
+                        else:
+                            for model in ai_list:
+                                hbox:
+                                    textbutton _(f"{model}") action Show(screen="basic_popup", title="Local Models", message="Sucessfully updated model!", ok_action=Function(FinishUpdateModelName, model))
+                                    textbutton _(" | ") action NullAction()
+                                    textbutton _("delete") action Function(DeleteModel, model)
 
-                    label _(f"Other Models")
-                    textbutton _("Download Model") action Function(FinishDownload)
-
-                    label _(f"Suggested Models")
-                    for model in fav_local_models:
-                        textbutton _(f"{model}") action Show(screen="basic_popup", title="Local Models", message="Sucessfully updated model!", ok_action=Function(FinishUpdateModelName, model))
+                    label _(f"Setup")
+                    textbutton _("Download Models") action Function(FinishSetup)
 
 
 
