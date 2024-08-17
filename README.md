@@ -14,6 +14,15 @@ If you've never downloaded a DDLC mod before then follow this guide <a href="SET
 
 # Frequently Asked Questions
 
+
+## Why does it take forever to load?
+
+2 Main reasons for this.
+1. An error happened and you should check your `log.txt` file in the main folder and send it in #support
+2. Hardware limitation. If you don't have a good enough device then it's going to take a while to respond.
+
+If it's a hardware limitation you should check out this project https://github.com/zeeblo/DDAE-Groq which uses an API version of the mod.
+
 ## Are my chats private?
 
 Yes. Your chats are completely localized on your machine, even if you turn your internet off, it'll still work.
@@ -27,13 +36,6 @@ No. No paid APIs are used in the mod.
 
 No. The fangame in the video is different from the mod and it doesn't have the ability to execute code on your machine. I also don't plan on doing this, since that's basically just malware.
 
-## Why does it take forever to load?
-
-2 Main reasons for this.
-1. An error happened and you should check your `log.txt` file in the main folder and send it in #support
-2. Hardware limitation. If you don't have a good enough device then it's going to take a while to respond.
-
-If it's a hardware limitation you should check out this project https://github.com/zeeblo/DDAE-Groq which uses an API version of the mod.
 
 ## Are the models uncensored
 
