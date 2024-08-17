@@ -206,6 +206,7 @@ label splashscreen:
                 "Whatever."
 
         "Once the game loads go to the settings tab and click \"AI Models\" to begin setting up the mod completely."
+        "If you have any questions, remember to check the \"Frequently asked questions\" section on the github page first. If your question isn't there or you need more clarification then you can ask for help on the discord."
 
 
 
