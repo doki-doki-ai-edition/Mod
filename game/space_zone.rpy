@@ -37,6 +37,8 @@ label space_zone:
     $ persistent.purgatory_name = ""
     $ renpy.save_persistent()
 
+    $ hard_pause = False
+
     $ resume = None # Used to check if a file has been loaded
     $ chatFolderName = f"{purg_name}_purgatory"
 
@@ -53,13 +55,20 @@ label space_zone:
 
         $ persistent.first_space = False
         $ renpy.save_persistent()
+        $ hard_pause = True
     else:
         $ rnd_line = rnd_line if rnd_line != 3 else 0
         $ space_line = Info().getSpaceLines[rnd_line]["file"]
         $ space_line_time = Info().getSpaceLines[rnd_line]["time"]
         $ renpy.sound.play(f"{space_line}", channel="sound", loop=None)
 
-    $ renpy.pause(space_line_time, hard=True)
+
+    if hard_pause:
+        $ renpy.pause(space_line_time, hard=hard_pause)
+    else:
+        "click to skip"
+        stop sound
+
     $ Configs().delete_egg(f"{config.basedir}/game/assets/audio/sfx/_space-lines.mp3")
 
 
