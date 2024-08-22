@@ -34,7 +34,7 @@ define build.name = "DDAE"
 
 define config.has_sound = True
 define config.has_music = True
-define config.has_voice = True
+define config.has_voice = False
 define config.debug_sound = True
 
 
@@ -112,7 +112,6 @@ default preferences.afm_time = 15
 
 default preferences.music_volume = 0.75
 default preferences.sfx_volume = 0.6
-
 
 
 
