@@ -1125,7 +1125,7 @@ screen select_model_name_screen():
     $ other_local_models = chat_model_dict["llms"]["other"]
 
 
-    $ important_info = "Type \"ollama pull (model name)\" in a console on your computer.\nFor example: ollama pull llama3.1" if llm_mode == True else "Make sure you're using the correct API key for the model name you select."
+    $ important_info = "If you know you have ollama running and you know you have extra models installed but it's not being displayed, you need to restart your game." if llm_mode == True else "If you know you have ollama running but it's not being displayed, you need to restart your game."
     use game_menu(_("Models"), scroll="viewport"):
 
         vbox:
@@ -1137,8 +1137,11 @@ screen select_model_name_screen():
             style_prefix "slider"
             box_wrap True
 
-            hbox:
+            vbox:
                 label _(f"Current Model: {persistent.chatModel}")
+                textbutton _("Important Info") action Show(screen="basic_popup", title="Info", message=important_info, ok_action=NullAction())
+
+
 
             vbox:
                 if llm_mode == True:
