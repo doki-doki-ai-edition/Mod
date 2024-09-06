@@ -3,6 +3,7 @@ If you've never downloaded a DDLC mod before then follow this guide. If you alre
 
 # Windows/Linux
 
+**IMPORTANT:** There is also a video tutorial of this whole process here: https://youtu.be/aGOP6ANbMxk
 
 - Make sure you have a fresh install of DDLC https://teamsalvato.itch.io/ddlc
 - When you click on the download button this popup should appear

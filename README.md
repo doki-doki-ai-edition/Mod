@@ -7,6 +7,15 @@ If you have extra questions or want to become apart of the community you can joi
 If you've been **banned** from the server you can appeal here: https://forms.gle/E8wyDi9aBzXdWvf99
 
 
+
+# (IMPORTANT) Setup
+
+To properly download the mod follow this guide here >>> <a href="SETUP.md">here</a> <<<
+
+This will show you how to properly download the mod
+
+
+
 # Examples
 
 <img src="game/assets/imgs/help_page/eg 1.png" alt="example 1">
@@ -15,11 +24,6 @@ If you've been **banned** from the server you can appeal here: https://forms.gle
 
 <img src="game/assets/imgs/help_page/eg 3.png" alt="example 3">
 
-
-
-# Setup
-
-If you've never downloaded a DDLC mod before then follow this guide <a href="SETUP.md">here</a>
 
 
 # Frequently Asked Questions
