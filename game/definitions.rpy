@@ -140,6 +140,12 @@ image bg kitchen = "bg/kitchen.png"
 image bg notebook = "bg/notebook.png"
 image bg notebook-glitch = "bg/notebook-glitch.png"
 
+image s_kill_bg:
+    subpixel True
+    "images/cg/s_kill_bg.png"
+
+
+
 image cg cry:
     "cg/ch_0_cry.png"
     yalign 0.2
@@ -1399,10 +1405,6 @@ image monika_bg_highlight:
     "images/cg/monika/monika_bg_highlight.png"
     function monika_alpha
 
-
-image unseen:
-    truecenter
-    "assets/imgs/cg/unseen.png"
 
 
 

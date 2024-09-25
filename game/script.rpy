@@ -137,7 +137,7 @@ label AICharacter:
 
         $ renpy.sound.play(f"{space_line}", channel="sound", loop=None)
 
-        show unseen with Dissolve(space_line_time/2)
+        scene s_kill_bg with Dissolve(space_line_time/2)
         $ renpy.pause(delay=space_line_time/2, hard=True)
         
         $ Configs().delete_egg(f"{config.basedir}/game/assets/audio/sfx/_space-lines.mp3")
